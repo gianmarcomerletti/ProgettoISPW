@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
@@ -50,12 +52,11 @@ public class EventController {
 		EventDAO dao = new EventDAO();
 		Event ev = dao.findByLatLong(latitude, longitude);
 		SessionView.setEventSetOnMap(ev);
-		System.out.println("FIRED " + ev.getTitle());
-
+		Logger.getLogger("together_run").info("Evento selezionato");
 	}
 
 	public void setAddressForEvent(Double longitude, Double latitude)
-			throws Exception {
+			throws ConnectToGeolocationServiceException {
 		SessionView.setLatitudeSetOnMap(latitude);
 		SessionView.setLongitudeSetOnMap(longitude);
 
@@ -75,7 +76,7 @@ public class EventController {
 			int responsecode = conn.getResponseCode();
 
 			if (responsecode != 200)
-				throw new Exception();
+				throw new ConnectToGeolocationServiceException();
 
 			jRdr = new JsonReader(new InputStreamReader(url.openStream()));
 
@@ -94,7 +95,6 @@ public class EventController {
 			else
 				addr.setRoad(num + ", " + addrJson.get("Street").getAsString());
 
-			String label = addr.getRoad() + ", " + addr.getCity() + ", " + addr.getCountry();
 			SessionView.setAddressSetOnMap(addr);
 
 		} catch (IOException e) {

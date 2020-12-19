@@ -1,5 +1,8 @@
 package com.gianmarco.merletti.progetto_ispw.logic.controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
@@ -20,9 +23,9 @@ public class LoginController {
 		if (checkUser != null) {
 			user.setLevel(LevelEnum.valueOf(checkUser.getLevel().toUpperCase()));
 			user.setCity(CityEnum.valueOf(checkUser.getCity().toUpperCase()));
-			System.out.println("USER REGISTRED!");
+			Logger.getLogger("together_run").log(Level.FINE, "Utente registrato");
 		} else {
-			System.out.println("USER NOT REGISTRED!");
+			Logger.getLogger("together_run").log(Level.WARNING, "Utente non registrato");
 			throw new UserNotFoundException();
 		}
 		return user;
@@ -39,7 +42,7 @@ public class LoginController {
 
 
 		dao.insertUser(userBean);
-		System.out.println("NEW USER INSERTED! (" + userBean.getUsername() +")");
+		Logger.getLogger("together_run").log(Level.FINE, "Utente inserito");
 
 		return true;
 

@@ -79,38 +79,36 @@ public class EventDAO {
 	}
 
 	public List<Event> findAll() {
-
+		List<Event> result = new ArrayList<Event>();
 		String query = "SELECT * FROM event;";
 		try (Connection conn = DBConnect.getInstance().getConnection();
 				PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
-			List<Event> result = new ArrayList<Event>();
 
 			while (rs.next()) {
-				Event event = new Event();
-				event.setId(rs.getInt(1));
-				event.setTitle(rs.getString(2));
-				event.setDescription(rs.getString(3));
-				event.setCreationDate(rs.getDate(4));
-				event.setDate(rs.getDate(5));
-				event.setTime(rs.getTime(6));
-				event.setAddress(rs.getString(7));
-				event.setCity(rs.getString(8));
-				event.setLatitude(rs.getDouble(9));
-				event.setLongitude(rs.getDouble(10));
-				event.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
-				event.setLevel(rs.getString(12));
-				event.setDistance(rs.getInt(13));
-				event.setType(rs.getString(14));
-				result.add(event);
+				Event eventElem = new Event();
+				eventElem.setId(rs.getInt(1));
+				eventElem.setTitle(rs.getString(2));
+				eventElem.setDescription(rs.getString(3));
+				eventElem.setCreationDate(rs.getDate(4));
+				eventElem.setDate(rs.getDate(5));
+				eventElem.setTime(rs.getTime(6));
+				eventElem.setAddress(rs.getString(7));
+				eventElem.setCity(rs.getString(8));
+				eventElem.setLatitude(rs.getDouble(9));
+				eventElem.setLongitude(rs.getDouble(10));
+				eventElem.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+				eventElem.setLevel(rs.getString(12));
+				eventElem.setDistance(rs.getInt(13));
+				eventElem.setType(rs.getString(14));
+				result.add(eventElem);
 			}
-			return result;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return result;
 	}
 
 	public void assignRequest(Integer requestId, Integer eventId) {
@@ -120,7 +118,6 @@ public class EventDAO {
 		List<Request> requests = event.getRequests();
 		requests.add(request);
 		event.setRequests(requests);
-		//updateEvent(event);
 	}
 
 	public Event findByLatLong(Double latitude, Double longitude) {
@@ -131,22 +128,22 @@ public class EventDAO {
 				PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
-				Event event = new Event();
-				event.setId(rs.getInt(1));
-				event.setTitle(rs.getString(2));
-				event.setDescription(rs.getString(3));
-				event.setCreationDate(rs.getDate(4));
-				event.setDate(rs.getDate(5));
-				event.setTime(rs.getTime(6));
-				event.setAddress(rs.getString(7));
-				event.setCity(rs.getString(8));
-				event.setLatitude(rs.getDouble(9));
-				event.setLongitude(rs.getDouble(10));
-				event.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
-				event.setLevel(rs.getString(12));
-				event.setDistance(rs.getInt(13));
-				event.setType(rs.getString(14));
-				return event;
+				Event eventFoundByLatLong = new Event();
+				eventFoundByLatLong.setId(rs.getInt(1));
+				eventFoundByLatLong.setTitle(rs.getString(2));
+				eventFoundByLatLong.setDescription(rs.getString(3));
+				eventFoundByLatLong.setCreationDate(rs.getDate(4));
+				eventFoundByLatLong.setDate(rs.getDate(5));
+				eventFoundByLatLong.setTime(rs.getTime(6));
+				eventFoundByLatLong.setAddress(rs.getString(7));
+				eventFoundByLatLong.setCity(rs.getString(8));
+				eventFoundByLatLong.setLatitude(rs.getDouble(9));
+				eventFoundByLatLong.setLongitude(rs.getDouble(10));
+				eventFoundByLatLong.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+				eventFoundByLatLong.setLevel(rs.getString(12));
+				eventFoundByLatLong.setDistance(rs.getInt(13));
+				eventFoundByLatLong.setType(rs.getString(14));
+				return eventFoundByLatLong;
 			}
 
 		} catch (SQLException e) {

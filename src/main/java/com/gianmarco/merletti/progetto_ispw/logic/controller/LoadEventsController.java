@@ -52,7 +52,9 @@ public class LoadEventsController {
 		eventBean.setEventViewTitle(event.getTitle());
 		eventBean.setEventViewDescription(event.getDescription());
 		try {eventBean.setEventViewTime(event.getTime().toString());
-		} catch (InvalidFieldException e) {}
+		} catch (InvalidFieldException e) {
+			e.printStackTrace();
+		}
 		eventBean.setEventViewLatitude(event.getLatitude());
 		eventBean.setEventViewLongitude(event.getLongitude());
 		eventBean.setEventViewAddress(event.getAddress());

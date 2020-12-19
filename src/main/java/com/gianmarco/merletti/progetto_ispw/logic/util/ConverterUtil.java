@@ -11,6 +11,10 @@ import javafx.scene.control.DatePicker;
 
 public class ConverterUtil {
 
+	private ConverterUtil() {
+		//empty constructor
+	}
+
 	public static Date dateFromDatePicker(DatePicker eventDatePicker) {
 		LocalDate ld = eventDatePicker.getValue();
 		if (ld != null) {

@@ -3,6 +3,8 @@ package com.gianmarco.merletti.progetto_ispw.logic.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class DBConnect {
@@ -20,10 +22,9 @@ public class DBConnect {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connection = DriverManager.getConnection(jdbcURL, username, psw);
-			System.out.println("Connessione al database riuscita!");
+			Logger.getLogger("together_run").log(Level.FINE, "Database connesso");
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			System.out.println("Impossibile connettersi al database!");
+			Logger.getLogger("together_run").log(Level.SEVERE, "Impossibile connettersi al database");
 		}
 	}
 
@@ -32,9 +33,7 @@ public class DBConnect {
 	}
 
 	public static DBConnect getInstance() throws SQLException {
-		if (instance == null)
-			instance = new DBConnect();
-		else if (instance.getConnection().isClosed())
+		if (instance == null || instance.getConnection().isClosed())
 			instance = new DBConnect();
 		return instance;
 	}
