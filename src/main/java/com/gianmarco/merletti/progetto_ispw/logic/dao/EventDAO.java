@@ -48,8 +48,9 @@ public class EventDAO {
 	public Event findById(Integer id) {
 		String query = "SELECT * FROM event "
 				+ "WHERE (ID='" + id.toString() + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection()){
-			PreparedStatement st = conn.prepareStatement(query);
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement st = conn.prepareStatement(query)){
+
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Event event = new Event();

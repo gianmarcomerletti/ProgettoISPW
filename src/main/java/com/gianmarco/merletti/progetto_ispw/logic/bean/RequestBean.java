@@ -13,6 +13,7 @@ public class RequestBean {
 	private EventBean requestEvent;
 
 	public RequestBean() {
+		//it can be empty
 	}
 
 	public Integer getRequestId() {

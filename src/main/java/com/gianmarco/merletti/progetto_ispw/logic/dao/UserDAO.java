@@ -13,6 +13,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 
 public class UserDAO {
 
+	private static final String SELECTQUERY_STRING = "SELECT * FROM user ";
+	private static final String USERNAME_COND_STRING = "WHERE (username='";
+
 	public void insertUser(UserBean userBean) {
 		User user = new User();
 		user.setFromBean(userBean);
@@ -34,11 +37,12 @@ public class UserDAO {
 	}
 
 	public boolean userExists(String username) {
+		String query = SELECTQUERY_STRING
+				+ USERNAME_COND_STRING + username + "');";
 		boolean result = false;
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM user "
-					+ "WHERE (username='" + username
-					+ "');");
+
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement statement = conn.prepareStatement(query);) {
 			ResultSet rs = statement.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -48,8 +52,8 @@ public class UserDAO {
 	}
 
 	public User findUser(UserBean userBean) {
-		String query = "SELECT * FROM user "
-					+ "WHERE (username='" + userBean.getUsername() + "' AND "
+		String query = SELECTQUERY_STRING
+					+ USERNAME_COND_STRING + userBean.getUsername() + "' AND "
 					+ "password='" + userBean.getPassword() + "');";
 		try (Connection conn = DBConnect.getInstance().getConnection();
 				PreparedStatement statement = conn.prepareStatement(query)) {
@@ -75,8 +79,8 @@ public class UserDAO {
 	}
 
 	public User findUserFromUsername(String username) {
-		String query = "SELECT * FROM user "
-				+ "WHERE (username='" + username + "');";
+		String query = SELECTQUERY_STRING
+				+ USERNAME_COND_STRING + username + "');";
 
 		try (Connection conn = DBConnect.getInstance().getConnection();
 				PreparedStatement statement = conn.prepareStatement(query)) {

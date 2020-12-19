@@ -33,10 +33,7 @@ public class MapBoundary implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		NavbarManager.setNavbar(usernameTextHome, levelLabelHome);
-
-		// TODO aggiungere lista degli eventi
 
 		MapController mapController = new MapController(mapWebView);
 		mapController.loadMap();

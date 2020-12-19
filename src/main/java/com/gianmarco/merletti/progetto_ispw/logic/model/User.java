@@ -11,6 +11,7 @@ public class User {
 	private String city;
 
 	public User() {
+		//empty constructor
 	}
 
 	public void setFromBean(UserBean userBean) {

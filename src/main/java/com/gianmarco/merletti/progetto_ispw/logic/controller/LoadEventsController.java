@@ -12,6 +12,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 public class LoadEventsController {
 
 	public LoadEventsController() {
+		//it can be empty
 	}
 
 	public List<EventBeanView> getEventsFiltered() {

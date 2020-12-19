@@ -13,6 +13,7 @@ public class Request {
 	private Event event;
 
 	public Request() {
+		//empty constructor
 	}
 
 	public void setFromBean(RequestBean requestBean) {

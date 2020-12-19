@@ -26,6 +26,7 @@ public class Event {
 	private List<Request> requests;
 
 	public Event() {
+		//empty constructor
 	}
 
 	public void setFromBean(EventBean eventBean) {
