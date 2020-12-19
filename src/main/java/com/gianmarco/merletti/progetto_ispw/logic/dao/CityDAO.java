@@ -14,8 +14,7 @@ public class CityDAO {
 
 	public City getCity(CityEnum cityEnum) {
 
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
+		try (Connection conn = DBConnect.getInstance().getConnection()) {
 			PreparedStatement statement = conn.prepareStatement("SELECT * FROM City "
 					+ "WHERE (name='" + cityEnum.toString()
 					+ "');");

@@ -49,8 +49,7 @@ public class EventDAO {
 	public Event findById(Integer id) {
 		String query = "SELECT * FROM event "
 				+ "WHERE (ID='" + id.toString() + "');";
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
+		try (Connection conn = DBConnect.getInstance().getConnection()){
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -82,8 +81,7 @@ public class EventDAO {
 	public List<Event> findAll() {
 
 		String query = "SELECT * FROM event;";
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
+		try (Connection conn = DBConnect.getInstance().getConnection()) {
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			List<Event> result = new ArrayList<Event>();
@@ -129,8 +127,7 @@ public class EventDAO {
 		String query = "SELECT * FROM event "
 				+ "WHERE (latitude='" + latitude + "' AND "
 				+ "longitude='" + longitude + "');";
-		try {
-			Connection conn = DBConnect.getInstance().getConnection();
+		try (Connection conn = DBConnect.getInstance().getConnection()) {
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {

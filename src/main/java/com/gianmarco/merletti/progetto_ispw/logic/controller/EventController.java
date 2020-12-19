@@ -89,7 +89,7 @@ public class EventController {
 			String num = "";
 			if (addrJson.get("HouseNumber") != null)
 				num = addrJson.get("HouseNumber").getAsString();
-			if (num == "")
+			if (num.isEmpty())
 				addr.setRoad(addrJson.get("Street").getAsString());
 			else
 				addr.setRoad(num + ", " + addrJson.get("Street").getAsString());
