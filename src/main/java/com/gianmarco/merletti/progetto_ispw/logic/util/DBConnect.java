@@ -16,13 +16,13 @@ public class DBConnect {
 
 	private String username = "root";
 	private String psw = "2202";
-	private String jdbcURL = "jdbc:mysql://93.42.111.41:3306/progettoispw?serverTimezone=UTC";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/progettoispw?serverTimezone=UTC";
 
 	private DBConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connection = DriverManager.getConnection(jdbcURL, username, psw);
-			Logger.getLogger("together_run").log(Level.FINE, "Database connesso");
+			Logger.getLogger("together_run").log(Level.INFO, "Database connesso");
 		} catch (ClassNotFoundException | SQLException e) {
 			Logger.getLogger("together_run").log(Level.SEVERE, "Impossibile connettersi al database");
 		}
@@ -32,9 +32,13 @@ public class DBConnect {
 		return connection;
 	}
 
-	public static DBConnect getInstance() throws SQLException {
-		if (instance == null || instance.getConnection().isClosed())
-			instance = new DBConnect();
+	public static DBConnect getInstance() {
+		try {
+			if (instance == null || instance.getConnection().isClosed())
+				instance = new DBConnect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return instance;
 	}
 }

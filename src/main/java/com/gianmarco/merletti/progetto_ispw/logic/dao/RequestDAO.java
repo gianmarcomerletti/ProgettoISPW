@@ -14,6 +14,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 public class RequestDAO {
 
 	public Request addRequest(RequestBean requestBean) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
 		request.setFromBean(requestBean);
 
@@ -22,8 +23,7 @@ public class RequestDAO {
 				+ request.getCreationDate() + "', '"
 				+ request.getEvent().getId() + "');");
 
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -32,10 +32,10 @@ public class RequestDAO {
 	}
 
 	public Request findById(Integer id) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = "SELECT * FROM request "
 				+ "WHERE (ID='" + id.toString() + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(query);) {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Request request = new Request();

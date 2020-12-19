@@ -17,6 +17,7 @@ public class UserDAO {
 	private static final String USERNAME_COND_STRING = "WHERE (username='";
 
 	public void insertUser(UserBean userBean) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		User userToInsert = new User();
 		userToInsert.setFromBean(userBean);
 		String query = ("INSERT INTO user "
@@ -27,8 +28,7 @@ public class UserDAO {
 				+ userToInsert.getSurname() + "', '"
 				+ userToInsert.getLevel() + "', '"
 				+ userToInsert.getCity() + "');");
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement statement = conn.prepareStatement(query)) {
+		try (PreparedStatement statement = conn.prepareStatement(query)) {
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -37,12 +37,12 @@ public class UserDAO {
 	}
 
 	public boolean userExists(String username) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = SELECTQUERY_STRING
 				+ USERNAME_COND_STRING + username + "');";
 		boolean result = false;
 
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement statement = conn.prepareStatement(query);) {
+		try (PreparedStatement statement = conn.prepareStatement(query);) {
 			ResultSet rs = statement.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -52,11 +52,11 @@ public class UserDAO {
 	}
 
 	public User findUser(UserBean userBean) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = SELECTQUERY_STRING
 					+ USERNAME_COND_STRING + userBean.getUsername() + "' AND "
 					+ "password='" + userBean.getPassword() + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement statement = conn.prepareStatement(query)) {
+		try (PreparedStatement statement = conn.prepareStatement(query)) {
 
 			ResultSet rs = statement.executeQuery();
 
@@ -79,11 +79,11 @@ public class UserDAO {
 	}
 
 	public User findUserFromUsername(String username) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = SELECTQUERY_STRING
 				+ USERNAME_COND_STRING + username + "');";
 
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement statement = conn.prepareStatement(query)) {
+		try (PreparedStatement statement = conn.prepareStatement(query)) {
 
 			ResultSet rs = statement.executeQuery();
 

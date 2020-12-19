@@ -52,10 +52,10 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <JFXButton layoutY="65.0" text="Map" onAction="#toMap" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                  <JFXButton layoutY="65.0" onAction="#toMap" text="Map" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                   <JFXButton layoutY="90.0" text="Search Event" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
-                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-border-color: #bfbfbf; -fx-border-style: solid outside; -fx-text-alignment: left;" text="My Events" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
-                  <JFXButton layoutY="312.0" style="-fx-background-color: #fff5f5;" text="Log out" onAction="#logout" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-background-color: #343A40; -fx-text-alignment: left;" text="My Events" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+                  <JFXButton layoutY="312.0" onAction="#logout" style="-fx-background-color: #fff5f5;" text="Log out" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

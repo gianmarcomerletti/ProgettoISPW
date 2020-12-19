@@ -17,6 +17,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 public class EventDAO {
 
 	public Event addEvent(EventBean eventBean) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		Event eventToAdd = new Event();
 		eventToAdd.setFromBean(eventBean);
 
@@ -36,8 +37,7 @@ public class EventDAO {
 				+ eventToAdd.getLevel() + "', '"
 				+ eventToAdd.getDistance() + "', '"
 				+ eventToAdd.getType() + "');");
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query)){
+		try (PreparedStatement st = conn.prepareStatement(query)){
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,10 +46,10 @@ public class EventDAO {
 	}
 
 	public Event findById(Integer id) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = "SELECT * FROM event "
 				+ "WHERE (ID='" + id.toString() + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query)){
+		try (PreparedStatement st = conn.prepareStatement(query)){
 
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -64,10 +64,11 @@ public class EventDAO {
 				eventFound.setCity(rs.getString(8));
 				eventFound.setLatitude(rs.getDouble(9));
 				eventFound.setLongitude(rs.getDouble(10));
-				eventFound.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
 				eventFound.setLevel(rs.getString(12));
 				eventFound.setDistance(rs.getInt(13));
 				eventFound.setType(rs.getString(14));
+				eventFound.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+
 				return eventFound;
 			}
 
@@ -79,10 +80,11 @@ public class EventDAO {
 	}
 
 	public List<Event> findAll() {
+		Connection conn = DBConnect.getInstance().getConnection();
 		List<Event> result = new ArrayList<Event>();
+		List<String> organizers = new ArrayList<String>();
 		String query = "SELECT * FROM event;";
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -97,12 +99,19 @@ public class EventDAO {
 				eventElem.setCity(rs.getString(8));
 				eventElem.setLatitude(rs.getDouble(9));
 				eventElem.setLongitude(rs.getDouble(10));
-				eventElem.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+				organizers.add(rs.getString(11));
 				eventElem.setLevel(rs.getString(12));
 				eventElem.setDistance(rs.getInt(13));
 				eventElem.setType(rs.getString(14));
 				result.add(eventElem);
 			}
+
+			UserDAO dao = new UserDAO();
+			for (int i=0; i<organizers.size(); i++) {
+				User organizerUser = dao.findUserFromUsername(organizers.get(i));
+				result.get(i).setOrganizerUser(organizerUser);
+			}
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,11 +130,11 @@ public class EventDAO {
 	}
 
 	public Event findByLatLong(Double latitude, Double longitude) {
+		Connection conn = DBConnect.getInstance().getConnection();
 		String query = "SELECT * FROM event "
 				+ "WHERE (latitude='" + latitude + "' AND "
 				+ "longitude='" + longitude + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection();
-				PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Event eventFoundByLatLong = new Event();
@@ -139,10 +148,10 @@ public class EventDAO {
 				eventFoundByLatLong.setCity(rs.getString(8));
 				eventFoundByLatLong.setLatitude(rs.getDouble(9));
 				eventFoundByLatLong.setLongitude(rs.getDouble(10));
-				eventFoundByLatLong.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
 				eventFoundByLatLong.setLevel(rs.getString(12));
 				eventFoundByLatLong.setDistance(rs.getInt(13));
 				eventFoundByLatLong.setType(rs.getString(14));
+				eventFoundByLatLong.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
 				return eventFoundByLatLong;
 			}
 
