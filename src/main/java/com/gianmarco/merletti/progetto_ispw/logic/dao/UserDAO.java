@@ -17,16 +17,16 @@ public class UserDAO {
 	private static final String USERNAME_COND_STRING = "WHERE (username='";
 
 	public void insertUser(UserBean userBean) {
-		User user = new User();
-		user.setFromBean(userBean);
+		User userToInsert = new User();
+		userToInsert.setFromBean(userBean);
 		String query = ("INSERT INTO user "
 				+ "VALUES ('"
-				+ user.getUsername() + "', '"
-				+ user.getPwd() + "', '"
-				+ user.getName() + "', '"
-				+ user.getSurname() + "', '"
-				+ user.getLevel() + "', '"
-				+ user.getCity() + "');");
+				+ userToInsert.getUsername() + "', '"
+				+ userToInsert.getPwd() + "', '"
+				+ userToInsert.getName() + "', '"
+				+ userToInsert.getSurname() + "', '"
+				+ userToInsert.getLevel() + "', '"
+				+ userToInsert.getCity() + "');");
 		try (Connection conn = DBConnect.getInstance().getConnection();
 				PreparedStatement statement = conn.prepareStatement(query)) {
 
@@ -61,14 +61,14 @@ public class UserDAO {
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
-				User result = new User();
-				result.setUsername(rs.getString("username"));
-				result.setPwd(rs.getString("password"));
-				result.setName(rs.getString("name"));
-				result.setSurname(rs.getString("surname"));
-				result.setLevel(rs.getString("level"));
-				result.setCity(rs.getString("city"));
-				return result;
+				User userFound = new User();
+				userFound.setUsername(rs.getString("username"));
+				userFound.setPwd(rs.getString("password"));
+				userFound.setName(rs.getString("name"));
+				userFound.setSurname(rs.getString("surname"));
+				userFound.setLevel(rs.getString("level"));
+				userFound.setCity(rs.getString("city"));
+				return userFound;
 			}
 
 		} catch (SQLException e) {
@@ -88,14 +88,14 @@ public class UserDAO {
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
-				User result = new User();
-				result.setUsername(rs.getString("username"));
-				result.setPwd(rs.getString("password"));
-				result.setName(rs.getString("name"));
-				result.setSurname(rs.getString("surname"));
-				result.setLevel(rs.getString("level"));
-				result.setCity(rs.getString("city"));
-				return result;
+				User userFoundFromUsername = new User();
+				userFoundFromUsername.setUsername(rs.getString("username"));
+				userFoundFromUsername.setPwd(rs.getString("password"));
+				userFoundFromUsername.setName(rs.getString("name"));
+				userFoundFromUsername.setSurname(rs.getString("surname"));
+				userFoundFromUsername.setLevel(rs.getString("level"));
+				userFoundFromUsername.setCity(rs.getString("city"));
+				return userFoundFromUsername;
 			}
 
 		} catch (SQLException e) {

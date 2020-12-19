@@ -47,20 +47,20 @@ public class LoadEventsController {
 	private EventBeanView getEventBeanFromEvent(Event event) {
 		EventBeanView eventBean = new EventBeanView();
 
-		eventBean.setEventCreationDate(event.getCreationDate());
-		eventBean.setEventDate(event.getDate());
-		eventBean.setEventTitle(event.getTitle());
-		eventBean.setEventDescription(event.getDescription());
-		try {eventBean.setEventTime(event.getTime().toString());
+		eventBean.setEventViewCreationDate(event.getCreationDate());
+		eventBean.setEventViewDate(event.getDate());
+		eventBean.setEventViewTitle(event.getTitle());
+		eventBean.setEventViewDescription(event.getDescription());
+		try {eventBean.setEventViewTime(event.getTime().toString());
 		} catch (InvalidFieldException e) {}
-		eventBean.setEventLatitude(event.getLatitude());
-		eventBean.setEventLongitude(event.getLongitude());
-		eventBean.setEventAddress(event.getAddress());
-		eventBean.setEventLevel(event.getLevel());
-		eventBean.setEventDistance(event.getDistance());
-		eventBean.setEventType(event.getType());
-		eventBean.setEventOrganizer(event.getOrganizerUser().getUsername());
-		eventBean.setEventCity(event.getCity());
+		eventBean.setEventViewLatitude(event.getLatitude());
+		eventBean.setEventViewLongitude(event.getLongitude());
+		eventBean.setEventViewAddress(event.getAddress());
+		eventBean.setEventViewLevel(event.getLevel());
+		eventBean.setEventViewDistance(event.getDistance());
+		eventBean.setEventViewType(event.getType());
+		eventBean.setEventViewOrganizer(event.getOrganizerUser().getUsername());
+		eventBean.setEventViewCity(event.getCity());
 		return eventBean;
 	}
 

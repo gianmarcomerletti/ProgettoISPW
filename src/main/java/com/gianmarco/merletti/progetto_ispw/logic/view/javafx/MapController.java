@@ -115,23 +115,23 @@ public class MapController {
 
 		for (EventBeanView myEvent : myEvents) {
 
-			new Marker(new LatLng(myEvent.getEventLatitude(), myEvent.getEventLongitude()), markerMyEventOpt)
-			.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventTitle()
-				+ "</u></b><br>" + myEvent.getEventDescription()
-				+ "<br><b>" + myEvent.getEventDistance() + " KM</b>"
+			new Marker(new LatLng(myEvent.getEventViewLatitude(), myEvent.getEventViewLongitude()), markerMyEventOpt)
+			.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
+				+ "</u></b><br>" + myEvent.getEventViewDescription()
+				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b>"
 				+ "<br><i>created on "
-				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventCreationDate()) + " by "
-				+ myEvent.getEventOrganizer() + "</i>"))
+				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
+				+ myEvent.getEventViewOrganizer() + "</i>"))
 			.addMouseListener(MouseEvent.Type.CLICK, markerListener)
 			.addTo(map);
 		}
 
 		for (EventBeanView event : eventsFiltered) {
-			new Marker(new LatLng(event.getEventLatitude(), event.getEventLongitude()), markerEventOpt)
-					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventTitle()
-						+ "</b><br>" + event.getEventDescription() + "<br><i>created on "
-						+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventCreationDate()) + " by "
-						+ event.getEventOrganizer() + "</i>"))
+			new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
+					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventViewTitle()
+						+ "</b><br>" + event.getEventViewDescription() + "<br><i>created on "
+						+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
+						+ event.getEventViewOrganizer() + "</i>"))
 					.addTo(map);
 		}
 	}

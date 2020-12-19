@@ -63,16 +63,16 @@ public class MyEventsControllerFX implements Initializable {
 					switch (nodeEvent.getId()) {
 					case "distanceText":
 						Text distance = (Text) nodeEvent;
-						distance.setText(event.getEventDistance().toString() + " KM");
+						distance.setText(event.getEventViewDistance().toString() + " KM");
 						break;
 					case "typeText":
 						Text type = (Text) nodeEvent;
-						type.setText(event.getEventType());
+						type.setText(event.getEventViewType());
 						break;
 					case "levelLabel":
 						Label level = (Label) nodeEvent;
-						level.setText(event.getEventLevel());
-						switch (LevelEnum.valueOf(event.getEventLevel())) {
+						level.setText(event.getEventViewLevel());
+						switch (LevelEnum.valueOf(event.getEventViewLevel())) {
 						case BEGINNER:
 							level.setStyle("-fx-background-color: GREEN; -fx-background-radius: 3;");
 							break;
@@ -88,20 +88,20 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "titleText":
 						Text title = (Text) nodeEvent;
-						title.setText(event.getEventTitle());
+						title.setText(event.getEventViewTitle());
 						break;
 					case "descriptionTextArea":
 						JFXTextArea description = (JFXTextArea) nodeEvent;
-						description.setText(event.getEventDescription());
+						description.setText(event.getEventViewDescription());
 						break;
 					case "addressText":
 						Text address = (Text) nodeEvent;
-						address.setText(event.getEventAddress() + ", " + event.getEventCity());
+						address.setText(event.getEventViewAddress() + ", " + event.getEventViewCity());
 						break;
 					case "dateText":
 						Text date = (Text) nodeEvent;
-						String dateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(event.getEventDate());
-						String timeFormatted = new SimpleDateFormat("HH:mm").format(event.getEventTime());
+						String dateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(event.getViewEventDate());
+						String timeFormatted = new SimpleDateFormat("HH:mm").format(event.getEventViewTime());
 						date.setText(dateFormatted + " - " + timeFormatted);
 						break;
 					case "cancelButton":
@@ -113,7 +113,7 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "organizerText":
 						Text organizer = (Text) nodeEvent;
-						organizer.setText("created by " + event.getEventOrganizer());
+						organizer.setText("created by " + event.getEventViewOrganizer());
 						break;
 					default:
 						continue;

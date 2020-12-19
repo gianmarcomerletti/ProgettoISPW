@@ -1,10 +1,5 @@
 package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
-import java.util.List;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.sql.Date;
 import java.sql.Time;
 

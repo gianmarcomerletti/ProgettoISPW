@@ -11,107 +11,107 @@ import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 
 public class EventBeanView {
 
-	private Date eventCreationDate;
-	private Date eventDate;
-	private String eventTitle;
-	private String eventDescription;
-	private Time eventTime;
-	private Double eventLatitude;
-	private Double eventLongitude;
-	private String eventAddress;
-	private String eventLevel;
-	private Integer eventDistance;
-	private String eventType;
-	private String eventOrganizer;
-	private String eventCity;
+	private Date eventViewCreationDate;
+	private Date eventViewDate;
+	private String eventViewTitle;
+	private String eventViewDescription;
+	private Time eventViewTime;
+	private Double eventViewLatitude;
+	private Double eventViewLongitude;
+	private String eventViewAddress;
+	private String eventViewLevel;
+	private Integer eventViewDistance;
+	private String eventViewType;
+	private String eventViewOrganizer;
+	private String eventViewCity;
 
-	public Date getEventCreationDate() {
-		return eventCreationDate;
+	public Date getEventViewCreationDate() {
+		return eventViewCreationDate;
 	}
-	public void setEventCreationDate(Date eventCreationDate) {
-		this.eventCreationDate = eventCreationDate;
+	public void setEventViewCreationDate(Date eventViewCreationDate) {
+		this.eventViewCreationDate = eventViewCreationDate;
 	}
-	public Date getEventDate() {
-		return eventDate;
+	public Date getViewEventDate() {
+		return eventViewDate;
 	}
-	public void setEventDate(Date eventDate) {
-		this.eventDate = eventDate;
+	public void setEventViewDate(Date eventViewDate) {
+		this.eventViewDate = eventViewDate;
 	}
-	public String getEventTitle() {
-		return eventTitle;
+	public String getEventViewTitle() {
+		return eventViewTitle;
 	}
-	public void setEventTitle(String eventTitle) {
-		this.eventTitle = eventTitle;
+	public void setEventViewTitle(String eventViewTitle) {
+		this.eventViewTitle = eventViewTitle;
 	}
-	public String getEventDescription() {
-		return eventDescription;
+	public String getEventViewDescription() {
+		return eventViewDescription;
 	}
-	public void setEventDescription(String eventDescription) {
-		this.eventDescription = eventDescription;
+	public void setEventViewDescription(String eventViewDescription) {
+		this.eventViewDescription = eventViewDescription;
 	}
-	public Time getEventTime() {
-		return eventTime;
+	public Time getEventViewTime() {
+		return eventViewTime;
 	}
 
-	public void setEventTime(String eventTime) throws InvalidFieldException {
+	public void setEventViewTime(String eventViewTime) throws InvalidFieldException {
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-			long ms = df.parse(eventTime).getTime();
+			long ms = df.parse(eventViewTime).getTime();
 			Time time = new Time(ms);
-			this.eventTime = time;
+			this.eventViewTime = time;
 		} catch (ParseException e) {
 			throw new InvalidFieldException();
 		}
 	}
 
-	public Double getEventLatitude() {
-		return eventLatitude;
+	public Double getEventViewLatitude() {
+		return eventViewLatitude;
 	}
-	public void setEventLatitude(Double eventLatitude) {
-		this.eventLatitude = eventLatitude;
+	public void setEventViewLatitude(Double eventViewLatitude) {
+		this.eventViewLatitude = eventViewLatitude;
 	}
-	public Double getEventLongitude() {
-		return eventLongitude;
+	public Double getEventViewLongitude() {
+		return eventViewLongitude;
 	}
-	public void setEventLongitude(Double eventLongitude) {
-		this.eventLongitude = eventLongitude;
+	public void setEventViewLongitude(Double eventViewLongitude) {
+		this.eventViewLongitude = eventViewLongitude;
 	}
-	public String getEventAddress() {
-		return eventAddress;
+	public String getEventViewAddress() {
+		return eventViewAddress;
 	}
-	public void setEventAddress(String eventAddress) {
-		this.eventAddress = eventAddress;
+	public void setEventViewAddress(String eventViewAddress) {
+		this.eventViewAddress = eventViewAddress;
 	}
-	public String getEventLevel() {
-		return eventLevel;
+	public String getEventViewLevel() {
+		return eventViewLevel;
 	}
-	public void setEventLevel(String eventLevel) {
-		this.eventLevel = eventLevel;
+	public void setEventViewLevel(String eventViewLevel) {
+		this.eventViewLevel = eventViewLevel;
 	}
 
-	public Integer getEventDistance() {
-		return eventDistance;
+	public Integer getEventViewDistance() {
+		return eventViewDistance;
 	}
-	public void setEventDistance(Integer eventDistance) {
-		this.eventDistance = eventDistance;
+	public void setEventViewDistance(Integer eventViewDistance) {
+		this.eventViewDistance = eventViewDistance;
 	}
-	public String getEventOrganizer() {
-		return eventOrganizer;
+	public String getEventViewOrganizer() {
+		return eventViewOrganizer;
 	}
-	public void setEventOrganizer(String eventOrganizer) {
-		this.eventOrganizer = eventOrganizer;
+	public void setEventViewOrganizer(String eventViewOrganizer) {
+		this.eventViewOrganizer = eventViewOrganizer;
 	}
-	public String getEventCity() {
-		return eventCity;
+	public String getEventViewCity() {
+		return eventViewCity;
 	}
-	public void setEventCity(String eventCity) {
-		this.eventCity = eventCity;
+	public void setEventViewCity(String eventViewCity) {
+		this.eventViewCity = eventViewCity;
 	}
-	public String getEventType() {
-		return eventType;
+	public String getEventViewType() {
+		return eventViewType;
 	}
-	public void setEventType(String eventType) {
-		this.eventType = eventType;
+	public void setEventViewType(String eventViewType) {
+		this.eventViewType = eventViewType;
 	}
 
 }

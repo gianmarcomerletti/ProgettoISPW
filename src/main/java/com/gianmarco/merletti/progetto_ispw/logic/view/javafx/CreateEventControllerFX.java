@@ -83,18 +83,18 @@ public class CreateEventControllerFX implements Initializable {
 		Double longitude = SessionView.getLongitudeSetOnMap();
 		AddressBean address = SessionView.getAddressSetOnMap();
 
-		eventBean.setEventTitle(eventTitleTextField.getText());
-		eventBean.setEventDescription(eventDescriptionTextArea.getText());
-		eventBean.setEventCreationDate(dateTime);
-		eventBean.setEventDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
-		eventBean.setEventTime(eventTimeTextField.getText());
-		eventBean.setEventLatitude(latitude);
-		eventBean.setEventLongitude(longitude);
-		eventBean.setEventAddress(address.getRoad());
-		eventBean.setEventType(typeChoiceBox.getValue());
-		eventBean.setEventDistance(Integer.parseInt(eventDistanceTextField.getText()));
-		eventBean.setEventCity(address.getCity().toUpperCase());
-		eventBean.setEventOrganizer(SessionView.getUsername());
+		eventBean.setEventViewTitle(eventTitleTextField.getText());
+		eventBean.setEventViewDescription(eventDescriptionTextArea.getText());
+		eventBean.setEventViewCreationDate(dateTime);
+		eventBean.setEventViewDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
+		eventBean.setEventViewTime(eventTimeTextField.getText());
+		eventBean.setEventViewLatitude(latitude);
+		eventBean.setEventViewLongitude(longitude);
+		eventBean.setEventViewAddress(address.getRoad());
+		eventBean.setEventViewType(typeChoiceBox.getValue());
+		eventBean.setEventViewDistance(Integer.parseInt(eventDistanceTextField.getText()));
+		eventBean.setEventViewCity(address.getCity().toUpperCase());
+		eventBean.setEventViewOrganizer(SessionView.getUsername());
 
 
 		new SystemFacade().createEvent(eventBean);

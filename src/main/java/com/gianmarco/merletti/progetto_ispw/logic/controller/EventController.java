@@ -24,21 +24,21 @@ public class EventController {
 
 	public boolean createEvent(EventBeanView eventBean) throws InvalidFieldException {
 		EventDAO dao = new EventDAO();
-		User organizer = new UserDAO().findUserFromUsername(eventBean.getEventOrganizer());
+		User organizer = new UserDAO().findUserFromUsername(eventBean.getEventViewOrganizer());
 
 		EventBean bean = new EventBean();
-		bean.setEventAddress(eventBean.getEventAddress());
-		bean.setEventCity(eventBean.getEventCity());
-		bean.setEventCreationDate(eventBean.getEventCreationDate());
-		bean.setEventDate(eventBean.getEventDate());
-		bean.setEventTitle(eventBean.getEventTitle());
-		bean.setEventDescription(eventBean.getEventDescription());
-		bean.setEventLatitude(eventBean.getEventLatitude());
-		bean.setEventLongitude(eventBean.getEventLongitude());
+		bean.setEventAddress(eventBean.getEventViewAddress());
+		bean.setEventCity(eventBean.getEventViewCity());
+		bean.setEventCreationDate(eventBean.getEventViewCreationDate());
+		bean.setEventDate(eventBean.getViewEventDate());
+		bean.setEventTitle(eventBean.getEventViewTitle());
+		bean.setEventDescription(eventBean.getEventViewDescription());
+		bean.setEventLatitude(eventBean.getEventViewLatitude());
+		bean.setEventLongitude(eventBean.getEventViewLongitude());
 		bean.setEventLevel(LevelEnum.valueOf(organizer.getLevel()));
-		bean.setEventDistance(eventBean.getEventDistance());
-		bean.setEventType(TypeEnum.valueOf(eventBean.getEventType()));
-		bean.setEventTime(eventBean.getEventTime());
+		bean.setEventDistance(eventBean.getEventViewDistance());
+		bean.setEventType(TypeEnum.valueOf(eventBean.getEventViewType()));
+		bean.setEventTime(eventBean.getEventViewTime());
 		bean.setEventOrganizer(organizer);
 
 		Event event = dao.addEvent(bean);
