@@ -13,9 +13,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 public class CityDAO {
 
 	public City getCity(CityEnum cityEnum) {
-		Connection conn = DBConnect.getConnection();
 
 		try {
+			Connection conn = DBConnect.getInstance().getConnection();
 			PreparedStatement statement = conn.prepareStatement("SELECT * FROM City "
 					+ "WHERE (name='" + cityEnum.toString()
 					+ "');");
@@ -40,8 +40,6 @@ public class CityDAO {
 				result.setBorders(db);
 				return result;
 			}
-
-			conn.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

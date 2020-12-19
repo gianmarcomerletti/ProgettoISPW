@@ -17,15 +17,14 @@ public class RequestDAO {
 		Request request = new Request();
 		request.setFromBean(requestBean);
 
-		Connection conn = DBConnect.getConnection();
 		String query = ("INSERT INTO request (creation_date, ID_event) "
 				+ "VALUES ('"
 				+ request.getCreationDate() + "', '"
 				+ request.getEvent().getId() + "');");
 		try {
-			Statement st = conn.createStatement();
-			st.executeUpdate(query);
-			conn.close();
+			Connection conn = DBConnect.getInstance().getConnection();
+			PreparedStatement st = conn.prepareStatement(query);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -33,10 +32,10 @@ public class RequestDAO {
 	}
 
 	public Request findById(Integer id) {
-		Connection conn = DBConnect.getConnection();
 		String query = "SELECT * FROM request "
 				+ "WHERE (ID='" + id.toString() + "');";
 		try {
+			Connection conn = DBConnect.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -44,9 +43,6 @@ public class RequestDAO {
 				request.setIdRequest(rs.getInt(1));
 				request.setCreationDate(rs.getDate(2));
 				request.setEvent(new EventDAO().findById(rs.getInt(3)));
-
-				st.close();
-				conn.close();
 				return request;
 			}
 

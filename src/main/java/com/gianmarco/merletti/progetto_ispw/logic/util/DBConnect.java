@@ -6,24 +6,36 @@ import java.sql.SQLException;
 
 
 public class DBConnect {
-	private final static String username = "root";
-	private final static String psw = "2202";
-	private final static String jdbcURL = "jdbc:mysql://93.42.111.41:3306/progettoispw?serverTimezone=UTC";
 
-	public static Connection getConnection() {
+	// this is a SINGLETON
+
+	private static DBConnect instance;
+	private Connection connection;
+
+	private String username = "root";
+	private String psw = "2202";
+	private String jdbcURL = "jdbc:mysql://93.42.111.41:3306/progettoispw?serverTimezone=UTC";
+
+	private DBConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (Exception e) {
+			this.connection = DriverManager.getConnection(jdbcURL, username, psw);
+			System.out.println("Connessione al database riuscita!");
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
+			System.out.println("Impossibile connettersi al database!");
 		}
-		try {
-			Connection conn = DriverManager.getConnection(jdbcURL, username, psw);
-			System.out.println("Connessione al database OK");
-			return conn;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Impossibile connettersi al database");
-		}
-		return null;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public static DBConnect getInstance() throws SQLException {
+		if (instance == null)
+			instance = new DBConnect();
+		else if (instance.getConnection().isClosed())
+			instance = new DBConnect();
+		return instance;
 	}
 }

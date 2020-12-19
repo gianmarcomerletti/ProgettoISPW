@@ -20,7 +20,6 @@ public class EventDAO {
 		Event event = new Event();
 		event.setFromBean(eventBean);
 
-		Connection conn = DBConnect.getConnection();
 		String query = ("INSERT INTO event (title, description, creation_date, date, time, address, city, latitude, longitude, "
 				+ "organizer, level, distance, type) "
 				+ "VALUES ('"
@@ -38,10 +37,9 @@ public class EventDAO {
 				+ event.getDistance() + "', '"
 				+ event.getType() + "');");
 		try {
-			Statement st = conn.createStatement();
-			st.executeUpdate(query);
-			System.out.println("DB QUERY OK");
-			conn.close();
+			Connection conn = DBConnect.getInstance().getConnection();
+			PreparedStatement st = conn.prepareStatement(query);
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -49,10 +47,10 @@ public class EventDAO {
 	}
 
 	public Event findById(Integer id) {
-		Connection conn = DBConnect.getConnection();
 		String query = "SELECT * FROM event "
 				+ "WHERE (ID='" + id.toString() + "');";
 		try {
+			Connection conn = DBConnect.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -71,9 +69,6 @@ public class EventDAO {
 				event.setLevel(rs.getString(12));
 				event.setDistance(rs.getInt(13));
 				event.setType(rs.getString(14));
-
-				st.close();
-				conn.close();
 				return event;
 			}
 
@@ -86,12 +81,11 @@ public class EventDAO {
 
 	public List<Event> findAll() {
 
-		Connection conn = DBConnect.getConnection();
 		String query = "SELECT * FROM event;";
 		try {
+			Connection conn = DBConnect.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
-			System.out.println("DB QUERY OK");
 			List<Event> result = new ArrayList<Event>();
 
 			while (rs.next()) {
@@ -112,9 +106,6 @@ public class EventDAO {
 				event.setType(rs.getString(14));
 				result.add(event);
 			}
-
-			st.close();
-			conn.close();
 			return result;
 
 		} catch (SQLException e) {
@@ -135,11 +126,11 @@ public class EventDAO {
 	}
 
 	public Event findByLatLong(Double latitude, Double longitude) {
-		Connection conn = DBConnect.getConnection();
 		String query = "SELECT * FROM event "
 				+ "WHERE (latitude='" + latitude + "' AND "
 				+ "longitude='" + longitude + "');";
 		try {
+			Connection conn = DBConnect.getInstance().getConnection();
 			PreparedStatement st = conn.prepareStatement(query);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -158,9 +149,6 @@ public class EventDAO {
 				event.setLevel(rs.getString(12));
 				event.setDistance(rs.getInt(13));
 				event.setType(rs.getString(14));
-
-				st.close();
-				conn.close();
 				return event;
 			}
 
