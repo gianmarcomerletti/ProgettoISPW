@@ -21,8 +21,9 @@ public class RequestDAO {
 				+ "VALUES ('"
 				+ request.getCreationDate() + "', '"
 				+ request.getEvent().getId() + "');");
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement st = conn.prepareStatement(query);
+
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -33,8 +34,8 @@ public class RequestDAO {
 	public Request findById(Integer id) {
 		String query = "SELECT * FROM request "
 				+ "WHERE (ID='" + id.toString() + "');";
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement st = conn.prepareStatement(query);
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement st = conn.prepareStatement(query);) {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Request request = new Request();

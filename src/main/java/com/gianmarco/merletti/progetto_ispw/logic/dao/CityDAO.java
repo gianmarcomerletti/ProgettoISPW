@@ -13,11 +13,11 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 public class CityDAO {
 
 	public City getCity(CityEnum cityEnum) {
+		String query = "SELECT * FROM City "
+				+ "WHERE (name='" + cityEnum.toString() + "');";
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement statement = conn.prepareStatement(query)) {
 
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM City "
-					+ "WHERE (name='" + cityEnum.toString()
-					+ "');");
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {

@@ -24,8 +24,9 @@ public class UserDAO {
 				+ user.getSurname() + "', '"
 				+ user.getLevel() + "', '"
 				+ user.getCity() + "');");
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement statement = conn.prepareStatement(query);
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement statement = conn.prepareStatement(query)) {
+
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,12 +48,12 @@ public class UserDAO {
 	}
 
 	public User findUser(UserBean userBean) {
-
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM user "
+		String query = "SELECT * FROM user "
 					+ "WHERE (username='" + userBean.getUsername() + "' AND "
-					+ "password='" + userBean.getPassword()
-					+ "');");
+					+ "password='" + userBean.getPassword() + "');";
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement statement = conn.prepareStatement(query)) {
+
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
@@ -74,11 +75,12 @@ public class UserDAO {
 	}
 
 	public User findUserFromUsername(String username) {
+		String query = "SELECT * FROM user "
+				+ "WHERE (username='" + username + "');";
 
-		try (Connection conn = DBConnect.getInstance().getConnection()) {
-			PreparedStatement statement = conn.prepareStatement("SELECT * FROM user "
-				+ "WHERE (username='" + username
-				+ "');");
+		try (Connection conn = DBConnect.getInstance().getConnection();
+				PreparedStatement statement = conn.prepareStatement(query)) {
+
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
