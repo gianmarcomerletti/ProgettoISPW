@@ -1,13 +1,16 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.fxml.FXML;
@@ -34,6 +37,12 @@ public class MapBoundary implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameTextHome, levelLabelHome);
+
+		List<CityEnum> cityFilters = new ArrayList<>();
+		cityFilters.add(CityEnum.ROMA);
+		cityFilters.add(CityEnum.MILANO);
+		cityFilters.add(CityEnum.TORINO);
+		cityFilters.add(CityEnum.TRIVIGLIANO);
 
 		MapController mapController = new MapController(mapWebView);
 		mapController.loadMap();
