@@ -6,12 +6,10 @@ import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
-import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.collections.FXCollections;

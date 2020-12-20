@@ -3,16 +3,13 @@ package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
-import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
@@ -105,7 +102,10 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "cancelButton":
 						JFXButton cancelBtn = (JFXButton) nodeEvent;
-						App.setRoot("home_user");
+						cancelBtn.setOnAction(value -> {
+							App.setRoot("home_user");
+						});
+
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;

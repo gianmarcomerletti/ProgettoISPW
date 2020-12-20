@@ -2,12 +2,10 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
-import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 
 public class EventBeanView {
 

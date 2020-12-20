@@ -2,24 +2,17 @@ package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.util.List;
 import java.text.SimpleDateFormat;
-import java.util.EventListener;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO;
-import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.City;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import net.java.html.boot.fx.FXBrowsers;
 import net.java.html.leaflet.Icon;
@@ -35,7 +28,6 @@ import net.java.html.leaflet.PopupOptions;
 import net.java.html.leaflet.TileLayer;
 import net.java.html.leaflet.TileLayerOptions;
 import net.java.html.leaflet.event.MouseEvent;
-import net.java.html.leaflet.event.MouseEvent.Type;
 import net.java.html.leaflet.event.MouseListener;
 
 public class MapController {
@@ -169,7 +161,6 @@ public class MapController {
 			Double longitude = Double.valueOf(longD);
 
 			try {
-				System.out.println("LATITUDE = " + latitude.toString() + ", LONGITUDE = " + longitude.toString());
 				new SystemFacade().setAddressForEvent(longitude, latitude);
 			} catch (Exception e) {
 				new Alert(AlertType.INFORMATION, "Could not connect to geolocation service!", ButtonType.OK).showAndWait();

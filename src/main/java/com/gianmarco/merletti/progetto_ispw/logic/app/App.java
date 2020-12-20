@@ -1,10 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.app;
 
 import java.io.IOException;
-import java.sql.Connection;
-
-import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
-import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

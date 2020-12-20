@@ -44,6 +44,11 @@
 .leaflet-container {
 	overflow: hidden;
 	-ms-touch-action: none;
+	background: #ddd;
+	outline: 0;
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 	}
 .leaflet-tile,
 .leaflet-marker-icon,
@@ -75,6 +80,8 @@
 .leaflet-zoom-box {
 	width: 0;
 	height: 0;
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
 	}
 /* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
 .leaflet-overlay-pane svg {
@@ -105,6 +112,7 @@
 	position: relative;
 	z-index: 7;
 	pointer-events: auto;
+	clear: both;
 	}
 .leaflet-top,
 .leaflet-bottom {
@@ -124,26 +132,6 @@
 .leaflet-left {
 	left: 0;
 	}
-.leaflet-control {
-	float: left;
-	clear: both;
-	}
-.leaflet-right .leaflet-control {
-	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-left: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
-	}
-
 
 /* zoom and fade animations */
 
@@ -185,10 +173,7 @@
 .leaflet-clickable {
 	cursor: pointer;
 	}
-.leaflet-container {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-	}
+
 .leaflet-popup-pane,
 .leaflet-control {
 	cursor: auto;
@@ -203,27 +188,12 @@
 
 /* visual tweaks */
 
-.leaflet-container {
-	background: #ddd;
-	outline: 0;
-	}
 .leaflet-container a {
 	color: #0078A8;
 	}
 .leaflet-container a.leaflet-active {
 	outline: 2px solid orange;
 	}
-.leaflet-zoom-box {
-	border: 2px dotted #38f;
-	background: rgba(255,255,255,0.5);
-	}
-
-
-/* general typography */
-.leaflet-container {
-	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-	}
-
 
 /* general toolbar styles */
 

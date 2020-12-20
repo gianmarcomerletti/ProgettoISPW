@@ -1,6 +1,5 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
-import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.scene.control.Label;

@@ -2,9 +2,9 @@ package com.gianmarco.merletti.progetto_ispw.logic.controller;
 
 import java.util.List;
 
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 
@@ -31,7 +31,7 @@ public class SystemFacade {
 	}
 
 	public void setAddressForEvent(Double longitude, Double latitude)
-			throws Exception {
+			throws ConnectToGeolocationServiceException {
 		new EventController().setAddressForEvent(longitude, latitude);
 	}
 

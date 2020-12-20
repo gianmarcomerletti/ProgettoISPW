@@ -1,7 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.model;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 

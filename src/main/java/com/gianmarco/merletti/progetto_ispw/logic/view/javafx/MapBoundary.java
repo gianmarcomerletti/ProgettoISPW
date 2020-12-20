@@ -2,13 +2,10 @@ package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
@@ -18,9 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebView;
 
