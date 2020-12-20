@@ -7,7 +7,10 @@ import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundExceptio
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 public class LoginControllerFX {
@@ -40,6 +43,7 @@ public class LoginControllerFX {
 			App.setRoot("home_user");
 
 		} catch (UserNotFoundException e) {
+			new Alert(AlertType.INFORMATION, "First pick a position on the map!", ButtonType.OK).showAndWait();
 		}
 	}
 

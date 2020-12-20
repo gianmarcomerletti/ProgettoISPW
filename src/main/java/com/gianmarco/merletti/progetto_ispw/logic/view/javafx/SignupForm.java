@@ -64,7 +64,6 @@ public class SignupForm implements Initializable{
 		newUser.setLastName(lastNameField.getText());
 		newUser.setCity(CityEnum.valueOf(cityChoiceBox.getValue().toUpperCase()));
 		newUser.setLevel(LevelEnum.valueOf(levelChoiceBox.getValue().split(" ")[0].toUpperCase()));
-		System.out.println(newUser.getUsername());
 		if (new SystemFacade().signupUser(newUser)) {
 			new LoginControllerFX().loginUser(newUser.getUsername(), newUser.getPassword());
 		}

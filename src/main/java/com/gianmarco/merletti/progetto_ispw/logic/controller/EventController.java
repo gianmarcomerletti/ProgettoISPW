@@ -44,7 +44,6 @@ public class EventController {
 		bean.setEventOrganizer(organizer);
 
 		Event event = dao.addEvent(bean);
-//		dao.joinEvent(SessionView.getUsername(), event.getId());
 		return (event != null);
 	}
 

@@ -57,56 +57,52 @@ public class MapController {
 		SessionView.setAddressSetOnMap(null);
 		SessionView.setEventSetOnMap(null);
 
-		FXBrowsers.load(mapView, MapBoundary.class.getResource("index.html"), new Runnable() {
+		FXBrowsers.load(mapView, MapBoundary.class.getResource("index.html"), () -> {
 
-			@Override
-			public void run() {
-				map = new Map("map");
+			map = new Map("map");
 
-				// Map setup
-				TileLayer tileLayer = new TileLayer(
-						"https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
-						+ "?apiKey=jcr3K96ee99COTmahBGt_FvhIAv2c12ePbnKWBukCLk",
-						new TileLayerOptions()
-							.setAttribution("TogetherRun | Map data &copy; <a href='https://developer.here.com/products/maps/'>HERE Api</a>")
-							.setMaxZoom(18)
-							.setId("togetherrun.ia9c2p12"));
-				map.addLayer(tileLayer);
-				map.setView(new LatLng(41.77579144, 13.2721022), 20);
+			// Map setup
+			TileLayer tileLayer = new TileLayer(
+					"https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
+					+ "?apiKey=jcr3K96ee99COTmahBGt_FvhIAv2c12ePbnKWBukCLk",
+					new TileLayerOptions()
+						.setAttribution("TogetherRun | Map data &copy; <a href='https://developer.here.com/products/maps/'>HERE Api</a>")
+						.setMaxZoom(18)
+						.setId("togetherrun.ia9c2p12"));
+			map.addLayer(tileLayer);
+			map.setView(new LatLng(41.77579144, 13.2721022), 20);
 
-				// Set city
-				LatLng[] borderArray = new LatLng[city.getBorders().length];
-				for (int i=0; i<borderArray.length; i++) {
-					borderArray[i] = new LatLng(city.getBorders()[i][1], city.getBorders()[i][0]);
-				}
-				Polygon borderPolygon = new Polygon(borderArray);
-				int zoom = map.getBoundsZoom(borderPolygon.getBounds());
-				map.setView(new LatLng(city.getLatitude(), city.getLongitude()), zoom);
-				map.addLayer(borderPolygon);
-
-				// Initialize listeners
-				initListeners();
-				map.addMouseListener(MouseEvent.Type.CLICK, mouseListener);
-
-				// Setup markers
-				icon = new Icon(
-						new IconOptions("leaflet-0.7.2/images/marker-icon-community.png").setIconSize(new Point(25, 41))
-								.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
-				iconEvent = new Icon(
-						new IconOptions("leaflet-0.7.2/images/marker-icon.png").setIconSize(new Point(25, 41))
-						.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
-				iconMyEvent = new Icon(
-						new IconOptions("leaflet-0.7.2/images/marker-icon-red.png").setIconSize(new Point(25, 41))
-						.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
-				markerOpt = new MarkerOptions().setIcon(icon);
-				markerEventOpt = new MarkerOptions().setIcon(iconEvent);
-				markerMyEventOpt = new MarkerOptions().setIcon(iconMyEvent);
-
-				// Loading events on map
-				addEveryEvent(map);
+			// Set city
+			LatLng[] borderArray = new LatLng[city.getBorders().length];
+			for (int i=0; i<borderArray.length; i++) {
+				borderArray[i] = new LatLng(city.getBorders()[i][1], city.getBorders()[i][0]);
 			}
-		});
+			Polygon borderPolygon = new Polygon(borderArray);
+			int zoom = map.getBoundsZoom(borderPolygon.getBounds());
+			map.setView(new LatLng(city.getLatitude(), city.getLongitude()), zoom);
+			map.addLayer(borderPolygon);
 
+			// Initialize listeners
+			initListeners();
+			map.addMouseListener(MouseEvent.Type.CLICK, mouseListener);
+
+			// Setup markers
+			icon = new Icon(
+				new IconOptions("leaflet-0.7.2/images/marker-icon-community.png").setIconSize(new Point(25, 41))
+						.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
+			iconEvent = new Icon(
+				new IconOptions("leaflet-0.7.2/images/marker-icon.png").setIconSize(new Point(25, 41))
+						.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
+			iconMyEvent = new Icon(
+				new IconOptions("leaflet-0.7.2/images/marker-icon-red.png").setIconSize(new Point(25, 41))
+						.setIconAnchor(new Point(12.5, 41)).setPopupAnchor(new Point(0, -20)));
+			markerOpt = new MarkerOptions().setIcon(icon);
+			markerEventOpt = new MarkerOptions().setIcon(iconEvent);
+			markerMyEventOpt = new MarkerOptions().setIcon(iconMyEvent);
+
+			// Loading events on map
+			addEveryEvent(map);
+		});
 	}
 
 	public void addEveryEvent(Map map) {
@@ -165,12 +161,7 @@ public class MapController {
 				if (intersect)
 					inside = !inside;
 			}
-/*
-			if (!inside) {
-				new Alert(AlertType.INFORMATION, "Out of city bounds! You can only pick locations inside the polygon.", ButtonType.OK).showAndWait();
-				return;
-			}
-*/
+
 			double latD = ev.getLatLng().getLatitude();
 			double longD = ev.getLatLng().getLongitude();
 

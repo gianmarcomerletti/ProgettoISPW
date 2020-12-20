@@ -41,8 +41,7 @@ public class MyEventsControllerFX implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
-		List<EventBeanView> events = new ArrayList<>();
-		events = new SystemFacade().getMyEvents();
+		List<EventBeanView> events = new SystemFacade().getMyEvents();
 
 		URL url = App.class.getResource("single_event.fxml");
 		fillEvents(events, url);
@@ -106,6 +105,7 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "cancelButton":
 						JFXButton cancelBtn = (JFXButton) nodeEvent;
+						App.setRoot("home_user");
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;

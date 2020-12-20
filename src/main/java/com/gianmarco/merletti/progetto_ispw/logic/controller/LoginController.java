@@ -17,15 +17,21 @@ import javafx.scene.control.ButtonType;
 
 public class LoginController {
 
+	private Logger log;
+
+	public LoginController() {
+		log = Logger.getLogger("together_run");
+	}
+
 	public UserBean checkUser(UserBean user) throws UserNotFoundException {
 		UserDAO dao = new UserDAO();
 		User checkUser = dao.findUser(user);
 		if (checkUser != null) {
 			user.setLevel(LevelEnum.valueOf(checkUser.getLevel().toUpperCase()));
 			user.setCity(CityEnum.valueOf(checkUser.getCity().toUpperCase()));
-			Logger.getLogger("together_run").log(Level.FINE, "Utente registrato");
+			log.log(Level.FINE, "Utente registrato");
 		} else {
-			Logger.getLogger("together_run").log(Level.WARNING, "Utente non registrato");
+			log.log(Level.WARNING, "Utente non registrato");
 			throw new UserNotFoundException();
 		}
 		return user;
@@ -42,7 +48,7 @@ public class LoginController {
 
 
 		dao.insertUser(userBean);
-		Logger.getLogger("together_run").log(Level.FINE, "Utente inserito");
+		log.log(Level.FINE, "Utente inserito");
 
 		return true;
 
