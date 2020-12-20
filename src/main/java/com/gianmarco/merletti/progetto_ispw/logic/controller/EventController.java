@@ -24,7 +24,7 @@ import com.google.gson.stream.JsonReader;
 
 public class EventController {
 
-	public boolean createEvent(EventBeanView eventBean) throws InvalidFieldException {
+	public boolean createEvent(EventBeanView eventBean) {
 		EventDAO dao = new EventDAO();
 		User organizer = new UserDAO().findUserFromUsername(eventBean.getEventViewOrganizer());
 

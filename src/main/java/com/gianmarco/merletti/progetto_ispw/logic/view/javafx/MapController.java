@@ -33,13 +33,17 @@ import net.java.html.leaflet.event.MouseListener;
 public class MapController {
 
 	private WebView mapView;
-	private MouseListener mouseListener;
-	private MouseListener markerListener;
+//	private MouseListener mouseListener;
+//	private MouseListener markerListener;
 	private Map map;
 	private City city;
 	private Marker markerSetPosMap;
-	private MarkerOptions markerOpt, markerEventOpt, markerMyEventOpt;
-	private Icon icon, iconEvent, iconMyEvent;
+	private MarkerOptions markerOpt;
+	private MarkerOptions markerEventOpt;
+	private MarkerOptions markerMyEventOpt;
+	private Icon icon;
+	private Icon iconEvent;
+	private Icon iconMyEvent;
 
 	public MapController(WebView mapView) {
 		this.setMapView(mapView);
@@ -76,7 +80,54 @@ public class MapController {
 			map.addLayer(borderPolygon);
 
 			// Initialize listeners
-			initListeners();
+			MouseListener mouseListener = (MouseEvent ev) -> {
+				SessionView.setEventSetOnMap(null);
+
+				double x = ev.getLatLng().getLatitude();
+				double y = ev.getLatLng().getLongitude();
+				Double[][] vs = city.getBorders();
+
+				boolean inside = false;
+				int i = 0;
+				int j = (vs.length - 1);
+				for (; i < vs.length; j = i++) {
+					double xi = vs[i][0];
+					double yi = vs[i][1];
+
+					double xj = vs[j][0];
+					double yj = vs[j][1];
+
+					boolean intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+					if (intersect)
+						inside = !inside;
+				}
+
+				double latD = ev.getLatLng().getLatitude();
+				double longD = ev.getLatLng().getLongitude();
+
+				Double latitude = Double.valueOf(latD);
+				Double longitude = Double.valueOf(longD);
+
+				try {
+					new SystemFacade().setAddressForEvent(longitude, latitude);
+				} catch (Exception e) {
+					new Alert(AlertType.INFORMATION, "Could not connect to geolocation service!", ButtonType.OK).showAndWait();
+				}
+
+				AddressBean addr = SessionView.getAddressSetOnMap();
+
+				Popup popup = new Popup(new PopupOptions().setMaxWidth(200))
+						.setContent("<b>" + addr.getRoad() + ", " + addr.getCity() + ", " + addr.getCountry() + "</b>");
+
+				if (markerSetPosMap == null)
+					markerSetPosMap = new Marker(new LatLng(latD, longD), markerOpt);
+				else
+					markerSetPosMap.setLatLng(new LatLng(latD, longD));
+				markerSetPosMap.setOpacity(1);
+				markerSetPosMap.bindPopup(popup).addTo(map);
+				markerSetPosMap.openPopup();
+
+			};
 			map.addMouseListener(MouseEvent.Type.CLICK, mouseListener);
 
 			// Setup markers
@@ -101,6 +152,12 @@ public class MapController {
 	public void addEveryEvent(Map map) {
 		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
 		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsFiltered();
+		MouseListener markerListener = (MouseEvent ev) -> {
+			Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
+			Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
+			new SystemFacade().setEventForRequest(latitude, longitude);
+
+		};
 
 		for (EventBeanView myEvent : myEvents) {
 
@@ -124,65 +181,6 @@ public class MapController {
 					.addTo(map);
 		}
 	}
-
-	private void initListeners() {
-		markerListener = (MouseEvent ev) -> {
-			Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
-			Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
-			new SystemFacade().setEventForRequest(latitude, longitude);
-
-		};
-
-		mouseListener = (MouseEvent ev) -> {
-			SessionView.setEventSetOnMap(null);
-
-			double x = ev.getLatLng().getLatitude();
-			double y = ev.getLatLng().getLongitude();
-			Double[][] vs = city.getBorders();
-
-			boolean inside = false;
-			int i = 0;
-			int j = (vs.length - 1);
-			for (; i < vs.length; j = i++) {
-				double xi = vs[i][0];
-				double yi = vs[i][1];
-
-				double xj = vs[j][0];
-				double yj = vs[j][1];
-
-				boolean intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-				if (intersect)
-					inside = !inside;
-			}
-
-			double latD = ev.getLatLng().getLatitude();
-			double longD = ev.getLatLng().getLongitude();
-
-			Double latitude = Double.valueOf(latD);
-			Double longitude = Double.valueOf(longD);
-
-			try {
-				new SystemFacade().setAddressForEvent(longitude, latitude);
-			} catch (Exception e) {
-				new Alert(AlertType.INFORMATION, "Could not connect to geolocation service!", ButtonType.OK).showAndWait();
-			}
-
-			AddressBean addr = SessionView.getAddressSetOnMap();
-
-			Popup popup = new Popup(new PopupOptions().setMaxWidth(200))
-					.setContent("<b>" + addr.getRoad() + ", " + addr.getCity() + ", " + addr.getCountry() + "</b>");
-
-			if (markerSetPosMap == null)
-				markerSetPosMap = new Marker(new LatLng(latD, longD), markerOpt);
-			else
-				markerSetPosMap.setLatLng(new LatLng(latD, longD));
-			markerSetPosMap.setOpacity(1);
-			markerSetPosMap.bindPopup(popup).addTo(map);
-			markerSetPosMap.openPopup();
-
-		};
-	}
-
 
 	private void setMapView(WebView mapView) {
 		this.mapView = mapView;
