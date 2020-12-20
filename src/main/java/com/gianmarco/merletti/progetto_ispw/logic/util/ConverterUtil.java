@@ -14,8 +14,7 @@ public class ConverterUtil {
 	public static Date dateFromDatePicker(DatePicker eventDatePicker) {
 		LocalDate ld = eventDatePicker.getValue();
 		if (ld != null) {
-			Date date = Date.valueOf(ld);
-			return date;
+			return Date.valueOf(ld);
 		}
 		return null;
 	}

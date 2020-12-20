@@ -102,10 +102,7 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "cancelButton":
 						JFXButton cancelBtn = (JFXButton) nodeEvent;
-						cancelBtn.setOnAction(value -> {
-							App.setRoot("home_user");
-						});
-
+						cancelBtn.setOnAction(value -> App.setRoot("home_user"));
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;

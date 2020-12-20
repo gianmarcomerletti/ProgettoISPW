@@ -3,7 +3,6 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 import java.sql.Date;
 import java.sql.Time;
 
-import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
@@ -69,7 +68,7 @@ public class EventBean {
 		return eventTime;
 	}
 
-	public void setEventTime(Time eventTime) throws InvalidFieldException {
+	public void setEventTime(Time eventTime) {
 		this.eventTime = eventTime;
 	}
 

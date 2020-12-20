@@ -33,7 +33,8 @@ import net.java.html.leaflet.event.MouseListener;
 public class MapController {
 
 	private WebView mapView;
-	private MouseListener mouseListener, markerListener;
+	private MouseListener mouseListener;
+	private MouseListener markerListener;
 	private Map map;
 	private City city;
 	private Marker markerSetPosMap;

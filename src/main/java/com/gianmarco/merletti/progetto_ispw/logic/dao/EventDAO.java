@@ -80,8 +80,8 @@ public class EventDAO {
 
 	public List<Event> findAll() {
 		Connection conn = DBConnect.getInstance().getConnection();
-		List<Event> result = new ArrayList<Event>();
-		List<String> organizers = new ArrayList<String>();
+		List<Event> result = new ArrayList<>();
+		List<String> organizers = new ArrayList<>();
 		String query = "SELECT * FROM event;";
 		try (PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
