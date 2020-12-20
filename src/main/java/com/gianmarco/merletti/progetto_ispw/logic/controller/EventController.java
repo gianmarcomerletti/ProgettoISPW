@@ -12,7 +12,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;

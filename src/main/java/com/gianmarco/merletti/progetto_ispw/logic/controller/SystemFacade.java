@@ -5,7 +5,6 @@ import java.util.List;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 
 public class SystemFacade {
@@ -18,7 +17,7 @@ public class SystemFacade {
 		return new LoginController().signupUser(user);
 	}
 
-	public boolean createEvent(EventBeanView eventBean) throws InvalidFieldException {
+	public boolean createEvent(EventBeanView eventBean) {
 		return new EventController().createEvent(eventBean);
 	}
 

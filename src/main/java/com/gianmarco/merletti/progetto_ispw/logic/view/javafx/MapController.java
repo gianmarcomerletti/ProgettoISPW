@@ -33,10 +33,7 @@ import net.java.html.leaflet.event.MouseListener;
 public class MapController {
 
 	private WebView mapView;
-//	private MouseListener mouseListener;
-//	private MouseListener markerListener;
 	private Map map;
-	private City city;
 	private Marker markerSetPosMap;
 	private MarkerOptions markerOpt;
 	private MarkerOptions markerEventOpt;
@@ -50,7 +47,7 @@ public class MapController {
 	}
 
 	public void loadMap() {
-		city = new CityDAO().getCity(SessionView.getCityEnum());
+		City city = new CityDAO().getCity(SessionView.getCityEnum());
 		SessionView.setAddressSetOnMap(null);
 		SessionView.setEventSetOnMap(null);
 
@@ -83,31 +80,11 @@ public class MapController {
 			MouseListener mouseListener = (MouseEvent ev) -> {
 				SessionView.setEventSetOnMap(null);
 
-				double x = ev.getLatLng().getLatitude();
-				double y = ev.getLatLng().getLongitude();
-				Double[][] vs = city.getBorders();
-
-				boolean inside = false;
-				int i = 0;
-				int j = (vs.length - 1);
-				for (; i < vs.length; j = i++) {
-					double xi = vs[i][0];
-					double yi = vs[i][1];
-
-					double xj = vs[j][0];
-					double yj = vs[j][1];
-
-					boolean intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-					if (intersect)
-						inside = !inside;
-				}
-
 				double latD = ev.getLatLng().getLatitude();
 				double longD = ev.getLatLng().getLongitude();
 
 				Double latitude = Double.valueOf(latD);
 				Double longitude = Double.valueOf(longD);
-
 				try {
 					new SystemFacade().setAddressForEvent(longitude, latitude);
 				} catch (Exception e) {
