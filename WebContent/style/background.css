@@ -3,6 +3,83 @@ html, body {
 }
 
 #login-bg {
- background-image: url('img/background.jpg');
- background-size: cover;
+ 	background-image: url('img/background.jpg');
+ 	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
 }
+
+.full-height {
+	min-height: 100%;
+}
+
+#login-box {
+	min-width: 280px
+}
+
+.valign-center {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.halign-center {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.signupProfileContainer {
+	width: 100%;
+	height: 250px;
+	text-align: center;
+}
+
+
+.inline-block {
+	display: "inline-block";
+}
+
+.btn-join {
+	padding: .3em .5em .3em .5em;
+	background-color: #116d89;
+	border-radius: .2em .2em .2em .2em;
+	color: white;
+}
+
+#label-level {
+	padding: .2em .4em .2em .4em;
+	background-color: white;
+	border-radius: 4px;
+	color: #0080ff;
+}
+
+#navbar {
+	height: 60px;
+	width: 100vw;
+}
+
+#sidenav {
+  height: calc(100vh - 60px);
+  min-width: 160px;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+#sidenav-heading {
+	padding: 0.5rem 1rem;
+	font-size: 1.5rem;
+}
+
+#page-content {
+	min-width: calc(100vw - 160px);
+}
+
+#mapid {
+	position: relative;
+	height: calc(100vh - 110px);
+	width: calc(100vw - 160px);
+}
+

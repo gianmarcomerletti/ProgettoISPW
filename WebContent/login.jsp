@@ -24,7 +24,7 @@
 			SessionView.setUsername(username);
 			SessionView.setCityEnum(responseUserBean.getCity());
 			SessionView.setLevelEnum(responseUserBean.getLevel());
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("home_user.jsp");
 		} catch (UserNotFoundException e) {
 			String errMessage = "<script>alert('User not registred')</script>";
 			out.println(errMessage);
@@ -49,7 +49,7 @@
 </head>
 
 <body>
-	<div class="container-fluid h-100 jumbotron d-flex align-items-center" id="login-bg">
+	<div class="container-fluid h-100 d-flex align-items-center" id="login-bg">
 		<div class="container h-100 w-25 p-3" id="login-box" display="table">
 			<div class="container -h100">
 				<div class="row">

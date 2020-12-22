@@ -18,7 +18,7 @@ public class NavbarManager {
 			levelLabel.setStyle("-fx-background-color: GREEN; -fx-background-radius: 3;");
 			break;
 		case INTERMEDIATE:
-			levelLabel.setStyle("-fx-background-color: BLUE; -fx-background-radius: 3;");
+			levelLabel.setStyle("-fx-background-color: #0080ff; -fx-background-radius: 3;");
 			break;
 		case PRO:
 			levelLabel.setStyle("-fx-background-color: RED; -fx-background-radius: 3;");

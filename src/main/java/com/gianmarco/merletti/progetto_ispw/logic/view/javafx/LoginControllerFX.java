@@ -43,7 +43,7 @@ public class LoginControllerFX {
 			App.setRoot("home_user");
 
 		} catch (UserNotFoundException e) {
-			new Alert(AlertType.INFORMATION, "First pick a position on the map!", ButtonType.OK).showAndWait();
+			new Alert(AlertType.ERROR, "Login failed! Check username and password!", ButtonType.OK).showAndWait();
 		}
 	}
 
