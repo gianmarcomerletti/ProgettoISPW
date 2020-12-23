@@ -49,9 +49,9 @@
 </head>
 
 <body>
-	<div class="container-fluid h-100 d-flex align-items-center" id="login-bg">
-		<div class="container h-100 w-25 p-3" id="login-box" display="table">
-			<div class="container -h100">
+	<div class="container-fluid h-100" id="login-bg">
+		<div class="container w-25 p-3 valign-center" id="login-box">
+			<div class="container">
 				<div class="row">
 					<div class="col-sm" style="padding:50px;">
 						<h1 id="welcome" align="center" style="color:white;">TogetherRun</h1>

@@ -37,7 +37,7 @@ public class MapBoundary implements Initializable {
 		cityFilters.add(CityEnum.ROMA);
 		cityFilters.add(CityEnum.MILANO);
 		cityFilters.add(CityEnum.TORINO);
-		cityFilters.add(CityEnum.TRIVIGLIANO);
+		cityFilters.add(CityEnum.ALATRI);
 
 		MapController mapController = new MapController(mapWebView);
 		mapController.loadMap();

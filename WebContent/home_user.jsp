@@ -1,9 +1,12 @@
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.sql.Date"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean"%>
+<%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.stream.Collectors"%>
 <%@page import="java.util.stream.Stream"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Arrays"%>
-<%@ page import="java.util.Base64"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade"%>
@@ -13,14 +16,52 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
+
 <%
+	// new event values
+	String titleEvent = request.getParameter("inputTitleEvent");
+	String descriptionEvent = request.getParameter("inputEventDescription");
+	String dateEvent = request.getParameter("inputDateEvent");
+	String timeEvent = request.getParameter("inputTimeEvent");
+	String distanceEvent = request.getParameter("inputDistanceEvent");
+	String typeEvent = request.getParameter("inputEventLevel");
+
+	// map click values
+	String evLatitude = (String) request.getParameter("latitudeInput");
+	String evLongitude = (String) request.getParameter("longitudeInput");
+	String evAddress = request.getParameter("addressInput");
+
+	SystemFacade facade = new SystemFacade();
+	if (evLatitude != null && evLongitude != null && evAddress != null &&
+			titleEvent != null && descriptionEvent != null && dateEvent != null && timeEvent != null && distanceEvent != null) {
+		EventBeanView bean = new EventBeanView();
+		bean.setEventViewTitle(titleEvent);
+		bean.setEventViewDescription(descriptionEvent);
+		bean.setEventViewDate(new java.sql.Date(new SimpleDateFormat("dd-MM-yyyy").parse(dateEvent).getTime()));
+		bean.setEventViewTime(timeEvent);
+		bean.setEventViewDistance(Integer.parseInt(distanceEvent));
+		bean.setEventViewAddress(evAddress);
+		bean.setEventViewLatitude(Double.parseDouble(evLatitude));
+		bean.setEventViewLongitude(Double.parseDouble(evLongitude));
+		bean.setEventViewCity(SessionView.getCityEnum().toString());
+		bean.setEventViewCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		bean.setEventViewOrganizer(SessionView.getUsername());
+		bean.setEventViewLevel(SessionView.getLevelEnum().toString());
+		bean.setEventViewType(typeEvent);
+		if (facade.createEvent(bean))
+			out.println("<script>alert('Event created');</script>");
+	}
+
 	City city = new CityDAO().getCity(SessionView.getCityEnum());
 	List<EventBeanView> events = new SystemFacade().getEventsFiltered();
 	List<String> typeList = Stream.of("LENTO", "MEDIO", "VELOCE", "FARTLEK", "RIPETUTE")
 			.collect(Collectors.toList());
-	List<EventBeanView> myEvents = new SystemFacade().getEventsFiltered();
+	List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
+	List<EventBeanView> eventsFiltered = new SystemFacade().getEventsFiltered();
 %>
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -73,7 +114,6 @@
 				<a href="home_citizen.jsp" class="list-group-item list-group-item-action bg-light">Map</a>
 				<a href="events.jsp" class="list-group-item list-group-item-action bg-light">Events</a>
 				<a href="myreports.jsp" class="list-group-item list-group-item-action bg-light">My Reports</a>
-				<a href="logout.jsp" class="list-group-item list-group-item-action bg-light">Logout</a>
 			</div>
 		</div>
 
@@ -81,17 +121,20 @@
 		<div id="page-content">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
 				<form class="form-inline">
-					<button id="addRepBtn" disabled
-						data-toggle="modal" data-target="#newReport"
-						class="btn btn-sm btn-outline-primary" type="button" style="margin-right:5px;">
-						Add a Report
+					<button id="sendRequestModalBtnId" disabled
+						data-toggle="modal" data-target="#newRequest"
+						class="btn btn-sm btn-primary" type="button" style="margin-right:5px;">
+						Send a Request to Join
 					</button>
-					<button id="createEventModalBtnId"
+					<button id="createEventModalBtnId" disabled
 						data-toggle="modal" data-target="#newEvent"
-						class="btn btn-sm btn-outline-primary" type="button">
-						Organize an Event
+						class="btn btn-sm btn-primary" type="button">
+						Create an Event
 					</button>
 				</form>
+				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
+				role="button"> Logout
+				</a>
 			</nav>
 
 			<div class="container-fluid p-0">
@@ -101,24 +144,21 @@
 	</div>
 
 	<!-- Form modals -->
-	<!-- Create Report -->
-	<div class="modal" id="newReport">
+
+	<!-- Create Request -->
+	<div class="modal" id="newRequest">
 		<div class="modal-dialog">
 			<div class="modal-content">
+
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h3 class="modal-title">Create Report</h3>
+					<h3 class="modal-title">Send Request</h3>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
+
 				<!-- Modal body -->
-				<form action="home_citizen.jsp" method="GET"
-					id="reportProblemFormId">
-					<input type="hidden" value="" id="latitudeInputId"
-						name="latitudeInput"> <input type="hidden" value=""
-						id="longitudeInputId" name="longitudeInput"> <input
-						type="hidden" value="" id="addressInputId"
-						name="inputReportAddress"> <input type="hidden" value=""
-						id="base64ImageReportId" name="base64ImageReport" value="">
+				<form action="home_user.jsp" method="GET"
+					id="sendRequestFormId">
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-sm">
@@ -154,11 +194,12 @@
 
 
 					</div>
+
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<div class="row">
 							<div class="col-sm">
-								<button type="submit" class="btn btn-primary w-100">Create</button>
+								<button type="submit" class="btn btn-primary w-100">Send</button>
 							</div>
 						</div>
 					</div>
@@ -171,13 +212,22 @@
 	<div class="modal fade" id="newEvent">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
+
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h3 class="modal-title">Create New Event</h3>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
+
 				<!-- Modal body -->
 				<form action="home_user.jsp" method="GET">
+					<input type="hidden" value="" id="latitudeInputId"
+						name="latitudeInput">
+					<input type="hidden" value="" id="longitudeInputId"
+						name="longitudeInput">
+					<input type="hidden" value="" id="addressInputId"
+						name="addressInput">
+
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-sm">
@@ -245,6 +295,7 @@
 							</div>
 						</div>
 					</div>
+
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<div class="row">
@@ -322,14 +373,15 @@
 	});
 
 	var cityBorder = [
-<%int len = city.getBorders().length;
+		<%	int len = city.getBorders().length;
 			for (int i = 0; i < len; i++) {
 				out.println("[" + Double.toString(city.getBorders()[i][1]) + ","
 						+ Double.toString(city.getBorders()[i][0]) + "]");
 				if (i < len - 1) {
 					out.println(", ");
 				}
-			}%>
+			}
+		%>
 	];
 
 	var mymap = L.map('mapid').setView(
@@ -339,8 +391,8 @@
 <%out.println(city.getLongitude());%>
 	], 13);
 	L.tileLayer(
-					"https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
-							+ "?apiKey=XUbEajSB94rqlnuoXCZkfMe_n3bUeeGghpHSejZkC50",
+		"https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
+			+ "?apiKey=XUbEajSB94rqlnuoXCZkfMe_n3bUeeGghpHSejZkC50",
 					{
 						attribution : 'TogetherRun | HERE Maps',
 						maxZoom : 18,
@@ -349,11 +401,19 @@
 					}).addTo(mymap);
 <%	for (EventBeanView myEvent : myEvents) {
 		out.println("L.marker([" + myEvent.getEventViewLatitude() + ", " + myEvent.getEventViewLongitude()
-				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventViewTitle() + "</u></b><br>" + myEvent.getEventViewDescription()
+				+ "], {icon: iconMyEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventViewTitle() + "</u></b><br>" + myEvent.getEventViewDescription()
 				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b>"
 				+ "<br><i>created on "
 				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
 				+ myEvent.getEventViewOrganizer() + "</i>');");
+	}
+
+	for (EventBeanView event : eventsFiltered) {
+		out.println("L.marker([" + event.getEventViewLatitude() + ", " + event.getEventViewLongitude()
+				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventViewTitle() + "</b><br>" + event.getEventViewDescription()
+				+ "<br><i>created on "
+				+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
+				+ event.getEventViewOrganizer() + "</i>');");
 	}
 %>
 
@@ -391,7 +451,7 @@
 						document.getElementById("latitudeInputId").value = e.latlng.lat;
 						document.getElementById("longitudeInputId").value = e.latlng.lng;
 						document.getElementById("addressInputId").value = result.address.Match_addr;
-						document.getElementById("addRepBtn").disabled = false;
+						document.getElementById("createEventModalBtnId").disabled = false;
 				});
 	});
 
