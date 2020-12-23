@@ -57,14 +57,14 @@ public class MyRequestsControllerFX implements Initializable {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 		Logger logger = Logger.getLogger("togetherrun");
 
-		List<RequestBean> requests = new SystemFacade().getMyRequests();
+//		List<RequestBean> requests = new SystemFacade().getMyRequests();
 
 		final TreeItem<RequestBean> root = new TreeItem<>();
 		root.setValue(new RequestBean());
 		requestTable.setRoot(root);
 		requestTable.setShowRoot(false);
 		root.setExpanded(true);
-		requests.stream().forEach(request -> root.getChildren().add(new TreeItem<>(request)));
+/*		requests.stream().forEach(request -> root.getChildren().add(new TreeItem<>(request)));
 
 		requestTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue != null) {
@@ -77,7 +77,7 @@ public class MyRequestsControllerFX implements Initializable {
 				messageTextArea.setText(requestSelected.getRequestMessage());
 			}
 		});
-
+*/
 		eventColumn.setCellValueFactory(
 				(TreeTableColumn.CellDataFeatures<RequestBean, String> param) -> new SimpleStringProperty(
 						param.getValue().getValue().getRequestEvent().getEventTitle()));
