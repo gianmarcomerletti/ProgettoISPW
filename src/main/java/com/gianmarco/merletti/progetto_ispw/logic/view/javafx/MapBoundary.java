@@ -67,6 +67,11 @@ public class MapBoundary implements Initializable {
 	}
 
 	@FXML
+	private void toMyRequests() {
+		App.setRoot("my_requests");
+	}
+
+	@FXML
 	private void logout() {
 		new SystemFacade().logout();
 		App.setRoot("login");

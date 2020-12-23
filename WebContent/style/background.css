@@ -81,12 +81,12 @@ html, body {
 }
 
 #page-content {
-	min-width: calc(100vw-160px);
+	min-width: calc(100vw - 160px);
 }
 
 #mapid {
 	position: relative;
-	height: calc(100vh-110px);
-	width: calc(100vw-160px);
+	height: calc(100vh - 110px);
+	width: calc(100vw - 160px);
 }
 

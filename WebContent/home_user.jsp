@@ -119,7 +119,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<form class="form-inline">
 					<button id="sendRequestModalBtnId" disabled
 						data-toggle="modal" data-target="#newRequest"
