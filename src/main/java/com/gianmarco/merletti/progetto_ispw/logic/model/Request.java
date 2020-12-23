@@ -8,7 +8,7 @@ public class Request {
 
 	private Integer idRequest;
 	private Date creationDate;
-	private User user;
+	private String user;
 	private Event event;
 
 	public Request() {
@@ -18,6 +18,7 @@ public class Request {
 	public void setFromBean(RequestBean requestBean) {
 		Event ev = new Event();
 		ev.setFromBean(requestBean.getRequestEvent());
+		this.setIdRequest(requestBean.getRequestId());
 		this.setUser(requestBean.getRequestUser());
 		this.setCreationDate(requestBean.getRequestCreationDate());
 		this.setEvent(ev);
@@ -40,11 +41,11 @@ public class Request {
 		this.creationDate = creationDate;
 	}
 
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

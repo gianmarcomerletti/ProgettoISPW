@@ -1,9 +1,13 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
+import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
+import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.fxml.FXML;
@@ -59,6 +63,22 @@ public class SendRequestControllerFX implements Initializable {
 		distanceText.setText(selectedEvent.getEventDistance().toString() + " KM");
 		typeText.setText(selectedEvent.getEventType().toString());
 		organizerText.setText(selectedEvent.getEventOrganizer().getUsername());
+	}
+
+	@FXML
+	public void handleCancelButton() {
+		App.setRoot("home_user");
+	}
+
+	@FXML
+	public void handleSendButton() {
+		RequestBean requestBean = new RequestBean();
+		requestBean.setRequestEvent(selectedEvent);
+		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		requestBean.setRequestUser(SessionView.getUsername());
+
+		new SystemFacade().sendRequest(requestBean);
+		App.setRoot("home_user");
 	}
 
 }

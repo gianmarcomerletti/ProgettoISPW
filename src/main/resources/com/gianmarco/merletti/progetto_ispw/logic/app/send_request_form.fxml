@@ -89,9 +89,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <JFXButton prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #FF4949;" text="Cancel" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-            <JFXButton prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #007bff;" text="Send" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-            <JFXButton layoutX="410.0" layoutY="413.0" prefHeight="30.0" style="-fx-background-color: gray;" text="&lt; Back" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+            <JFXButton onAction="#handleCancelButton" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #FF4949;" text="Cancel" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+            <JFXButton onAction="#handleSendButton" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #007bff;" text="Send" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
             <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" text="Title of the event" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
             <Label fx:id="levelLabel" style="-fx-background-color: RED; -fx-background-radius: 3;" text="Level" textAlignment="RIGHT" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <opaqueInsets>

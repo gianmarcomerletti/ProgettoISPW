@@ -30,6 +30,7 @@ public class Event {
 	}
 
 	public void setFromBean(EventBean eventBean) {
+		this.setId(eventBean.getEventId());
 		this.setTitle(eventBean.getEventTitle());
 		this.setAddress(eventBean.getEventAddress());
 		this.setLatitude(eventBean.getEventLatitude());

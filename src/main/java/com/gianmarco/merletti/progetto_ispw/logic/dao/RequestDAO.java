@@ -16,10 +16,11 @@ public class RequestDAO {
 		Request request = new Request();
 		request.setFromBean(requestBean);
 
-		String query = ("INSERT INTO request (creation_date, ID_event) "
+		String query = ("INSERT INTO request (creation_date, id_event, user) "
 				+ "VALUES ('"
 				+ request.getCreationDate() + "', '"
-				+ request.getEvent().getId() + "');");
+				+ request.getEvent().getId() + "', '"
+				+ request.getUser() + "');");
 
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
