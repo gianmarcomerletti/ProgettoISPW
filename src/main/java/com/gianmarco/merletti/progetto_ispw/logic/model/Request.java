@@ -10,6 +10,8 @@ public class Request {
 	private Date creationDate;
 	private String user;
 	private Event event;
+	private String message;
+	private String status;
 
 	public Request() {
 		//empty constructor
@@ -56,5 +58,22 @@ public class Request {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 
 }

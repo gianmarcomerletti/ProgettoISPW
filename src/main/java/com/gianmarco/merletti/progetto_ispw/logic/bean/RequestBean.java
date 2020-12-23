@@ -8,6 +8,8 @@ public class RequestBean {
 	private Date requestCreationDate;
 	private String requestUser;
 	private EventBean requestEvent;
+	private String requestMessage;
+	private String requestStatus;
 
 	public RequestBean() {
 		//it can be empty
@@ -44,5 +46,22 @@ public class RequestBean {
 	public void setRequestEvent(EventBean requestEvent) {
 		this.requestEvent = requestEvent;
 	}
+
+	public String getRequestMessage() {
+		return requestMessage;
+	}
+
+	public void setRequestMessage(String requestMessage) {
+		this.requestMessage = requestMessage;
+	}
+
+	public String getRequestStatus() {
+		return requestStatus;
+	}
+
+	public void setRequestStatus(String requestStatus) {
+		this.requestStatus = requestStatus;
+	}
+
 
 }

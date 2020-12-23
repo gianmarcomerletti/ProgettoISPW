@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
 
 public class RequestDAO {
 
@@ -15,12 +16,15 @@ public class RequestDAO {
 		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
 		request.setFromBean(requestBean);
+		request.setStatus(Status.PENDING.toString());
 
-		String query = ("INSERT INTO request (creation_date, id_event, user) "
+		String query = ("INSERT INTO request (creation_date, id_event, user, message, status) "
 				+ "VALUES ('"
 				+ request.getCreationDate() + "', '"
 				+ request.getEvent().getId() + "', '"
-				+ request.getUser() + "');");
+				+ request.getUser() + "', '"
+				+ request.getMessage() + "', '"
+				+ request.getStatus() + "');");
 
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
@@ -41,6 +45,8 @@ public class RequestDAO {
 				request.setIdRequest(rs.getInt(1));
 				request.setCreationDate(rs.getDate(2));
 				request.setEvent(new EventDAO().findById(rs.getInt(3)));
+				request.setMessage(rs.getString(4));
+				request.setStatus(rs.getString(5));
 				return request;
 			}
 
