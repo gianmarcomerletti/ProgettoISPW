@@ -2,8 +2,6 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
 import java.sql.Date;
 
-import com.gianmarco.merletti.progetto_ispw.logic.model.User;
-
 public class RequestBean {
 
 	private Integer requestId;
