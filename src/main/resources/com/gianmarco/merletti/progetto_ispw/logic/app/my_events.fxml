@@ -14,7 +14,7 @@
 
 <BorderPane minHeight="400.0" minWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.MyEventsControllerFX">
    <top>
-      <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="600.0" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #343A40;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="600.0" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #007bff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <image>
@@ -54,7 +54,7 @@
                   </Text>
                   <JFXButton layoutY="65.0" onAction="#toMap" text="Map" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                   <JFXButton layoutY="90.0" text="Search Event" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
-                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-background-color: #343A40; -fx-text-alignment: left;" text="My Events" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
+                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-background-color: #007bff; -fx-text-alignment: left;" text="My Events" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
                   <JFXButton layoutY="312.0" onAction="#logout" style="-fx-background-color: #fff5f5;" text="Log out" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>

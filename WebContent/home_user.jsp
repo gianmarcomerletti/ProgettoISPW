@@ -391,7 +391,7 @@
 <%out.println(city.getLongitude());%>
 	], 13);
 	L.tileLayer(
-		"https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
+		"https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
 			+ "?apiKey=XUbEajSB94rqlnuoXCZkfMe_n3bUeeGghpHSejZkC50",
 					{
 						attribution : 'TogetherRun | HERE Maps',

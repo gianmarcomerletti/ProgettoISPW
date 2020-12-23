@@ -50,7 +50,7 @@
 
 <body>
 	<div class="container-fluid h-100" id="login-bg">
-		<div class="container w-25 p-3 valign-center" id="login-box">
+		<div class="container w-25 h-100 p-3 valign-center" id="login-box">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm" style="padding:50px;">

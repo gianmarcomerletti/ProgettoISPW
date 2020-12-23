@@ -14,10 +14,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #343A40;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.LoginControllerFX">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@background.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.LoginControllerFX">
 	<children>
 
-		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" style="-fx-background-color: #343A40; -fx-border-color: white; -fx-border-width: 5;">
+		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: white; -fx-border-width: 5;">
 			<children>
 			<ImageView fitHeight="150.0" fitWidth="325.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="50.0">
                <image>
@@ -46,14 +46,14 @@
                      <GridPane.margin>
                         <Insets right="5.0" />
                      </GridPane.margin></PasswordField>
-						<Button mnemonicParsing="false" onAction="#submitLogin" prefHeight="25.0" prefWidth="191.0" style="-fx-background-color: white;" text="LOGIN" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+						<Button mnemonicParsing="false" onAction="#submitLogin" prefHeight="25.0" prefWidth="191.0" style="-fx-background-color: white;" text="LOGIN" textFill="#0066cc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font></Button>
-						<Button mnemonicParsing="false" onAction="#showSignupForm" prefHeight="25.0" prefWidth="191.0" style="-fx-background-color: GRAY;" text="Sign Up" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+						<Button mnemonicParsing="false" onAction="#showSignupForm" prefHeight="25.0" prefWidth="191.0" style="-fx-background-color: #0066cc; -fx-border-radius: 3; -fx-border-color: white;" text="Sign Up" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
@@ -65,4 +65,7 @@
 			</children>
 		</AnchorPane>
 	</children>
+   <padding>
+      <Insets top="100.0" />
+   </padding>
 </VBox>

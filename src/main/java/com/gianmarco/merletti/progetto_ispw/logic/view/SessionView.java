@@ -1,7 +1,7 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 
@@ -12,7 +12,7 @@ public class SessionView {
 	private static Double latitudeSetOnMap;
 	private static Double longitudeSetOnMap;
 	private static AddressBean addressSetOnMap;
-	private static Event eventSetOnMap;
+	private static EventBean eventSetOnMap;
 
 	private SessionView() {
 	}
@@ -65,11 +65,11 @@ public class SessionView {
 		SessionView.addressSetOnMap = addressSetOnMap;
 	}
 
-	public static Event getEventSetOnMap() {
+	public static EventBean getEventSetOnMap() {
 		return eventSetOnMap;
 	}
 
-	public static void setEventSetOnMap(Event eventSetOnMap) {
+	public static void setEventSetOnMap(EventBean eventSetOnMap) {
 		SessionView.eventSetOnMap = eventSetOnMap;
 	}
 

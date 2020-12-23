@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="640.0" style="-fx-background-color: #343A40;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.CreateEventControllerFX">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="640.0" style="-fx-background-color: #007bff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.CreateEventControllerFX">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="640.0" style="-fx-border-color: white;">
          <columnConstraints>
@@ -41,12 +41,12 @@
                </font>
             </Text>
             <Text fill="WHITE" layoutX="257.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event details" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #343A40; -fx-border-color: white; -fx-border-radius: 3;" text="Back" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-border-color: white; -fx-border-radius: 3;" text="Back" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white;" text="Submit" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="9">
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white;" text="Submit" textFill="#007bff" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>

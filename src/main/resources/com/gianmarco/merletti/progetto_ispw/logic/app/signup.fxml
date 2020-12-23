@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="500.0" prefWidth="640.0" style="-fx-background-color: #343A40;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.SignupForm">
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="640.0" style="-fx-background-color: #007bff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.SignupForm">
 	<children>
 		<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="640.0" style="-fx-border-color: white;">
 			<columnConstraints>
@@ -56,7 +56,7 @@
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin></Button>
-				<Button mnemonicParsing="false" onAction="#clearValues" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: #343A40; -fx-border-color: white; -fx-border-radius: 3;" text="Clear" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="11">
+				<Button mnemonicParsing="false" onAction="#clearValues" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: #007bff; -fx-border-color: white; -fx-border-radius: 3;" text="Clear" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="11">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin></Button>
@@ -71,7 +71,7 @@
                   <ChoiceBox fx:id="levelChoiceBox" prefHeight="25.0" prefWidth="150.0" AnchorPane.leftAnchor="-50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
             </AnchorPane>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#backToLogin" style="-fx-background-color: #343A40; -fx-border-color: white;" text="&lt; Back" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#backToLogin" style="-fx-background-color: #007bff; -fx-border-color: white;" text="&lt; Back" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" text="Registration" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Label layoutX="210.0" layoutY="331.0" text="Level" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="9" />
 			</children>

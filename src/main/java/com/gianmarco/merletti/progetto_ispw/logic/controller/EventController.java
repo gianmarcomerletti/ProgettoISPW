@@ -49,7 +49,24 @@ public class EventController {
 	public void setEventForRequest(Double latitude, Double longitude) {
 		EventDAO dao = new EventDAO();
 		Event ev = dao.findByLatLong(latitude, longitude);
-		SessionView.setEventSetOnMap(ev);
+
+		EventBean evBean = new EventBean();
+		evBean.setEventId(ev.getId());
+		evBean.setEventTitle(ev.getTitle());
+		evBean.setEventAddress(ev.getAddress());
+		evBean.setEventLatitude(ev.getLatitude());
+		evBean.setEventLongitude(ev.getLongitude());
+		evBean.setEventDescription(ev.getDescription());
+		evBean.setEventCreationDate(ev.getCreationDate());
+		evBean.setEventDate(ev.getDate());
+		evBean.setEventTime(ev.getTime());
+		evBean.setEventDistance(ev.getDistance());
+		evBean.setEventLevel(LevelEnum.valueOf(ev.getLevel()));
+		evBean.setEventType(TypeEnum.valueOf(ev.getType()));
+		evBean.setEventCity(ev.getCity());
+		evBean.setEventOrganizer(ev.getOrganizerUser());
+
+		SessionView.setEventSetOnMap(evBean);
 		Logger.getLogger("together_run").info("Evento selezionato");
 	}
 

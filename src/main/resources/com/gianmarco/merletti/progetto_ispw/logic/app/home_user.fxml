@@ -25,15 +25,15 @@
          <top>
             <AnchorPane maxHeight="60.0" minHeight="40.0" minWidth="600.0" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fff; -fx-border-style: solid outside; -fx-border-color: #bfbfbf;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton layoutX="198.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#createRequest" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #343A40; -fx-border-radius: 3;" text="Send Request to Join" textAlignment="CENTER" textFill="#212121" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="6.0" />
-                  <JFXButton layoutX="14.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#createEvent" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #343A40;" text="Create New Event" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
+                  <JFXButton layoutX="198.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#createRequest" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #F5F5F5; -fx-border-color: #007bff; -fx-border-radius: 3;" text="Send Request to Join" textAlignment="CENTER" textFill="#007bff" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="6.0" />
+                  <JFXButton layoutX="14.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#createEvent" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: #007bff;" text="Create New Event" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="6.0" />
                </children>
             </AnchorPane>
          </top>
       </BorderPane>
    </center>
    <top>
-      <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="600.0" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #343A40;" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="60.0" minHeight="60.0" minWidth="600.0" prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #007bff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <image>
@@ -71,7 +71,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-text-alignment: left; -fx-background-color: #343A40;" text="Map" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                  <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-text-alignment: left; -fx-background-color: #007bff;" text="Map" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                   <JFXButton layoutY="65.0" text="Search Event" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
                   <JFXButton layoutY="90.0" onAction="#toMyEvents" text="My Events" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
                   <JFXButton layoutY="312.0" onAction="#logout" style="-fx-background-color: #fff5f5;" text="Log out" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
