@@ -3,10 +3,13 @@ package com.gianmarco.merletti.progetto_ispw.logic.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
+import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 public class LoadEventsController {
@@ -23,7 +26,7 @@ public class LoadEventsController {
 		for (Event event : events) {
 			if	((event.getCity().equals(SessionView.getCityEnum().toString())) &&
 					(!event.getOrganizerUser().getUsername().equals(SessionView.getUsername()))) {
-				EventBeanView eventBean = getEventBeanFromEvent(event);
+				EventBeanView eventBean = getEventBeanViewFromEvent(event);
 				eventBeanList.add(eventBean);
 			}
 		}
@@ -37,14 +40,14 @@ public class LoadEventsController {
 
 		for (Event event : events) {
 			if	(event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
-				EventBeanView eventBean = getEventBeanFromEvent(event);
+				EventBeanView eventBean = getEventBeanViewFromEvent(event);
 				eventBeanList.add(eventBean);
 			}
 		}
 		return eventBeanList;
 	}
 
-	private EventBeanView getEventBeanFromEvent(Event event) {
+	private EventBeanView getEventBeanViewFromEvent(Event event) {
 		EventBeanView eventBean = new EventBeanView();
 
 		eventBean.setEventViewCreationDate(event.getCreationDate());
@@ -63,6 +66,25 @@ public class LoadEventsController {
 		eventBean.setEventViewType(event.getType());
 		eventBean.setEventViewOrganizer(event.getOrganizerUser().getUsername());
 		eventBean.setEventViewCity(event.getCity());
+		return eventBean;
+	}
+
+	public EventBean getEventBeanFromEvent(Event event) {
+		EventBean eventBean = new EventBean();
+
+		eventBean.setEventCreationDate(event.getCreationDate());
+		eventBean.setEventDate(event.getDate());
+		eventBean.setEventTitle(event.getTitle());
+		eventBean.setEventDescription(event.getDescription());
+		eventBean.setEventTime(event.getTime());
+		eventBean.setEventLatitude(event.getLatitude());
+		eventBean.setEventLongitude(event.getLongitude());
+		eventBean.setEventAddress(event.getAddress());
+		eventBean.setEventLevel(LevelEnum.valueOf(event.getLevel()));
+		eventBean.setEventDistance(event.getDistance());
+		eventBean.setEventType(TypeEnum.valueOf(event.getType()));
+		eventBean.setEventOrganizer(event.getOrganizerUser());
+		eventBean.setEventCity(event.getCity());
 		return eventBean;
 	}
 

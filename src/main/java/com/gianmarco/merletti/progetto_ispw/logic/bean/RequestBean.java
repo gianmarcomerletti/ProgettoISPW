@@ -2,6 +2,8 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
 import java.sql.Date;
 
+import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+
 public class RequestBean {
 
 	private Integer requestId;
@@ -43,8 +45,8 @@ public class RequestBean {
 		return requestEvent;
 	}
 
-	public void setRequestEvent(EventBean requestEvent) {
-		this.requestEvent = requestEvent;
+	public void setRequestEvent(EventBean event) {
+		this.requestEvent = event;
 	}
 
 	public String getRequestMessage() {

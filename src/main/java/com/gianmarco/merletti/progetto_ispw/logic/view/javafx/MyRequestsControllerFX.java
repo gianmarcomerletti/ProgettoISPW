@@ -47,6 +47,8 @@ public class MyRequestsControllerFX implements Initializable {
 	@FXML
 	private Text addressText;
 	@FXML
+	private Text typeDistanceText;
+	@FXML
 	private TextArea messageTextArea;
 
 	private RequestBean requestSelected;
@@ -55,29 +57,30 @@ public class MyRequestsControllerFX implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
-		Logger logger = Logger.getLogger("togetherrun");
 
-//		List<RequestBean> requests = new SystemFacade().getMyRequests();
+		List<RequestBean> requests = new SystemFacade().getMyRequests();
 
 		final TreeItem<RequestBean> root = new TreeItem<>();
 		root.setValue(new RequestBean());
 		requestTable.setRoot(root);
 		requestTable.setShowRoot(false);
 		root.setExpanded(true);
-/*		requests.stream().forEach(request -> root.getChildren().add(new TreeItem<>(request)));
+		requests.stream().forEach(request -> root.getChildren().add(new TreeItem<>(request)));
 
 		requestTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue != null) {
 				requestSelected = newValue.getValue();
 				requestEvent = requestSelected.getRequestEvent();
-				addressText.setText(requestEvent.getEventAddress() + ", " +
+				addressText.setText(requestEvent.getEventAddress() + "\n" +
 					requestEvent.getEventCity());
 				dateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(requestEvent.getEventDate()) + " " +
 					requestEvent.getEventTime().toLocalTime().toString());
+				typeDistanceText.setText(requestEvent.getEventType().toString() + " - " +
+					requestEvent.getEventDistance() + " KM");
 				messageTextArea.setText(requestSelected.getRequestMessage());
 			}
 		});
-*/
+
 		eventColumn.setCellValueFactory(
 				(TreeTableColumn.CellDataFeatures<RequestBean, String> param) -> new SimpleStringProperty(
 						param.getValue().getValue().getRequestEvent().getEventTitle()));

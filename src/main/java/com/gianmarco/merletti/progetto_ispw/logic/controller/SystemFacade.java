@@ -7,6 +7,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
+import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 public class SystemFacade {
 
@@ -32,6 +33,10 @@ public class SystemFacade {
 
 	public boolean sendRequest(RequestBean requestBean) {
 		return new RequestController().creteRequest(requestBean);
+	}
+
+	public List<RequestBean> getMyRequests() {
+		return new RequestController().loadRequests(SessionView.getUsername());
 	}
 
 	public void setAddressForEvent(Double longitude, Double latitude)
