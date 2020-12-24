@@ -10,10 +10,14 @@ import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestIsAcceptedException;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
@@ -96,12 +100,27 @@ public class MyRequestsControllerFX implements Initializable {
 
 	@FXML
 	public void acceptRequest() {
-
+		if (requestSelected == null) {
+			new Alert(AlertType.INFORMATION, "No request selected!", ButtonType.OK).showAndWait();
+			return;
+		}
+		try {
+			new SystemFacade().acceptRequest(requestSelected);
+		} catch (RequestIsAcceptedException e) {
+			new Alert(AlertType.WARNING, "This request was already accepted.", ButtonType.OK).showAndWait();
+		}
+		App.setRoot("my_requests");
 	}
 
 	@FXML
 	public void rejectRequest() {
+		if (requestSelected == null) {
+			new Alert(AlertType.INFORMATION, "No request selected!", ButtonType.OK).showAndWait();
+			return;
+		}
+		new SystemFacade().rejectRequest(requestSelected);
 
+		App.setRoot("home_user");
 	}
 
 

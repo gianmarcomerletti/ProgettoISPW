@@ -6,6 +6,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestIsAcceptedException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
@@ -50,6 +51,15 @@ public class SystemFacade {
 
 	public void logout() {
 		new LoginController().logout();
+	}
+
+	public boolean acceptRequest(RequestBean requestSelected)
+			throws RequestIsAcceptedException {
+		return new RequestController().acceptRequest(requestSelected);
+	}
+
+	public boolean rejectRequest(RequestBean requestSelected) {
+		return new RequestController().rejectRequest(requestSelected);
 	}
 
 }

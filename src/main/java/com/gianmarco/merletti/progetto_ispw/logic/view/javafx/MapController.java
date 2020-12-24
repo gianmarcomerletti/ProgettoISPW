@@ -28,6 +28,7 @@ import net.java.html.leaflet.PopupOptions;
 import net.java.html.leaflet.TileLayer;
 import net.java.html.leaflet.TileLayerOptions;
 import net.java.html.leaflet.event.MouseEvent;
+import net.java.html.leaflet.event.MouseEvent.Type;
 import net.java.html.leaflet.event.MouseListener;
 
 public class MapController {
@@ -78,7 +79,7 @@ public class MapController {
 
 			// Initialize listeners
 			MouseListener mouseListener = (MouseEvent ev) -> {
-				SessionView.setEventSetOnMap(null);
+//				SessionView.setEventSetOnMap(null);
 
 				double latD = ev.getLatLng().getLatitude();
 				double longD = ev.getLatLng().getLongitude();
@@ -105,7 +106,7 @@ public class MapController {
 				markerSetPosMap.openPopup();
 
 			};
-			map.addMouseListener(MouseEvent.Type.CLICK, mouseListener);
+			map.addMouseListener(Type.CLICK, mouseListener);
 
 			// Setup markers
 			icon = new Icon(
@@ -122,13 +123,14 @@ public class MapController {
 			markerMyEventOpt = new MarkerOptions().setIcon(iconMyEvent);
 
 			// Loading events on map
-			addEveryEvent(map);
+			this.addEveryEvent(map);
 		});
 	}
 
 	public void addEveryEvent(Map map) {
 		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
 		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsFiltered();
+
 		MouseListener markerListener = (MouseEvent ev) -> {
 			Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
 			Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
@@ -137,7 +139,6 @@ public class MapController {
 		};
 
 		for (EventBeanView myEvent : myEvents) {
-
 			new Marker(new LatLng(myEvent.getEventViewLatitude(), myEvent.getEventViewLongitude()), markerMyEventOpt)
 			.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
 				+ "</u></b><br>" + myEvent.getEventViewDescription()
@@ -145,7 +146,7 @@ public class MapController {
 				+ "<br><i>created on "
 				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
 				+ myEvent.getEventViewOrganizer() + "</i>"))
-			.addMouseListener(MouseEvent.Type.CLICK, markerListener)
+			.addMouseListener(Type.CLICK, markerListener)
 			.addTo(map);
 		}
 

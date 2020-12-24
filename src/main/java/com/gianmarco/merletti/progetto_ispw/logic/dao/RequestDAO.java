@@ -86,4 +86,33 @@ public class RequestDAO {
 		return result;
 	}
 
+	public Request activateRequest(RequestBean bean) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		Request request = new Request();
+		request.setFromBean(bean);
+		String query = "UPDATE request "
+				+ "SET status='" + Status.ACCEPTED.toString() + "' "
+				+ "WHERE (idrequest='" + request.getIdRequest() + "');";
+		try (PreparedStatement st = conn.prepareStatement(query);) {
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return request;
+	}
+
+	public Request deleteRequest(RequestBean bean) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		Request request = new Request();
+		request.setFromBean(bean);
+		String query = "DELETE FROM request "
+				+ "WHERE (idrequest='" + request.getIdRequest() + "');";
+		try (PreparedStatement st = conn.prepareStatement(query);) {
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return request;
+	}
+
 }

@@ -24,6 +24,7 @@ public class Request {
 		this.setUser(requestBean.getRequestUser());
 		this.setCreationDate(requestBean.getRequestCreationDate());
 		this.setEvent(ev);
+		this.setMessage(requestBean.getRequestMessage());
 
 	}
 
