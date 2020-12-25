@@ -31,7 +31,7 @@ public class EventController {
 		bean.setEventAddress(eventBean.getEventViewAddress());
 		bean.setEventCity(eventBean.getEventViewCity());
 		bean.setEventCreationDate(eventBean.getEventViewCreationDate());
-		bean.setEventDate(eventBean.getViewEventDate());
+		bean.setEventDate(eventBean.getEventViewDate());
 		bean.setEventTitle(eventBean.getEventViewTitle());
 		bean.setEventDescription(eventBean.getEventViewDescription());
 		bean.setEventLatitude(eventBean.getEventViewLatitude());
@@ -43,7 +43,9 @@ public class EventController {
 		bean.setEventOrganizer(organizer);
 
 		Event event = dao.addEvent(bean);
-		return (event != null);
+		if (dao.joinEvent(SessionView.getUsername(), event.getId()))
+			return (event != null);
+		return false;
 	}
 
 	public void setEventForRequest(Double latitude, Double longitude) {

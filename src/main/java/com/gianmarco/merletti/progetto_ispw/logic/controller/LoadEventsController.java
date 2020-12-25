@@ -8,6 +8,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
@@ -18,13 +19,13 @@ public class LoadEventsController {
 		//it can be empty
 	}
 
-	public List<EventBeanView> getEventsFiltered() {
+	public List<EventBeanView> getEventsByCity(CityEnum city) {
 		EventDAO dao = new EventDAO();
 		List<Event> events = dao.findAll();
 		ArrayList<EventBeanView> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if	((event.getCity().equals(SessionView.getCityEnum().toString())) &&
+			if	((event.getCity().equals(city)) &&
 					(!event.getOrganizerUser().getUsername().equals(SessionView.getUsername()))) {
 				EventBeanView eventBean = getEventBeanViewFromEvent(event);
 				eventBeanList.add(eventBean);
@@ -36,6 +37,21 @@ public class LoadEventsController {
 	public List<EventBeanView> getMyEvents() {
 		EventDAO dao = new EventDAO();
 		List<Event> events = dao.findAll();
+		ArrayList<EventBeanView> eventBeanList = new ArrayList<>();
+
+		for (Event event : events) {
+			if	(event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
+				EventBeanView eventBean = getEventBeanViewFromEvent(event);
+				eventBeanList.add(eventBean);
+			}
+		}
+		return eventBeanList;
+	}
+
+
+	public List<EventBeanView> getJoinEvents() {
+		EventDAO dao = new EventDAO();
+		List<Event> events = dao.findJoinEvent(SessionView.getUsername());
 		ArrayList<EventBeanView> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
@@ -87,6 +103,4 @@ public class LoadEventsController {
 		eventBean.setEventCity(event.getCity());
 		return eventBean;
 	}
-
-
 }

@@ -57,7 +57,7 @@ public class MapBoundary implements Initializable {
 		if (SessionView.getEventSetOnMap() != null)
 			App.setRoot("send_request_form");
 		else {
-			new Alert(AlertType.INFORMATION, "First select an event on the map!", ButtonType.OK).showAndWait();
+			new Alert(AlertType.INFORMATION, "First select a valide event on the map!", ButtonType.OK).showAndWait();
 		}
 	}
 

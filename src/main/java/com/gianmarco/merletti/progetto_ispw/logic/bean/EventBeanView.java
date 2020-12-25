@@ -29,7 +29,7 @@ public class EventBeanView {
 	public void setEventViewCreationDate(Date eventViewCreationDate) {
 		this.eventViewCreationDate = eventViewCreationDate;
 	}
-	public Date getViewEventDate() {
+	public Date getEventViewDate() {
 		return eventViewDate;
 	}
 	public void setEventViewDate(Date eventViewDate) {

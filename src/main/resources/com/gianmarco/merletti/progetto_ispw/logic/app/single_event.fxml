@@ -13,7 +13,7 @@
 
 <HBox style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane style="-fx-background-color: #fff; -fx-border-style: solid none none none; -fx-border-color: #bfbfbf; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+      <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="120.0" style="-fx-background-color: #fff; -fx-border-style: solid none none none; -fx-border-color: #bfbfbf; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
          <children>
             <Label id="levelLabel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="5.0" layoutX="200.0" layoutY="24.0" style="-fx-background-color: RED; -fx-background-radius: 3;" text="Level" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="5.0">
                <opaqueInsets>
@@ -23,12 +23,12 @@
                   <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
                </padding>
             </Label>
-            <Text id="distanceText" layoutX="18.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10 KM" textAlignment="CENTER" wrappingWidth="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0">
+            <Text id="distanceText" layoutX="18.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10 KM" textAlignment="CENTER" wrappingWidth="180.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                <font>
                   <Font name="System Bold" size="46.0" />
                </font>
             </Text>
-            <Text id="typeText" layoutX="16.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo Corsa" textAlignment="CENTER" wrappingWidth="180.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0">
+            <Text id="typeText" layoutX="16.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo Corsa" textAlignment="CENTER" wrappingWidth="180.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                <font>
                   <Font size="14.0" />
                </font>

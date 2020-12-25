@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 
@@ -36,8 +36,11 @@ public class EventDAO {
 				+ eventToAdd.getLevel() + "', '"
 				+ eventToAdd.getDistance() + "', '"
 				+ eventToAdd.getType() + "');");
-		try (PreparedStatement st = conn.prepareStatement(query)){
+		try (PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))	{
 			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			rs.next();
+			eventToAdd.setId(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,13 +122,43 @@ public class EventDAO {
 		return result;
 	}
 
-	public void assignRequest(Integer requestId, Integer eventId) {
-		Event event = findById(eventId);
-		Request request = new RequestDAO().findById(requestId);
+	public List<Event> findJoinEvent(String username) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		List<Event> result = new ArrayList<>();
+		List<String> organizers = new ArrayList<>();
+		String query = "SELECT * FROM event INNER JOIN organization ON organization.idevent=event.idevent "
+				+ "WHERE (username='" + username + "');";
+		try (PreparedStatement st = conn.prepareStatement(query)) {
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				Event eventJoinElem = new Event();
+				eventJoinElem.setId(rs.getInt(1));
+				eventJoinElem.setTitle(rs.getString(2));
+				eventJoinElem.setDescription(rs.getString(3));
+				eventJoinElem.setCreationDate(rs.getDate(4));
+				eventJoinElem.setDate(rs.getDate(5));
+				eventJoinElem.setTime(rs.getTime(6));
+				eventJoinElem.setAddress(rs.getString(7));
+				eventJoinElem.setCity(rs.getString(8));
+				eventJoinElem.setLatitude(rs.getDouble(9));
+				eventJoinElem.setLongitude(rs.getDouble(10));
+				organizers.add(rs.getString(11));
+				eventJoinElem.setLevel(rs.getString(12));
+				eventJoinElem.setDistance(rs.getInt(13));
+				eventJoinElem.setType(rs.getString(14));
+				result.add(eventJoinElem);
+			}
 
-		List<Request> requests = event.getRequests();
-		requests.add(request);
-		event.setRequests(requests);
+			UserDAO dao = new UserDAO();
+			for (int i=0; i<organizers.size(); i++) {
+				User organizerUser = dao.findUserFromUsername(organizers.get(i));
+				result.get(i).setOrganizerUser(organizerUser);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public Event findByLatLong(Double latitude, Double longitude) {
@@ -160,5 +193,25 @@ public class EventDAO {
 
 		return null;
 	}
+
+	public boolean joinEvent(String username, Integer eventId) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		String query = ("INSERT INTO organization "
+				+ "VALUES ('"
+				+ eventId + "', '"
+				+ username + "');");
+		try (PreparedStatement st = conn.prepareStatement(query)){
+			st.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+
+
+
+	}
+
+
 
 }

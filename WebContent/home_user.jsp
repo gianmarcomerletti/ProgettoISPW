@@ -112,8 +112,9 @@
 			<div class id="sidenav-heading" >Menu</div>
 			<div class="list-group list-group-flush">
 				<a href="home_citizen.jsp" class="list-group-item list-group-item-action bg-light">Map</a>
-				<a href="events.jsp" class="list-group-item list-group-item-action bg-light">Events</a>
-				<a href="myreports.jsp" class="list-group-item list-group-item-action bg-light">My Reports</a>
+				<a href="all_events.jsp" class="list-group-item list-group-item-action bg-light">All Events</a>
+				<a href="my_events.jsp" class="list-group-item list-group-item-action bg-light">My Events</a>
+				<a href="my_requests.jsp" class="list-group-item list-group-item-action bg-light">My Requests</a>
 			</div>
 		</div>
 
@@ -121,15 +122,15 @@
 		<div id="page-content">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<form class="form-inline">
-					<button id="sendRequestModalBtnId" disabled
-						data-toggle="modal" data-target="#newRequest"
-						class="btn btn-sm btn-primary" type="button" style="margin-right:5px;">
-						Send a Request to Join
-					</button>
 					<button id="createEventModalBtnId" disabled
 						data-toggle="modal" data-target="#newEvent"
-						class="btn btn-sm btn-primary" type="button">
+						class="btn btn-sm btn-primary" type="button" style="margin-right:5px;">
 						Create an Event
+					</button>
+					<button id="sendRequestModalBtnId" disabled
+						data-toggle="modal" data-target="#newRequest"
+						class="btn btn-sm btn-primary" type="button">
+						Send a Request to Join
 					</button>
 				</form>
 				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
@@ -391,7 +392,7 @@
 <%out.println(city.getLongitude());%>
 	], 13);
 	L.tileLayer(
-		"https://2.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
+		"https://1.base.maps.ls.hereapi.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png8"
 			+ "?apiKey=XUbEajSB94rqlnuoXCZkfMe_n3bUeeGghpHSejZkC50",
 					{
 						attribution : 'TogetherRun | HERE Maps',
@@ -401,16 +402,23 @@
 					}).addTo(mymap);
 <%	for (EventBeanView myEvent : myEvents) {
 		out.println("L.marker([" + myEvent.getEventViewLatitude() + ", " + myEvent.getEventViewLongitude()
-				+ "], {icon: iconMyEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventViewTitle() + "</u></b><br>" + myEvent.getEventViewDescription()
-				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b>"
+				+ "], {icon: iconMyEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventViewTitle() + "</u></b><br>" + myEvent.getEventViewAddress()
+				+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewDate()) + "</b>"
+				+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(myEvent.getEventViewTime()) + "</b>"
+				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b> - " + myEvent.getEventViewType()
+				+ "<br>Level: <b>" + myEvent.getEventViewLevel() + "</b>"
 				+ "<br><i>created on "
 				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
-				+ myEvent.getEventViewOrganizer() + "</i>');");
+				+ myEvent.getEventViewOrganizer() + "</i>')");
 	}
 
 	for (EventBeanView event : eventsFiltered) {
 		out.println("L.marker([" + event.getEventViewLatitude() + ", " + event.getEventViewLongitude()
-				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventViewTitle() + "</b><br>" + event.getEventViewDescription()
+				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventViewTitle() + "</b><br>" + event.getEventViewAddress()
+				+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewDate()) + "</b>"
+				+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(event.getEventViewTime()) + "</b>"
+				+ "<br><b>" + event.getEventViewDistance() + " KM</b> - " + event.getEventViewType()
+				+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
 				+ "<br><i>created on "
 				+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
 				+ event.getEventViewOrganizer() + "</i>');");

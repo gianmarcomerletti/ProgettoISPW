@@ -65,13 +65,13 @@ public class CreateEventControllerFX implements Initializable {
 	}
 
 	@FXML
-	public void handleSubmitButton() throws InvalidFieldException {
+	public void handleSubmitButton() {
 		errorText.setVisible(false);
 
 		if (eventTitleTextField.getText() == null || eventDescriptionTextArea.getText() == null
 				|| eventDatePicker.getValue() == null || eventTimeTextField.getText() == null
 				|| eventDistanceTextField.getText() == null) {
-			new Alert(AlertType.INFORMATION, "Invalid field", ButtonType.OK).showAndWait();
+			new Alert(AlertType.INFORMATION, "Invalid field!", ButtonType.OK).showAndWait();
 			return;
 		}
 
@@ -85,12 +85,22 @@ public class CreateEventControllerFX implements Initializable {
 		eventBean.setEventViewDescription(eventDescriptionTextArea.getText());
 		eventBean.setEventViewCreationDate(dateTime);
 		eventBean.setEventViewDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
-		eventBean.setEventViewTime(eventTimeTextField.getText());
+		try {
+			eventBean.setEventViewTime(eventTimeTextField.getText());
+		} catch (InvalidFieldException e) {
+			new Alert(AlertType.WARNING, "Invalid time field!", ButtonType.OK).showAndWait();
+			return;
+		}
 		eventBean.setEventViewLatitude(latitude);
 		eventBean.setEventViewLongitude(longitude);
 		eventBean.setEventViewAddress(address.getRoad());
 		eventBean.setEventViewType(typeChoiceBox.getValue());
-		eventBean.setEventViewDistance(Integer.parseInt(eventDistanceTextField.getText()));
+		try {
+			eventBean.setEventViewDistance(Integer.parseInt(eventDistanceTextField.getText()));
+		} catch (NumberFormatException e) {
+			new Alert(AlertType.WARNING, "Invalid distance field!", ButtonType.OK).showAndWait();
+			return;
+		}
 		eventBean.setEventViewCity(address.getCity().toUpperCase());
 		eventBean.setEventViewOrganizer(SessionView.getUsername());
 

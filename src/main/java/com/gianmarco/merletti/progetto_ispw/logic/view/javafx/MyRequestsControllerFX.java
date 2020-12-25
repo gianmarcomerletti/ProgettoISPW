@@ -4,13 +4,12 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestIsAcceptedException;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -104,11 +103,12 @@ public class MyRequestsControllerFX implements Initializable {
 			new Alert(AlertType.INFORMATION, "No request selected!", ButtonType.OK).showAndWait();
 			return;
 		}
-		try {
-			new SystemFacade().acceptRequest(requestSelected);
-		} catch (RequestIsAcceptedException e) {
+		if (requestSelected.getRequestStatus().equals(Status.ACCEPTED.toString()) ) {
 			new Alert(AlertType.WARNING, "This request was already accepted.", ButtonType.OK).showAndWait();
+			return;
 		}
+
+		new SystemFacade().acceptRequest(requestSelected);
 		App.setRoot("my_requests");
 	}
 

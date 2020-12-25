@@ -6,8 +6,8 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestIsAcceptedException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
+import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 public class SystemFacade {
@@ -24,12 +24,17 @@ public class SystemFacade {
 		return new EventController().createEvent(eventBean);
 	}
 
-	public List<EventBeanView> getEventsFiltered() {
-		return new LoadEventsController().getEventsFiltered();
+	public List<EventBeanView> getEventsByCity(CityEnum cityEnum) {
+		return new LoadEventsController().getEventsByCity(cityEnum);
 	}
 
 	public List<EventBeanView> getMyEvents() {
 		return new LoadEventsController().getMyEvents();
+	}
+
+
+	public List<EventBeanView> getJoinEvents() {
+		return new LoadEventsController().getJoinEvents();
 	}
 
 	public boolean sendRequest(RequestBean requestBean) {
@@ -53,8 +58,7 @@ public class SystemFacade {
 		new LoginController().logout();
 	}
 
-	public boolean acceptRequest(RequestBean requestSelected)
-			throws RequestIsAcceptedException {
+	public boolean acceptRequest(RequestBean requestSelected) {
 		return new RequestController().acceptRequest(requestSelected);
 	}
 

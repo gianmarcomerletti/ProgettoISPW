@@ -3,14 +3,9 @@ package com.gianmarco.merletti.progetto_ispw.logic.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
-import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.RequestDAO;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestIsAcceptedException;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
-import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
 
 public class RequestController {
 
@@ -27,7 +22,7 @@ public class RequestController {
 
 		requests.stream().forEach(req -> {
 			RequestBean reqBean = new RequestBean();
-			reqBean.setRequestCreationDate(req.getCreationDate());;
+			reqBean.setRequestCreationDate(req.getCreationDate());
 			reqBean.setRequestEvent(new LoadEventsController().getEventBeanFromEvent(req.getEvent()));
 			reqBean.setRequestId(req.getIdRequest());
 			reqBean.setRequestMessage(req.getMessage());
@@ -39,10 +34,7 @@ public class RequestController {
 		return reqBeanList;
 	}
 
-	public boolean acceptRequest(RequestBean bean)
-			throws RequestIsAcceptedException {
-		if (bean.getRequestStatus() == Status.ACCEPTED.toString())
-			throw new RequestIsAcceptedException();
+	public boolean acceptRequest(RequestBean bean) {
 		RequestDAO dao = new RequestDAO();
 		Request request = dao.activateRequest(bean);
 		return (request != null);

@@ -14,6 +14,8 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
 
 public class RequestDAO {
 
+	private static final String IDREQUEST_COND_STRING = "WHERE (idrequest='";
+
 	public Request addRequest(RequestBean requestBean) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
@@ -39,7 +41,7 @@ public class RequestDAO {
 	public Request findById(Integer id) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		String query = "SELECT * FROM request "
-				+ "WHERE (idrequest='" + id.toString() + "');";
+				+ IDREQUEST_COND_STRING + id.toString() + "');";
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -92,7 +94,7 @@ public class RequestDAO {
 		request.setFromBean(bean);
 		String query = "UPDATE request "
 				+ "SET status='" + Status.ACCEPTED.toString() + "' "
-				+ "WHERE (idrequest='" + request.getIdRequest() + "');";
+				+ IDREQUEST_COND_STRING + request.getIdRequest() + "');";
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -106,7 +108,7 @@ public class RequestDAO {
 		Request request = new Request();
 		request.setFromBean(bean);
 		String query = "DELETE FROM request "
-				+ "WHERE (idrequest='" + request.getIdRequest() + "');";
+				+ IDREQUEST_COND_STRING + request.getIdRequest() + "');";
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();
 		} catch (SQLException e) {

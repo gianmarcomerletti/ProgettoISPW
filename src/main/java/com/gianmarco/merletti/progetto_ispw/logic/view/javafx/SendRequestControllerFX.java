@@ -1,7 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;

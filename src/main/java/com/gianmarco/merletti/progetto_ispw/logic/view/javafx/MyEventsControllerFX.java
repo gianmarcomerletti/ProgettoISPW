@@ -38,10 +38,12 @@ public class MyEventsControllerFX implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
-		List<EventBeanView> events = new SystemFacade().getMyEvents();
+//		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
+		List<EventBeanView> joinEvents = new SystemFacade().getJoinEvents();
 
 		URL url = App.class.getResource("single_event.fxml");
-		fillEvents(events, url);
+//		fillEvents(myEvents, url);
+		fillEvents(joinEvents, url);
 	}
 
 	private void fillEvents(List<EventBeanView> events, URL urlSingleEventFXML) {
@@ -54,7 +56,6 @@ public class MyEventsControllerFX implements Initializable {
 				HBox parent;
 				parent = FXMLLoader.load(urlSingleEventFXML);
 				singleEvent = (AnchorPane) parent.getChildren().get(0);
-
 				for (Node nodeEvent : singleEvent.getChildren()) {
 					switch (nodeEvent.getId()) {
 					case "distanceText":
@@ -96,7 +97,7 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "dateText":
 						Text date = (Text) nodeEvent;
-						String dateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(event.getViewEventDate());
+						String dateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(event.getEventViewDate());
 						String timeFormatted = new SimpleDateFormat("HH:mm").format(event.getEventViewTime());
 						date.setText(dateFormatted + " - " + timeFormatted);
 						break;

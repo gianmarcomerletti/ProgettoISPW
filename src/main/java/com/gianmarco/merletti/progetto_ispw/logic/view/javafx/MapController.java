@@ -79,7 +79,7 @@ public class MapController {
 
 			// Initialize listeners
 			MouseListener mouseListener = (MouseEvent ev) -> {
-//				SessionView.setEventSetOnMap(null);
+				SessionView.setEventSetOnMap(null);
 
 				double latD = ev.getLatLng().getLatitude();
 				double longD = ev.getLatLng().getLongitude();
@@ -129,33 +129,40 @@ public class MapController {
 
 	public void addEveryEvent(Map map) {
 		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsFiltered();
+		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 
-		MouseListener markerListener = (MouseEvent ev) -> {
-			Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
-			Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
-			new SystemFacade().setEventForRequest(latitude, longitude);
-
-		};
-
+		// setting MY EVENTS
 		for (EventBeanView myEvent : myEvents) {
 			new Marker(new LatLng(myEvent.getEventViewLatitude(), myEvent.getEventViewLongitude()), markerMyEventOpt)
-			.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
-				+ "</u></b><br>" + myEvent.getEventViewDescription()
-				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b>"
-				+ "<br><i>created on "
-				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
-				+ myEvent.getEventViewOrganizer() + "</i>"))
-			.addMouseListener(Type.CLICK, markerListener)
-			.addTo(map);
+				.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
+					+ "</u></b><br>" + myEvent.getEventViewAddress()
+					+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewDate()) + "</b>"
+					+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(myEvent.getEventViewTime()) + "</b>"
+					+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b> - " + myEvent.getEventViewType()
+					+ "<br>Level: <b>" + myEvent.getEventViewLevel() + "</b>"
+					+ "<br><i>created on "
+					+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
+					+ myEvent.getEventViewOrganizer() + "</i>"))
+				.addTo(map);
 		}
 
+		// setting OTHER EVENTS
 		for (EventBeanView event : eventsFiltered) {
 			new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
 					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventViewTitle()
-						+ "</b><br>" + event.getEventViewDescription() + "<br><i>created on "
+						+ "</b><br>" + event.getEventViewAddress()
+						+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewDate()) + "</b>"
+						+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(event.getEventViewTime()) + "</b>"
+						+ "<br><b>" + event.getEventViewDistance() + " KM</b> - " + event.getEventViewType()
+						+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
+						+ "<br><i>created on "
 						+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
 						+ event.getEventViewOrganizer() + "</i>"))
+					.addMouseListener(Type.CLICK, ev -> {
+						Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
+						Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
+						new SystemFacade().setEventForRequest(latitude, longitude);
+					})
 					.addTo(map);
 		}
 	}
