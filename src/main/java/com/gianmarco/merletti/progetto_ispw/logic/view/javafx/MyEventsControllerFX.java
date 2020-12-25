@@ -38,11 +38,10 @@ public class MyEventsControllerFX implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
-//		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-		List<EventBeanView> joinEvents = new SystemFacade().getJoinEvents();
-
 		URL url = App.class.getResource("single_event.fxml");
-//		fillEvents(myEvents, url);
+		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
+		fillEvents(myEvents, url);
+		List<EventBeanView> joinEvents = new SystemFacade().getJoinEvents();
 		fillEvents(joinEvents, url);
 	}
 

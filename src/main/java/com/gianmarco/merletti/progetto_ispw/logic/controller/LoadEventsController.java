@@ -25,7 +25,7 @@ public class LoadEventsController {
 		ArrayList<EventBeanView> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if	((event.getCity().equals(city)) &&
+			if	((event.getCity().equals(city.toString())) &&
 					(!event.getOrganizerUser().getUsername().equals(SessionView.getUsername()))) {
 				EventBeanView eventBean = getEventBeanViewFromEvent(event);
 				eventBeanList.add(eventBean);

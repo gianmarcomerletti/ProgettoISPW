@@ -128,6 +128,8 @@ public class MapController {
 	}
 
 	public void addEveryEvent(Map map) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
 		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 
@@ -136,12 +138,12 @@ public class MapController {
 			new Marker(new LatLng(myEvent.getEventViewLatitude(), myEvent.getEventViewLongitude()), markerMyEventOpt)
 				.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
 					+ "</u></b><br>" + myEvent.getEventViewAddress()
-					+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewDate()) + "</b>"
-					+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(myEvent.getEventViewTime()) + "</b>"
+					+ "<br>Date: <b>" + dateFormat.format(myEvent.getEventViewDate()) + "</b>"
+					+ "<br>Time: <b>" + timeFormat.format(myEvent.getEventViewTime()) + "</b>"
 					+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b> - " + myEvent.getEventViewType()
 					+ "<br>Level: <b>" + myEvent.getEventViewLevel() + "</b>"
 					+ "<br><i>created on "
-					+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
+					+ dateFormat.format(myEvent.getEventViewCreationDate()) + " by "
 					+ myEvent.getEventViewOrganizer() + "</i>"))
 				.addTo(map);
 		}
@@ -151,12 +153,12 @@ public class MapController {
 			new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
 					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventViewTitle()
 						+ "</b><br>" + event.getEventViewAddress()
-						+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewDate()) + "</b>"
-						+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(event.getEventViewTime()) + "</b>"
+						+ "<br>Date: <b>" + dateFormat.format(event.getEventViewDate()) + "</b>"
+						+ "<br>Time: <b>" + timeFormat.format(event.getEventViewTime()) + "</b>"
 						+ "<br><b>" + event.getEventViewDistance() + " KM</b> - " + event.getEventViewType()
 						+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
 						+ "<br><i>created on "
-						+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
+						+ dateFormat.format(event.getEventViewCreationDate()) + " by "
 						+ event.getEventViewOrganizer() + "</i>"))
 					.addMouseListener(Type.CLICK, ev -> {
 						Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
