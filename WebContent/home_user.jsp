@@ -55,11 +55,11 @@
 	}
 
 	City city = new CityDAO().getCity(SessionView.getCityEnum());
-	List<EventBeanView> events = new SystemFacade().getEventsFiltered();
+	List<EventBeanView> events = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 	List<String> typeList = Stream.of("LENTO", "MEDIO", "VELOCE", "FARTLEK", "RIPETUTE")
 			.collect(Collectors.toList());
 	List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-	List<EventBeanView> eventsFiltered = new SystemFacade().getEventsFiltered();
+	List<EventBeanView> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 %>
 
 <head>

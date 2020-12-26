@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 
@@ -54,6 +55,7 @@ public class EventBeanView {
 	public void setEventViewTime(String eventViewTime) throws InvalidFieldException {
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+			df.setTimeZone(TimeZone.getTimeZone("GMT+2"));
 			long ms = df.parse(eventViewTime).getTime();
 			Time time = new Time(ms);
 			this.eventViewTime = time;

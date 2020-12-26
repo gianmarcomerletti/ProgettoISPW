@@ -73,8 +73,8 @@ public class SendRequestControllerFX implements Initializable {
 		levelLabel.setText(selectedEvent.getEventLevel().toString());
 		descriptionTextArea.setText(selectedEvent.getEventDescription());
 		addressText.setText(selectedEvent.getEventAddress());
-		dateText.setText(selectedEvent.getEventDate().toLocalDate().toString());
-		timeText.setText(selectedEvent.getEventTime().toLocalTime().toString());
+		dateText.setText(selectedEvent.getEventDate().toString());
+		timeText.setText(selectedEvent.getEventTime().toString());
 		distanceText.setText(selectedEvent.getEventDistance().toString() + " KM");
 		typeText.setText(selectedEvent.getEventType().toString());
 		organizerText.setText(selectedEvent.getEventOrganizer().getUsername());

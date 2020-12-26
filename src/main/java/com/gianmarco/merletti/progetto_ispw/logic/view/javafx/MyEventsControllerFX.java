@@ -39,8 +39,6 @@ public class MyEventsControllerFX implements Initializable {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
 		URL url = App.class.getResource("single_event.fxml");
-		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-		fillEvents(myEvents, url);
 		List<EventBeanView> joinEvents = new SystemFacade().getJoinEvents();
 		fillEvents(joinEvents, url);
 	}

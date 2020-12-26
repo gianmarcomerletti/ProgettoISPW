@@ -1,5 +1,7 @@
 package com.gianmarco.merletti.progetto_ispw.logic.controller;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,11 +57,10 @@ public class LoadEventsController {
 		ArrayList<EventBeanView> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if	(event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
-				EventBeanView eventBean = getEventBeanViewFromEvent(event);
-				eventBeanList.add(eventBean);
-			}
+			EventBeanView eventBean = getEventBeanViewFromEvent(event);
+			eventBeanList.add(eventBean);
 		}
+
 		return eventBeanList;
 	}
 

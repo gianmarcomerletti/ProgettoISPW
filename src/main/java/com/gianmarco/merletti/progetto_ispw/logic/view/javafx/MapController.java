@@ -79,7 +79,7 @@ public class MapController {
 
 			// Initialize listeners
 			MouseListener mouseListener = (MouseEvent ev) -> {
-				SessionView.setEventSetOnMap(null);
+//				SessionView.setEventSetOnMap(null);
 
 				double latD = ev.getLatLng().getLatitude();
 				double longD = ev.getLatLng().getLongitude();
@@ -150,7 +150,7 @@ public class MapController {
 
 		// setting OTHER EVENTS
 		for (EventBeanView event : eventsFiltered) {
-			new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
+			Marker mk = new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
 					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventViewTitle()
 						+ "</b><br>" + event.getEventViewAddress()
 						+ "<br>Date: <b>" + dateFormat.format(event.getEventViewDate()) + "</b>"
@@ -159,13 +159,14 @@ public class MapController {
 						+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
 						+ "<br><i>created on "
 						+ dateFormat.format(event.getEventViewCreationDate()) + " by "
-						+ event.getEventViewOrganizer() + "</i>"))
-					.addMouseListener(Type.CLICK, ev -> {
-						Double latitude = Double.valueOf(ev.getLatLng().getLatitude());
-						Double longitude = Double.valueOf(ev.getLatLng().getLongitude());
+						+ event.getEventViewOrganizer() + "</i>"));
+			mk.addMouseListener(Type.CLICK, ev -> {
+						Double latitude = Double.valueOf(mk.getLatLng().getLatitude());
+						Double longitude = Double.valueOf(mk.getLatLng().getLongitude());
 						new SystemFacade().setEventForRequest(latitude, longitude);
-					})
-					.addTo(map);
+					});
+			mk.addTo(map);
+
 		}
 	}
 
