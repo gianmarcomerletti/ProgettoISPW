@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -53,6 +54,10 @@ public class MyRequestsControllerFX implements Initializable {
 	private Text typeDistanceText;
 	@FXML
 	private TextArea messageTextArea;
+	@FXML
+	private Button acceptButton;
+	@FXML
+	private Button rejectButton;
 
 	private RequestBean requestSelected;
 	private EventBean requestEvent;
@@ -81,6 +86,14 @@ public class MyRequestsControllerFX implements Initializable {
 				typeDistanceText.setText(requestEvent.getEventType().toString() + " - " +
 					requestEvent.getEventDistance() + " KM");
 				messageTextArea.setText(requestSelected.getRequestMessage());
+				if (!requestSelected.getRequestStatus().equals(Status.PENDING.toString())) {
+					acceptButton.setDisable(true);
+					rejectButton.setDisable(true);
+				} else {
+					acceptButton.setDisable(false);
+					rejectButton.setDisable(false);
+				}
+
 			}
 		});
 

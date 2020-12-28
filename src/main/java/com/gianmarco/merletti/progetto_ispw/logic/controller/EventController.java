@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
@@ -23,26 +22,25 @@ import com.google.gson.stream.JsonReader;
 
 public class EventController {
 
-	public boolean createEvent(EventBeanView eventBean) {
+	public boolean createEvent(EventBean eventBean) {
 		EventDAO dao = new EventDAO();
-		User organizer = new UserDAO().findUserFromUsername(eventBean.getEventViewOrganizer());
 
-		EventBean bean = new EventBean();
-		bean.setEventAddress(eventBean.getEventViewAddress());
-		bean.setEventCity(eventBean.getEventViewCity());
-		bean.setEventCreationDate(eventBean.getEventViewCreationDate());
-		bean.setEventDate(eventBean.getEventViewDate());
-		bean.setEventTitle(eventBean.getEventViewTitle());
-		bean.setEventDescription(eventBean.getEventViewDescription());
-		bean.setEventLatitude(eventBean.getEventViewLatitude());
-		bean.setEventLongitude(eventBean.getEventViewLongitude());
-		bean.setEventLevel(LevelEnum.valueOf(organizer.getLevel()));
-		bean.setEventDistance(eventBean.getEventViewDistance());
-		bean.setEventType(TypeEnum.valueOf(eventBean.getEventViewType()));
-		bean.setEventTime(eventBean.getEventViewTime());
-		bean.setEventOrganizer(organizer);
+		EventBean temp = new EventBean();
+		temp.setEventAddress(eventBean.getEventAddress());
+		temp.setEventCity(eventBean.getEventCity());
+		temp.setEventCreationDate(eventBean.getEventCreationDate());
+		temp.setEventDate(eventBean.getEventDate());
+		temp.setEventTitle(eventBean.getEventTitle());
+		temp.setEventDescription(eventBean.getEventDescription());
+		temp.setEventLatitude(eventBean.getEventLatitude());
+		temp.setEventLongitude(eventBean.getEventLongitude());
+		temp.setEventLevel(LevelEnum.valueOf(eventBean.getEventOrganizer().getLevel()));
+		temp.setEventDistance(eventBean.getEventDistance());
+		temp.setEventType(eventBean.getEventType());
+		temp.setEventTime(eventBean.getEventTime());
+		temp.setEventOrganizer(eventBean.getEventOrganizer());
 
-		Event event = dao.addEvent(bean);
+		Event event = dao.addEvent(temp);
 		if (dao.joinEvent(SessionView.getUsername(), event.getId()))
 			return (event != null);
 		return false;
@@ -117,5 +115,20 @@ public class EventController {
 		} catch (IOException e) {
 			e.getLocalizedMessage();
 		}
+	}
+
+	public boolean cancelEvent(EventBean eventBean) {
+		EventDAO dao = new EventDAO();
+
+		if (eventBean.getEventOrganizer().getUsername().equals(SessionView.getUsername())) {
+			return dao.deleteEvent(eventBean.getEventId());
+		}
+
+		return dao.cancelParticipation(SessionView.getUsername(), eventBean.getEventId());
+	}
+
+	public Integer getNumberParticipants(EventBean eventBean) {
+		EventDAO dao = new EventDAO();
+		return dao.getNumberParticipants(eventBean.getEventId());
 	}
 }

@@ -33,21 +33,21 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text id="titleText" layoutX="316.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Title" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="5.0">
+            <Text id="titleText" layoutX="316.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Title" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="5.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <JFXTextArea id="descriptionTextArea" editable="false" focusColor="#78787800" layoutX="204.0" layoutY="43.0" prefHeight="50.0" prefWidth="334.0" promptText="description" text="description" unFocusColor="#5c5c5c5f" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="174.0" AnchorPane.topAnchor="30.0" />
+            <JFXTextArea id="descriptionTextArea" editable="false" focusColor="#78787800" layoutX="204.0" layoutY="43.0" prefHeight="50.0" prefWidth="300.0" promptText="description" text="description" unFocusColor="#5c5c5c5f" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="30.0" />
             <Text id="addressText" fill="#797979" layoutX="200.0" layoutY="122.94921875" strokeType="OUTSIDE" strokeWidth="0.0" text="event address" AnchorPane.bottomAnchor="25.0" />
             <Text id="dateText" fill="#797979" layoutX="200.0" layoutY="138.94921875" strokeType="OUTSIDE" strokeWidth="0.0" text="event date" AnchorPane.bottomAnchor="10.0" />
-            <JFXButton id="cancelButton" layoutX="555.0" layoutY="21.0" style="-fx-background-color: red;" text="Cancel" textFill="WHITE" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
-            <ImageView id="icon" fitHeight="24.0" fitWidth="24.0" layoutX="564.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="45.0">
+            <JFXButton id="cancelButton" fx:id="cancelButton" layoutX="555.0" layoutY="21.0" style="-fx-background-color: #fff; -fx-border-color: red; -fx-border-radius: 3;" text="Cancel" textFill="RED" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="45.0" />
+            <ImageView id="icon" fitHeight="24.0" fitWidth="24.0" layoutX="564.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="10.0">
                <image>
                   <Image url="@img/icon-participants-24.png" />
                </image>
             </ImageView>
-            <Text id="usersText" layoutX="585.28125" layoutY="118.81640625" strokeType="OUTSIDE" strokeWidth="0.0" text="1" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0" />
+            <Text id="usersText" layoutX="585.28125" layoutY="118.81640625" strokeType="OUTSIDE" strokeWidth="0.0" text="1" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
             <Text id="organizerText" fill="#797979" layoutX="349.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="organized by" AnchorPane.bottomAnchor="10.0" />
          </children>
       </AnchorPane>

@@ -4,6 +4,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -65,7 +67,20 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="eventsContainer" />
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Created events">
+                     <content>
+                        <VBox fx:id="myEventsContainer" />
+                     </content>
+                </Tab>
+                <Tab text="Join events">
+                     <content>
+                        <VBox fx:id="joinEventsContainer" />
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </content>
       </ScrollPane>
    </center>

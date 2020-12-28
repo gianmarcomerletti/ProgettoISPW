@@ -212,6 +212,64 @@ public class EventDAO {
 
 	}
 
+	public boolean cancelParticipation(String username, Integer eventId) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		String query = "DELETE FROM organization "
+				+ "WHERE (idevent='" + eventId + "' AND "
+				+ "username='" + username + "');";
+		try (PreparedStatement st = conn.prepareStatement(query)){
+			st.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
+	public boolean deleteEvent(Integer eventId) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		String query = "DELETE FROM event "
+				+ "WHERE (idevent='" + eventId + "');";
+		try (PreparedStatement st = conn.prepareStatement(query)){
+			st.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean checkParticipation(String username, Integer eventId) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		String query = "SELECT * FROM organization "
+				+ "WHERE (idevent='" + eventId + "' AND "
+				+ "username='" + username + "');";
+		boolean result = false;
+
+		try (PreparedStatement statement = conn.prepareStatement(query);) {
+			ResultSet rs = statement.executeQuery();
+			result = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public Integer getNumberParticipants(Integer eventId) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		int counter = 0;
+		String query = "SELECT * FROM organization "
+				+ "WHERE (idevent='" + eventId + "');";
+		boolean result = false;
+
+		try (PreparedStatement statement = conn.prepareStatement(query);) {
+			ResultSet rs = statement.executeQuery();
+			while (rs.next())
+				counter++;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return counter;
+	}
 
 }

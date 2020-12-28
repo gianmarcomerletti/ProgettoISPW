@@ -4,7 +4,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.City;
@@ -130,36 +130,36 @@ public class MapController {
 	public void addEveryEvent(Map map) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-		List<EventBeanView> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
+		List<EventBean> myEvents = new SystemFacade().getMyEvents();
+		List<EventBean> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 
 		// setting MY EVENTS
-		for (EventBeanView myEvent : myEvents) {
-			new Marker(new LatLng(myEvent.getEventViewLatitude(), myEvent.getEventViewLongitude()), markerMyEventOpt)
-				.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventViewTitle()
-					+ "</u></b><br>" + myEvent.getEventViewAddress()
-					+ "<br>Date: <b>" + dateFormat.format(myEvent.getEventViewDate()) + "</b>"
-					+ "<br>Time: <b>" + timeFormat.format(myEvent.getEventViewTime()) + "</b>"
-					+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b> - " + myEvent.getEventViewType()
-					+ "<br>Level: <b>" + myEvent.getEventViewLevel() + "</b>"
+		for (EventBean myEvent : myEvents) {
+			new Marker(new LatLng(myEvent.getEventLatitude(), myEvent.getEventLongitude()), markerMyEventOpt)
+				.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b><u>" + myEvent.getEventTitle()
+					+ "</u></b><br>" + myEvent.getEventAddress()
+					+ "<br>Date: <b>" + dateFormat.format(myEvent.getEventDate()) + "</b>"
+					+ "<br>Time: <b>" + timeFormat.format(myEvent.getEventTime()) + "</b>"
+					+ "<br><b>" + myEvent.getEventDistance() + " KM</b> - " + myEvent.getEventType()
+					+ "<br>Level: <b>" + myEvent.getEventLevel() + "</b>"
 					+ "<br><i>created on "
-					+ dateFormat.format(myEvent.getEventViewCreationDate()) + " by "
-					+ myEvent.getEventViewOrganizer() + "</i>"))
+					+ dateFormat.format(myEvent.getEventCreationDate()) + " by "
+					+ myEvent.getEventOrganizer().getUsername() + "</i>"))
 				.addTo(map);
 		}
 
 		// setting OTHER EVENTS
-		for (EventBeanView event : eventsFiltered) {
-			Marker mk = new Marker(new LatLng(event.getEventViewLatitude(), event.getEventViewLongitude()), markerEventOpt)
-					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventViewTitle()
-						+ "</b><br>" + event.getEventViewAddress()
-						+ "<br>Date: <b>" + dateFormat.format(event.getEventViewDate()) + "</b>"
-						+ "<br>Time: <b>" + timeFormat.format(event.getEventViewTime()) + "</b>"
-						+ "<br><b>" + event.getEventViewDistance() + " KM</b> - " + event.getEventViewType()
-						+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
+		for (EventBean event : eventsFiltered) {
+			Marker mk = new Marker(new LatLng(event.getEventLatitude(), event.getEventLongitude()), markerEventOpt)
+					.bindPopup(new Popup(new PopupOptions().setMaxWidth(200)).setContent("<b>" + event.getEventTitle()
+						+ "</b><br>" + event.getEventAddress()
+						+ "<br>Date: <b>" + dateFormat.format(event.getEventDate()) + "</b>"
+						+ "<br>Time: <b>" + timeFormat.format(event.getEventTime()) + "</b>"
+						+ "<br><b>" + event.getEventDistance() + " KM</b> - " + event.getEventType()
+						+ "<br>Level: <b>" + event.getEventLevel() + "</b>"
 						+ "<br><i>created on "
-						+ dateFormat.format(event.getEventViewCreationDate()) + " by "
-						+ event.getEventViewOrganizer() + "</i>"));
+						+ dateFormat.format(event.getEventCreationDate()) + " by "
+						+ event.getEventOrganizer().getUsername() + "</i>"));
 			mk.addMouseListener(Type.CLICK, ev -> {
 						Double latitude = Double.valueOf(mk.getLatLng().getLatitude());
 						Double longitude = Double.valueOf(mk.getLatLng().getLongitude());

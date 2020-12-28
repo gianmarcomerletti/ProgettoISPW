@@ -2,6 +2,8 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
@@ -70,6 +72,16 @@ public class EventBean {
 
 	public void setEventTime(Time eventTime) {
 		this.eventTime = eventTime;
+	}
+
+	public void setEventTime(String eventTime) {
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		try {
+			Time time = new Time(format.parse(eventTime).getTime());
+			setEventTime(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Double getEventLatitude() {

@@ -65,8 +65,8 @@ public class RequestDAO {
 	public List<Request> findByUser(String username) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		List<Request> result = new ArrayList<>();
-		String query = "SELECT * FROM request "
-				+ "WHERE (user='" + username + "');";
+		String query = "SELECT * FROM request INNER JOIN event ON event.idevent=request.id_event "
+				+ "WHERE (organizer='" + username + "');";
 		try (PreparedStatement st = conn.prepareStatement(query)) {
 			ResultSet rs = st.executeQuery();
 
@@ -103,11 +103,12 @@ public class RequestDAO {
 		return request;
 	}
 
-	public Request deleteRequest(RequestBean bean) {
+	public Request refuseRequest(RequestBean bean) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
 		request.setFromBean(bean);
-		String query = "DELETE FROM request "
+		String query = "UPDATE request "
+				+ "SET status='" + Status.REJECTED.toString() + "' "
 				+ IDREQUEST_COND_STRING + request.getIdRequest() + "');";
 		try (PreparedStatement st = conn.prepareStatement(query);) {
 			st.executeUpdate();

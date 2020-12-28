@@ -6,10 +6,12 @@ import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
+import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.collections.FXCollections;
@@ -75,34 +77,30 @@ public class CreateEventControllerFX implements Initializable {
 			return;
 		}
 
-		EventBeanView eventBean = new EventBeanView();
+		EventBean eventBean = new EventBean();
 		Date dateTime = new java.sql.Date(new java.util.Date().getTime());
 		Double latitude = SessionView.getLatitudeSetOnMap();
 		Double longitude = SessionView.getLongitudeSetOnMap();
 		AddressBean address = SessionView.getAddressSetOnMap();
 
-		eventBean.setEventViewTitle(eventTitleTextField.getText());
-		eventBean.setEventViewDescription(eventDescriptionTextArea.getText());
-		eventBean.setEventViewCreationDate(dateTime);
-		eventBean.setEventViewDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
+		eventBean.setEventTitle(eventTitleTextField.getText());
+		eventBean.setEventDescription(eventDescriptionTextArea.getText());
+		eventBean.setEventCreationDate(dateTime);
+		eventBean.setEventDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
+		eventBean.setEventTime(eventTimeTextField.getText());
+		eventBean.setEventLatitude(latitude);
+		eventBean.setEventLongitude(longitude);
+		eventBean.setEventAddress(address.getRoad());
+		eventBean.setEventType(TypeEnum.valueOf(typeChoiceBox.getValue()));
 		try {
-			eventBean.setEventViewTime(eventTimeTextField.getText());
-		} catch (InvalidFieldException e) {
-			new Alert(AlertType.WARNING, "Invalid time field!", ButtonType.OK).showAndWait();
-			return;
-		}
-		eventBean.setEventViewLatitude(latitude);
-		eventBean.setEventViewLongitude(longitude);
-		eventBean.setEventViewAddress(address.getRoad());
-		eventBean.setEventViewType(typeChoiceBox.getValue());
-		try {
-			eventBean.setEventViewDistance(Integer.parseInt(eventDistanceTextField.getText()));
+			eventBean.setEventDistance(Integer.parseInt(eventDistanceTextField.getText()));
 		} catch (NumberFormatException e) {
 			new Alert(AlertType.WARNING, "Invalid distance field!", ButtonType.OK).showAndWait();
 			return;
 		}
-		eventBean.setEventViewCity(address.getCity().toUpperCase());
-		eventBean.setEventViewOrganizer(SessionView.getUsername());
+		eventBean.setEventCity(address.getCity().toUpperCase());
+		eventBean.setEventOrganizer(
+				new UserDAO().findUserFromUsername(SessionView.getUsername()));
 
 
 		new SystemFacade().createEvent(eventBean);

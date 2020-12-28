@@ -134,11 +134,11 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Text>
-                                    <JFXButton alignment="CENTER" onAction="#rejectRequest" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #FF4949;" text="Reject" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                    <JFXButton alignment="CENTER" onAction="#acceptRequest" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #5fe214;" text="Accept" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                    <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                                    <Text fx:id="addressText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                    <Text fx:id="typeDistanceText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
+                                    <JFXButton fx:id="rejectButton" alignment="CENTER" onAction="#rejectRequest" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #FF4949;" text="Reject" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <JFXButton fx:id="acceptButton" alignment="CENTER" onAction="#acceptRequest" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #5fe214;" text="Accept" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <Text fx:id="dateText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                                    <Text fx:id="addressText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Text fx:id="typeDistanceText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="3" GridPane.halignment="LEFT" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Message from user" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" size="12.0" />

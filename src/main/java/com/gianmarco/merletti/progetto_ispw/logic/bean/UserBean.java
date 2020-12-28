@@ -59,5 +59,4 @@ public class UserBean {
 		this.city = city;
 	}
 
-
 }
