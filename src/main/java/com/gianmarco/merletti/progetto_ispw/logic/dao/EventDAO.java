@@ -12,6 +12,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
+import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 
 public class EventDAO {
 
@@ -20,27 +21,24 @@ public class EventDAO {
 		Event eventToAdd = new Event();
 		eventToAdd.setFromBean(eventBean);
 
-		String query = ("INSERT INTO event (title, description, creation_date, date, time, address, city, latitude, longitude, "
-				+ "organizer, level, distance, type) "
-				+ "VALUES ('"
-				+ eventToAdd.getTitle() + "', '"
-				+ eventToAdd.getDescription() + "', '"
-				+ eventToAdd.getCreationDate() + "', '"
-				+ eventToAdd.getDate() + "', '"
-				+ eventToAdd.getTime() + "', '"
-				+ eventToAdd.getAddress() + "', '"
-				+ eventToAdd.getCity() + "', '"
-				+ eventToAdd.getLatitude() + "', '"
-				+ eventToAdd.getLongitude() + "', '"
-				+ eventToAdd.getOrganizerUser().getUsername() + "', '"
-				+ eventToAdd.getLevel() + "', '"
-				+ eventToAdd.getDistance() + "', '"
-				+ eventToAdd.getType() + "');");
-		try (PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))	{
+		try (PreparedStatement st = conn.prepareStatement(SQL_ADD_EVENT, Statement.RETURN_GENERATED_KEYS))	{
+			st.setString(1, eventToAdd.getTitle());
+			st.setString(2, eventToAdd.getDescription());
+			st.setDate(3, eventToAdd.getCreationDate());
+			st.setDate(4, eventToAdd.getDate());
+			st.setTime(5, eventToAdd.getTime());
+			st.setString(6, eventToAdd.getAddress());
+			st.setString(7, eventToAdd.getCity());
+			st.setDouble(8, eventToAdd.getLatitude());
+			st.setDouble(9, eventToAdd.getLongitude());
+			st.setString(10, eventToAdd.getOrganizerUser().getUsername());
+			st.setString(11, eventToAdd.getLevel());
+			st.setInt(12, eventToAdd.getDistance());
+			st.setString(13, eventToAdd.getType());
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
 			rs.next();
-			eventToAdd.setId(rs.getInt(1));
+			eventToAdd.setId(rs.getInt(COLUMN_IDEVENT));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -49,27 +47,26 @@ public class EventDAO {
 
 	public Event findById(Integer id) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "SELECT * FROM event "
-				+ "WHERE (idevent=" + id.toString() + ");";
-		try (PreparedStatement st = conn.prepareStatement(query)){
 
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_EVENT_FROM_ID)){
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Event eventFound = new Event();
-				eventFound.setId(rs.getInt(1));
-				eventFound.setTitle(rs.getString(2));
-				eventFound.setDescription(rs.getString(3));
-				eventFound.setCreationDate(rs.getDate(4));
-				eventFound.setDate(rs.getDate(5));
-				eventFound.setTime(rs.getTime(6));
-				eventFound.setAddress(rs.getString(7));
-				eventFound.setCity(rs.getString(8));
-				eventFound.setLatitude(rs.getDouble(9));
-				eventFound.setLongitude(rs.getDouble(10));
-				eventFound.setLevel(rs.getString(12));
-				eventFound.setDistance(rs.getInt(13));
-				eventFound.setType(rs.getString(14));
-				eventFound.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+				eventFound.setId(rs.getInt(COLUMN_IDEVENT));
+				eventFound.setTitle(rs.getString(COLUMN_TITLE));
+				eventFound.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				eventFound.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				eventFound.setDate(rs.getDate(COLUMN_DATE));
+				eventFound.setTime(rs.getTime(COLUMN_TIME));
+				eventFound.setAddress(rs.getString(COLUMN_ADDRESS));
+				eventFound.setCity(rs.getString(COLUMN_CITY));
+				eventFound.setLatitude(rs.getDouble(COLUMN_LATITUDE));
+				eventFound.setLongitude(rs.getDouble(COLUMN_LONGITUDE));
+				eventFound.setLevel(rs.getString(COLUMN_LEVEL));
+				eventFound.setDistance(rs.getInt(COLUMN_DISTANCE));
+				eventFound.setType(rs.getString(COLUMN_TYPE));
+				eventFound.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(COLUMN_ORGANIZER)));
 
 				return eventFound;
 			}
@@ -85,26 +82,25 @@ public class EventDAO {
 		Connection conn = DBConnect.getInstance().getConnection();
 		List<Event> result = new ArrayList<>();
 		List<String> organizers = new ArrayList<>();
-		String query = "SELECT * FROM event;";
-		try (PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_EVENTS)) {
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				Event eventElem = new Event();
-				eventElem.setId(rs.getInt(1));
-				eventElem.setTitle(rs.getString(2));
-				eventElem.setDescription(rs.getString(3));
-				eventElem.setCreationDate(rs.getDate(4));
-				eventElem.setDate(rs.getDate(5));
-				eventElem.setTime(rs.getTime(6));
-				eventElem.setAddress(rs.getString(7));
-				eventElem.setCity(rs.getString(8));
-				eventElem.setLatitude(rs.getDouble(9));
-				eventElem.setLongitude(rs.getDouble(10));
-				organizers.add(rs.getString(11));
-				eventElem.setLevel(rs.getString(12));
-				eventElem.setDistance(rs.getInt(13));
-				eventElem.setType(rs.getString(14));
+				eventElem.setId(rs.getInt(COLUMN_IDEVENT));
+				eventElem.setTitle(rs.getString(COLUMN_TITLE));
+				eventElem.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				eventElem.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				eventElem.setDate(rs.getDate(COLUMN_DATE));
+				eventElem.setTime(rs.getTime(COLUMN_TIME));
+				eventElem.setAddress(rs.getString(COLUMN_ADDRESS));
+				eventElem.setCity(rs.getString(COLUMN_CITY));
+				eventElem.setLatitude(rs.getDouble(COLUMN_LATITUDE));
+				eventElem.setLongitude(rs.getDouble(COLUMN_LONGITUDE));
+				organizers.add(rs.getString(COLUMN_ORGANIZER));
+				eventElem.setLevel(rs.getString(COLUMN_LEVEL));
+				eventElem.setDistance(rs.getInt(COLUMN_DISTANCE));
+				eventElem.setType(rs.getString(COLUMN_TYPE));
 				result.add(eventElem);
 			}
 
@@ -126,26 +122,25 @@ public class EventDAO {
 		Connection conn = DBConnect.getInstance().getConnection();
 		List<Event> result = new ArrayList<>();
 		List<String> organizers = new ArrayList<>();
-		String query = "SELECT * FROM event INNER JOIN organization ON organization.idevent=event.idevent "
-				+ "WHERE (username='" + username + "');";
-		try (PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_JOIN_EVENTS_FROM_USERNAME)) {
+			st.setString(1, username);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				Event eventJoinElem = new Event();
-				eventJoinElem.setId(rs.getInt(1));
-				eventJoinElem.setTitle(rs.getString(2));
-				eventJoinElem.setDescription(rs.getString(3));
-				eventJoinElem.setCreationDate(rs.getDate(4));
-				eventJoinElem.setDate(rs.getDate(5));
-				eventJoinElem.setTime(rs.getTime(6));
-				eventJoinElem.setAddress(rs.getString(7));
-				eventJoinElem.setCity(rs.getString(8));
-				eventJoinElem.setLatitude(rs.getDouble(9));
-				eventJoinElem.setLongitude(rs.getDouble(10));
-				organizers.add(rs.getString(11));
-				eventJoinElem.setLevel(rs.getString(12));
-				eventJoinElem.setDistance(rs.getInt(13));
-				eventJoinElem.setType(rs.getString(14));
+				eventJoinElem.setId(rs.getInt(COLUMN_IDEVENT));
+				eventJoinElem.setTitle(rs.getString(COLUMN_TITLE));
+				eventJoinElem.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				eventJoinElem.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				eventJoinElem.setDate(rs.getDate(COLUMN_DATE));
+				eventJoinElem.setTime(rs.getTime(COLUMN_TIME));
+				eventJoinElem.setAddress(rs.getString(COLUMN_ADDRESS));
+				eventJoinElem.setCity(rs.getString(COLUMN_CITY));
+				eventJoinElem.setLatitude(rs.getDouble(COLUMN_LATITUDE));
+				eventJoinElem.setLongitude(rs.getDouble(COLUMN_LONGITUDE));
+				organizers.add(rs.getString(COLUMN_ORGANIZER));
+				eventJoinElem.setLevel(rs.getString(COLUMN_LEVEL));
+				eventJoinElem.setDistance(rs.getInt(COLUMN_DISTANCE));
+				eventJoinElem.setType(rs.getString(COLUMN_TYPE));
 				result.add(eventJoinElem);
 			}
 
@@ -163,27 +158,26 @@ public class EventDAO {
 
 	public Event findByLatLong(Double latitude, Double longitude) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "SELECT * FROM event "
-				+ "WHERE (latitude='" + latitude + "' AND "
-				+ "longitude='" + longitude + "');";
-		try (PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_EVENT_FROM_LATLONG)) {
+			st.setDouble(1, latitude);
+			st.setDouble(2, longitude);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Event eventFoundByLatLong = new Event();
-				eventFoundByLatLong.setId(rs.getInt(1));
-				eventFoundByLatLong.setTitle(rs.getString(2));
-				eventFoundByLatLong.setDescription(rs.getString(3));
-				eventFoundByLatLong.setCreationDate(rs.getDate(4));
-				eventFoundByLatLong.setDate(rs.getDate(5));
-				eventFoundByLatLong.setTime(rs.getTime(6));
-				eventFoundByLatLong.setAddress(rs.getString(7));
-				eventFoundByLatLong.setCity(rs.getString(8));
-				eventFoundByLatLong.setLatitude(rs.getDouble(9));
-				eventFoundByLatLong.setLongitude(rs.getDouble(10));
-				eventFoundByLatLong.setLevel(rs.getString(12));
-				eventFoundByLatLong.setDistance(rs.getInt(13));
-				eventFoundByLatLong.setType(rs.getString(14));
-				eventFoundByLatLong.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(11)));
+				eventFoundByLatLong.setId(rs.getInt(COLUMN_IDEVENT));
+				eventFoundByLatLong.setTitle(rs.getString(COLUMN_TITLE));
+				eventFoundByLatLong.setDescription(rs.getString(COLUMN_DESCRIPTION));
+				eventFoundByLatLong.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				eventFoundByLatLong.setDate(rs.getDate(COLUMN_DATE));
+				eventFoundByLatLong.setTime(rs.getTime(COLUMN_TIME));
+				eventFoundByLatLong.setAddress(rs.getString(COLUMN_ADDRESS));
+				eventFoundByLatLong.setCity(rs.getString(COLUMN_CITY));
+				eventFoundByLatLong.setLatitude(rs.getDouble(COLUMN_LATITUDE));
+				eventFoundByLatLong.setLongitude(rs.getDouble(COLUMN_LONGITUDE));
+				eventFoundByLatLong.setLevel(rs.getString(COLUMN_LEVEL));
+				eventFoundByLatLong.setDistance(rs.getInt(COLUMN_DISTANCE));
+				eventFoundByLatLong.setType(rs.getString(COLUMN_TYPE));
+				eventFoundByLatLong.setOrganizerUser(new UserDAO().findUserFromUsername(rs.getString(COLUMN_ORGANIZER)));
 				return eventFoundByLatLong;
 			}
 
@@ -196,11 +190,10 @@ public class EventDAO {
 
 	public boolean joinEvent(String username, Integer eventId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = ("INSERT INTO organization "
-				+ "VALUES ('"
-				+ eventId + "', '"
-				+ username + "');");
-		try (PreparedStatement st = conn.prepareStatement(query)){
+
+		try (PreparedStatement st = conn.prepareStatement(SQL_JOIN_EVENT)){
+			st.setInt(1, eventId);
+			st.setString(2, username);
 			st.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -260,7 +253,6 @@ public class EventDAO {
 		int counter = 0;
 		String query = "SELECT * FROM organization "
 				+ "WHERE (idevent='" + eventId + "');";
-		boolean result = false;
 
 		try (PreparedStatement statement = conn.prepareStatement(query);) {
 			ResultSet rs = statement.executeQuery();

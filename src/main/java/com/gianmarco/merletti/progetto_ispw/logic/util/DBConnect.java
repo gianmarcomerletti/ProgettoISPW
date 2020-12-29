@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 
 public class DBConnect {
 
@@ -14,14 +15,10 @@ public class DBConnect {
 	private static DBConnect instance;
 	private Connection connection;
 
-	private String username = "root";
-	private String psw = "2202";
-	private String jdbcURL = "jdbc:mysql://localhost:3306/progettoispw?serverTimezone=UTC";
-
 	private DBConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connection = DriverManager.getConnection(jdbcURL, username, psw);
+			this.connection = DriverManager.getConnection(URL_DB, USERNAME_DB, PSW_DB);
 			Logger.getLogger("together_run").log(Level.INFO, "Database connesso");
 		} catch (ClassNotFoundException | SQLException e) {
 			Logger.getLogger("together_run").log(Level.SEVERE, "Impossibile connettersi al database");

@@ -9,24 +9,24 @@ import java.util.Arrays;
 import com.gianmarco.merletti.progetto_ispw.logic.model.City;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
+import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 
 public class CityDAO {
 
 	public City getCity(CityEnum cityEnum) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "SELECT * FROM City "
-				+ "WHERE (name='" + cityEnum.toString() + "');";
-		try (PreparedStatement statement = conn.prepareStatement(query)) {
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_CITY)) {
 
+			statement.setString(1, cityEnum.toString());
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
 				City result = new City();
-				result.setName(rs.getString("name"));
-				result.setLatitude(rs.getDouble("latitude"));
-				result.setLongitude(rs.getDouble("longitude"));
+				result.setName(rs.getString(COLUMN_NAME));
+				result.setLatitude(rs.getDouble(COLUMN_LATITUDE));
+				result.setLongitude(rs.getDouble(COLUMN_LONGITUDE));
 
-				String bordersArray = rs.getString("borders");
+				String bordersArray = rs.getString(COLUMN_BORDERS);
 				String[] borders = bordersArray.split("/");
 
 				Double[][] db = new Double[borders.length][];
