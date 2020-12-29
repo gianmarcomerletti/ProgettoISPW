@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
-import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 

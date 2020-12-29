@@ -79,7 +79,7 @@ public class MapController {
 
 			// Initialize listeners
 			MouseListener mouseListener = (MouseEvent ev) -> {
-//				SessionView.setEventSetOnMap(null);
+				SessionView.setEventSetOnMap(null);
 
 				double latD = ev.getLatLng().getLatitude();
 				double longD = ev.getLatLng().getLongitude();

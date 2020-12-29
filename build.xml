@@ -25,17 +25,16 @@
         <pathelement location="C:/Users/giamp/.m2/repository/org/openjfx/javafx-media/11.0.1/javafx-media-11.0.1.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/org/openjfx/javafx-media/11.0.1/javafx-media-11.0.1-win.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/com/jfoenix/jfoenix/8.0.10/jfoenix-8.0.10.jar"/>
-        <pathelement location="C:/Users/giamp/.m2/repository/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar"/>
-        <pathelement location="C:/Users/giamp/.m2/repository/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
+        <pathelement location="C:/Users/giamp/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/com/dukescript/api/leaflet4j/0.7.7/leaflet4j-0.7.7.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/org/netbeans/html/net.java.html.boot/1.7/net.java.html.boot-1.7.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/org/netbeans/html/net.java.html/1.7/net.java.html-1.7.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/org/netbeans/html/net.java.html.boot.fx/1.7/net.java.html.boot.fx-1.7.jar"/>
-        <pathelement location="C:/Users/giamp/.m2/repository/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/commons-codec/commons-codec/1.14/commons-codec-1.14.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/mysql/mysql-connector-java/8.0.22/mysql-connector-java-8.0.22.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar"/>
         <pathelement location="C:/Users/giamp/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"/>
+        <pathelement location="C:/Users/giamp/.m2/repository/org/controlsfx/controlsfx/8.40.18/controlsfx-8.40.18.jar"/>
     </path>
     <path id="Web App Libraries.libraryclasspath"/>
     <path id="EAR Libraries.libraryclasspath"/>
@@ -47,6 +46,10 @@
         <path refid="EAR Libraries.libraryclasspath"/>
     </path>
     <path id="run.App (2).classpath">
+        <path refid="ProgettoISPW.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.App (3).classpath">
         <path refid="ProgettoISPW.classpath"/>
         <path refid="Maven Dependencies.libraryclasspath"/>
     </path>
@@ -107,6 +110,11 @@
     <target name="App (2)">
         <java classname="com.gianmarco.merletti.progetto_ISPW.logic.app.App" failonerror="true" fork="yes">
             <classpath refid="run.App (2).classpath"/>
+        </java>
+    </target>
+    <target name="App (3)">
+        <java classname="com.gianmarco.merletti.progetto_ispw.logic.app.App" failonerror="true" fork="yes">
+            <classpath refid="run.App (3).classpath"/>
         </java>
     </target>
 </project>
