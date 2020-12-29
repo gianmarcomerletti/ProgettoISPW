@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
@@ -74,13 +75,13 @@ public class EventBean {
 		this.eventTime = eventTime;
 	}
 
-	public void setEventTime(String eventTime) {
+	public void setEventTime(String eventTime) throws InvalidFieldException {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		try {
 			Time time = new Time(format.parse(eventTime).getTime());
 			setEventTime(time);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			throw new InvalidFieldException();
 		}
 	}
 

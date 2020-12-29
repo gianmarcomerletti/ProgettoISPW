@@ -79,6 +79,11 @@
                         <VBox fx:id="joinEventsContainer" />
                      </content>
                 </Tab>
+                  <Tab text="Past Events">
+                     <content>
+                        <VBox fx:id="myPastEventsContainer" />
+                     </content>
+                  </Tab>
               </tabs>
             </TabPane>
          </content>

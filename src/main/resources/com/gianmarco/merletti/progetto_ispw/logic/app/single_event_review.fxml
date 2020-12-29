@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #fff; -fx-border-style: solid none none none; -fx-border-color: #bfbfbf; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+         <children>
+            <Label id="levelLabel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="5.0" layoutX="504.0" layoutY="14.0" style="-fx-background-color: RED; -fx-background-radius: 3;" text="intermediate" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+               </padding>
+            </Label>
+            <Text id="distanceText" layoutX="59.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10 KM" textAlignment="CENTER" wrappingWidth="120.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Text>
+            <Text id="titleText" layoutX="25.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Title" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <Text id="addressText" fill="#797979" layoutX="191.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="event address" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="15.0" />
+            <Text id="dateText" fill="#797979" layoutX="191.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="event date" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="180.0" />
+            <Text id="organizerText" fill="#797979" layoutX="362.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="organized by" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="220.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Text>
+            <JFXButton id="rateButton" layoutX="489.0" layoutY="41.0" style="-fx-background-color: #007bff; -fx-border-radius: 3;" text="Rate organizer" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

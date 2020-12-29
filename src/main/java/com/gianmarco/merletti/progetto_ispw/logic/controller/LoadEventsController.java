@@ -1,6 +1,7 @@
 package com.gianmarco.merletti.progetto_ispw.logic.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
@@ -23,8 +24,9 @@ public class LoadEventsController {
 		ArrayList<EventBean> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if	((event.getCity().equals(city.toString())) &&
-					(!event.getOrganizerUser().getUsername().equals(SessionView.getUsername()))) {
+			if	(event.getCity().equals(city.toString()) &&
+					!event.getOrganizerUser().getUsername().equals(SessionView.getUsername())
+					&& event.getDate().after(new Date())) {
 				EventBean eventBean = getEventBeanFromEvent(event);
 				eventBeanList.add(eventBean);
 			}
@@ -32,13 +34,28 @@ public class LoadEventsController {
 		return eventBeanList;
 	}
 
-	public List<EventBean> getMyEvents() {
+	public List<EventBean> getMyActiveEvents() {
 		EventDAO dao = new EventDAO();
 		List<Event> events = dao.findAll();
 		ArrayList<EventBean> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if	(event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
+			if	(event.getOrganizerUser().getUsername().equals(SessionView.getUsername())
+					&& event.getDate().after(new Date())) {
+				EventBean eventBean = getEventBeanFromEvent(event);
+				eventBeanList.add(eventBean);
+			}
+		}
+		return eventBeanList;
+	}
+
+	public List<EventBean> getMyPastEvents() {
+		EventDAO dao = new EventDAO();
+		List<Event> events = dao.findJoinEvent(SessionView.getUsername());
+		ArrayList<EventBean> eventBeanList = new ArrayList<>();
+
+		for (Event event : events) {
+			if	(event.getDate().before(new Date())) {
 				EventBean eventBean = getEventBeanFromEvent(event);
 				eventBeanList.add(eventBean);
 			}
@@ -53,7 +70,8 @@ public class LoadEventsController {
 		ArrayList<EventBean> eventBeanList = new ArrayList<>();
 
 		for (Event event : events) {
-			if (!event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
+			if (!event.getOrganizerUser().getUsername().equals(SessionView.getUsername())
+					&& event.getDate().after(new Date())) {
 				EventBean eventBean = getEventBeanFromEvent(event);
 				eventBeanList.add(eventBean);
 			}

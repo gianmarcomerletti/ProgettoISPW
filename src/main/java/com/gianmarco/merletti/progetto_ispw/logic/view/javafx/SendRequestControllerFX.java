@@ -1,6 +1,8 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
@@ -73,8 +75,10 @@ public class SendRequestControllerFX implements Initializable {
 		levelLabel.setText(selectedEvent.getEventLevel().toString());
 		descriptionTextArea.setText(selectedEvent.getEventDescription());
 		addressText.setText(selectedEvent.getEventAddress());
-		dateText.setText(selectedEvent.getEventDate().toString());
-		timeText.setText(selectedEvent.getEventTime().toString());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		dateText.setText(df.format(selectedEvent.getEventDate()));
+		DateFormat tf = new SimpleDateFormat("HH:mm");
+		timeText.setText(tf.format(selectedEvent.getEventTime()));
 		distanceText.setText(selectedEvent.getEventDistance().toString() + " KM");
 		typeText.setText(selectedEvent.getEventType().toString());
 		organizerText.setText(selectedEvent.getEventOrganizer().getUsername());

@@ -130,7 +130,7 @@ public class MapController {
 	public void addEveryEvent(Map map) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-		List<EventBean> myEvents = new SystemFacade().getMyEvents();
+		List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
 		List<EventBean> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 
 		// setting MY EVENTS

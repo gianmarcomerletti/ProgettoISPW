@@ -28,10 +28,13 @@ public class SystemFacade {
 		return new LoadEventsController().getEventsByCity(cityEnum);
 	}
 
-	public List<EventBean> getMyEvents() {
-		return new LoadEventsController().getMyEvents();
+	public List<EventBean> getMyActiveEvents() {
+		return new LoadEventsController().getMyActiveEvents();
 	}
 
+	public List<EventBean> getMyPastEvents() {
+		return new LoadEventsController().getMyPastEvents();
+	}
 
 	public List<EventBean> getJoinEvents() {
 		return new LoadEventsController().getJoinEvents();

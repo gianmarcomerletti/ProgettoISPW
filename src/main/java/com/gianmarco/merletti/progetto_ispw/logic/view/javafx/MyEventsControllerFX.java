@@ -6,7 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
@@ -41,15 +42,21 @@ public class MyEventsControllerFX implements Initializable {
 	@FXML
 	private VBox joinEventsContainer;
 
+	@FXML
+	private VBox myPastEventsContainer;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
-		URL url = App.class.getResource("single_event.fxml");
-		List<EventBean> myEvents = new SystemFacade().getMyEvents();
-		fillEvents(myEvents, url, myEventsContainer);
+		URL urlSingleEventFXML = App.class.getResource("single_event.fxml");
+		URL urlSingleEventReviewFXML = App.class.getResource("single_event_review.fxml");
+		List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
+		fillEvents(myEvents, urlSingleEventFXML, myEventsContainer);
 		List<EventBean> joinEvents = new SystemFacade().getJoinEvents();
-		fillEvents(joinEvents, url, joinEventsContainer);
+		fillEvents(joinEvents, urlSingleEventFXML, joinEventsContainer);
+		List<EventBean> myPastEvents = new SystemFacade().getMyPastEvents();
+		fillEvents(myPastEvents, urlSingleEventReviewFXML, myPastEventsContainer);
 	}
 
 	private void fillEvents(List<EventBean> events, URL urlSingleEventFXML, VBox eventsContainer) {
@@ -111,6 +118,10 @@ public class MyEventsControllerFX implements Initializable {
 					case "cancelButton":
 						JFXButton cancelBtn = (JFXButton) nodeEvent;
 						cancelBtn.setOnAction(value -> cancelEvent(event));
+						break;
+					case "rateButton":
+						JFXButton rateBtn = (JFXButton) nodeEvent;
+						rateBtn.setOnAction(value -> Logger.getLogger("togheterrun").log(Level.INFO, "Rate button pressed!"));
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;

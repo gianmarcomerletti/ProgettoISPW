@@ -38,7 +38,7 @@ public class EventDAO {
 			st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
 			rs.next();
-			eventToAdd.setId(rs.getInt(COLUMN_IDEVENT));
+			eventToAdd.setId(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

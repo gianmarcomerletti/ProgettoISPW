@@ -9,6 +9,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
@@ -85,8 +86,18 @@ public class CreateEventControllerFX implements Initializable {
 		eventBean.setEventTitle(eventTitleTextField.getText());
 		eventBean.setEventDescription(eventDescriptionTextArea.getText());
 		eventBean.setEventCreationDate(dateTime);
-		eventBean.setEventDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
-		eventBean.setEventTime(eventTimeTextField.getText());
+		try {
+			eventBean.setEventDate(ConverterUtil.dateFromDatePicker(eventDatePicker));
+		} catch (InvalidFieldException e) {
+			new Alert(AlertType.WARNING, "Invalid date!", ButtonType.OK).showAndWait();
+			return;
+		}
+		try {
+			eventBean.setEventTime(eventTimeTextField.getText());
+		} catch (InvalidFieldException e) {
+			new Alert(AlertType.WARNING, "Invalid time!", ButtonType.OK).showAndWait();
+			return;
+		}
 		eventBean.setEventLatitude(latitude);
 		eventBean.setEventLongitude(longitude);
 		eventBean.setEventAddress(address.getRoad());
