@@ -11,10 +11,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
 import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
+import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 
 public class RequestDAO {
-
-	private static final String IDREQUEST_COND_STRING = "WHERE (idrequest='";
 
 	public Request addRequest(RequestBean requestBean) {
 		Connection conn = DBConnect.getInstance().getConnection();
@@ -22,15 +21,12 @@ public class RequestDAO {
 		request.setFromBean(requestBean);
 		request.setStatus(Status.PENDING.toString());
 
-		String query = ("INSERT INTO request (creation_date, id_event, user, message, status) "
-				+ "VALUES ('"
-				+ request.getCreationDate() + "', '"
-				+ request.getEvent().getId() + "', '"
-				+ request.getUser() + "', '"
-				+ request.getMessage() + "', '"
-				+ request.getStatus() + "');");
-
-		try (PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_ADD_REQUEST);) {
+			st.setDate(1, request.getCreationDate());
+			st.setInt(2, request.getEvent().getId());
+			st.setString(3, request.getUser());
+			st.setString(4, request.getMessage());
+			st.setString(5, request.getStatus());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -40,18 +36,17 @@ public class RequestDAO {
 
 	public Request findById(Integer id) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "SELECT * FROM request "
-				+ IDREQUEST_COND_STRING + id.toString() + "');";
-		try (PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_REQUEST_FROM_ID);) {
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				Request request = new Request();
-				request.setIdRequest(rs.getInt(1));
-				request.setCreationDate(rs.getDate(2));
-				request.setEvent(new EventDAO().findById(rs.getInt(3)));
-				request.setUser(rs.getString(4));
-				request.setMessage(rs.getString(5));
-				request.setStatus(rs.getString(6));
+				request.setIdRequest(rs.getInt(COLUMN_IDREQUEST));
+				request.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				request.setEvent(new EventDAO().findById(rs.getInt(COLUMN_IDEVENT)));
+				request.setUser(rs.getString(COLUMN_USER));
+				request.setMessage(rs.getString(COLUMN_MESSAGE));
+				request.setStatus(rs.getString(COLUMN_STATUS));
 				return request;
 			}
 
@@ -65,19 +60,18 @@ public class RequestDAO {
 	public List<Request> findByUser(String username) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		List<Request> result = new ArrayList<>();
-		String query = "SELECT * FROM request INNER JOIN event ON event.idevent=request.id_event "
-				+ "WHERE (organizer='" + username + "');";
-		try (PreparedStatement st = conn.prepareStatement(query)) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_REQUESTS_FROM_USER)) {
+			st.setString(1, username);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
 				Request requestElem = new Request();
-				requestElem.setIdRequest(rs.getInt(1));
-				requestElem.setCreationDate(rs.getDate(2));
-				requestElem.setEvent(new EventDAO().findById(rs.getInt(3)));
-				requestElem.setUser(rs.getString(4));
-				requestElem.setMessage(rs.getString(5));
-				requestElem.setStatus(rs.getString(6));
+				requestElem.setIdRequest(rs.getInt(COLUMN_IDREQUEST));
+				requestElem.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
+				requestElem.setEvent(new EventDAO().findById(rs.getInt(COLUMN_IDEVENT)));
+				requestElem.setUser(rs.getString(COLUMN_USER));
+				requestElem.setMessage(rs.getString(COLUMN_MESSAGE));
+				requestElem.setStatus(rs.getString(COLUMN_STATUS));
 				result.add(requestElem);
 			}
 
@@ -92,10 +86,9 @@ public class RequestDAO {
 		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
 		request.setFromBean(bean);
-		String query = "UPDATE request "
-				+ "SET status='" + Status.ACCEPTED.toString() + "' "
-				+ IDREQUEST_COND_STRING + request.getIdRequest() + "');";
-		try (PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_UPDATE_REQUEST_STATUS);) {
+			st.setString(1, Status.ACCEPTED.toString());
+			st.setInt(2, request.getIdRequest());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,10 +100,9 @@ public class RequestDAO {
 		Connection conn = DBConnect.getInstance().getConnection();
 		Request request = new Request();
 		request.setFromBean(bean);
-		String query = "UPDATE request "
-				+ "SET status='" + Status.REJECTED.toString() + "' "
-				+ IDREQUEST_COND_STRING + request.getIdRequest() + "');";
-		try (PreparedStatement st = conn.prepareStatement(query);) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_UPDATE_REQUEST_STATUS);) {
+			st.setString(1, Status.REJECTED.toString());
+			st.setInt(2, request.getIdRequest());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

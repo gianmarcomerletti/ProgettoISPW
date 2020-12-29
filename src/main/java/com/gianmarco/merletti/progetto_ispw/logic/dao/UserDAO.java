@@ -9,26 +9,21 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
+import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 
 public class UserDAO {
-
-	private static final String SELECTQUERY_STRING = "SELECT * FROM user ";
-	private static final String USERNAME_COND_STRING = "WHERE (username='";
 
 	public void insertUser(UserBean userBean) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		User userToInsert = new User();
 		userToInsert.setFromBean(userBean);
-		String query = ("INSERT INTO user "
-				+ "VALUES ('"
-				+ userToInsert.getUsername() + "', '"
-				+ userToInsert.getPwd() + "', '"
-				+ userToInsert.getName() + "', '"
-				+ userToInsert.getSurname() + "', '"
-				+ userToInsert.getLevel() + "', '"
-				+ userToInsert.getCity() + "');");
-		try (PreparedStatement statement = conn.prepareStatement(query)) {
-
+		try (PreparedStatement statement = conn.prepareStatement(SQL_ADD_USER)) {
+			statement.setString(1, userToInsert.getUsername());
+			statement.setString(2, userToInsert.getPwd());
+			statement.setString(3, userToInsert.getName());
+			statement.setString(4, userToInsert.getSurname());
+			statement.setString(5, userToInsert.getLevel());
+			statement.setString(6, userToInsert.getCity());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -37,11 +32,9 @@ public class UserDAO {
 
 	public boolean userExists(String username) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = SELECTQUERY_STRING
-				+ USERNAME_COND_STRING + username + "');";
 		boolean result = false;
-
-		try (PreparedStatement statement = conn.prepareStatement(query);) {
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_USER_FROM_USERNAME);) {
+			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -52,21 +45,19 @@ public class UserDAO {
 
 	public User findUser(UserBean userBean) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = SELECTQUERY_STRING
-					+ USERNAME_COND_STRING + userBean.getUsername() + "' AND "
-					+ "password='" + userBean.getPassword() + "');";
-		try (PreparedStatement statement = conn.prepareStatement(query)) {
-
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_USER_FROM_CREDENTIALS)) {
+			statement.setString(1, userBean.getUsername());
+			statement.setString(2, userBean.getPassword());
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
 				User userFound = new User();
-				userFound.setUsername(rs.getString("username"));
-				userFound.setPwd(rs.getString("password"));
-				userFound.setName(rs.getString("name"));
-				userFound.setSurname(rs.getString("surname"));
-				userFound.setLevel(rs.getString("level"));
-				userFound.setCity(rs.getString("city"));
+				userFound.setUsername(rs.getString(COLUMN_USERNAME));
+				userFound.setPwd(rs.getString(COLUMN_PASSWORD));
+				userFound.setName(rs.getString(COLUMN_NAME));
+				userFound.setSurname(rs.getString(COLUMN_SURNAME));
+				userFound.setLevel(rs.getString(COLUMN_LEVEL));
+				userFound.setCity(rs.getString(COLUMN_CITY));
 				return userFound;
 			}
 
@@ -79,21 +70,18 @@ public class UserDAO {
 
 	public User findUserFromUsername(String username) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = SELECTQUERY_STRING
-				+ USERNAME_COND_STRING + username + "');";
-
-		try (PreparedStatement statement = conn.prepareStatement(query)) {
-
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_USER_FROM_USERNAME)) {
+			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
 
 			if (rs.next()) {
 				User userFoundFromUsername = new User();
-				userFoundFromUsername.setUsername(rs.getString("username"));
-				userFoundFromUsername.setPwd(rs.getString("password"));
-				userFoundFromUsername.setName(rs.getString("name"));
-				userFoundFromUsername.setSurname(rs.getString("surname"));
-				userFoundFromUsername.setLevel(rs.getString("level"));
-				userFoundFromUsername.setCity(rs.getString("city"));
+				userFoundFromUsername.setUsername(rs.getString(COLUMN_USERNAME));
+				userFoundFromUsername.setPwd(rs.getString(COLUMN_PASSWORD));
+				userFoundFromUsername.setName(rs.getString(COLUMN_NAME));
+				userFoundFromUsername.setSurname(rs.getString(COLUMN_SURNAME));
+				userFoundFromUsername.setLevel(rs.getString(COLUMN_LEVEL));
+				userFoundFromUsername.setCity(rs.getString(COLUMN_CITY));
 				return userFoundFromUsername;
 			}
 
