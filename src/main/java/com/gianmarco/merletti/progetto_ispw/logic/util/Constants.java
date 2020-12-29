@@ -12,6 +12,7 @@ public final class Constants {
 
 	private static String SELECT_ALL_FROM = "SELECT * FROM ";
 	private static String INSERT_INTO = "INSERT INTO ";
+	private static String DELETE_FROM = "DELETE FROM ";
 
 	private static String TABLE_CITY = "city";
 	private static String TABLE_EVENT = "event";
@@ -76,4 +77,10 @@ public final class Constants {
 
 	public static String SQL_JOIN_EVENT = INSERT_INTO + TABLE_JOIN
 			+ " VALUES (?,?);";
+
+	public static String SQL_DELETE_JOIN = DELETE_FROM + TABLE_JOIN
+			+ " WHERE (" + COLUMN_IDEVENT + "=? AND " + COLUMN_USERNAME + "=?);";
+
+	public static String SQL_DELETE_EVENT = DELETE_FROM + TABLE_EVENT
+			+ " WHERE (" + COLUMN_IDEVENT + "=?);";
 }

@@ -207,10 +207,9 @@ public class EventDAO {
 
 	public boolean cancelParticipation(String username, Integer eventId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "DELETE FROM organization "
-				+ "WHERE (idevent='" + eventId + "' AND "
-				+ "username='" + username + "');";
-		try (PreparedStatement st = conn.prepareStatement(query)){
+		try (PreparedStatement st = conn.prepareStatement(SQL_DELETE_JOIN)){
+			st.setInt(1, eventId);
+			st.setString(2, username);
 			st.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -221,9 +220,8 @@ public class EventDAO {
 
 	public boolean deleteEvent(Integer eventId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "DELETE FROM event "
-				+ "WHERE (idevent='" + eventId + "');";
-		try (PreparedStatement st = conn.prepareStatement(query)){
+		try (PreparedStatement st = conn.prepareStatement(SQL_DELETE_EVENT)){
+			st.setInt(1, eventId);
 			st.executeUpdate();
 			return true;
 		} catch (SQLException e) {
