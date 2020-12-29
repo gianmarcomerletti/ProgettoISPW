@@ -232,12 +232,11 @@ public class EventDAO {
 
 	public boolean checkParticipation(String username, Integer eventId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		String query = "SELECT * FROM organization "
-				+ "WHERE (idevent='" + eventId + "' AND "
-				+ "username='" + username + "');";
 		boolean result = false;
 
-		try (PreparedStatement statement = conn.prepareStatement(query);) {
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_JOIN_FROM_USERNAME);) {
+			statement.setInt(1, eventId);
+			statement.setString(2, username);
 			ResultSet rs = statement.executeQuery();
 			result = rs.next();
 		} catch (SQLException e) {
@@ -249,10 +248,8 @@ public class EventDAO {
 	public Integer getNumberParticipants(Integer eventId) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		int counter = 0;
-		String query = "SELECT * FROM organization "
-				+ "WHERE (idevent='" + eventId + "');";
-
-		try (PreparedStatement statement = conn.prepareStatement(query);) {
+		try (PreparedStatement statement = conn.prepareStatement(SQL_FIND_JOIN_FROM_EVENT);) {
+			statement.setInt(1, eventId);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next())
 				counter++;

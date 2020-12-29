@@ -13,6 +13,7 @@ public final class Constants {
 	private final static String SELECT_ALL_FROM = "SELECT * FROM ";
 	private final static String INSERT_INTO = "INSERT INTO ";
 	private final static String DELETE_FROM = "DELETE FROM ";
+	private final static String WHERE_COND = " WHERE (";
 
 	private final static String TABLE_CITY = "city";
 	private final static String TABLE_EVENT = "event";
@@ -46,7 +47,7 @@ public final class Constants {
 
 
 	public final static String SQL_FIND_CITY = SELECT_ALL_FROM + TABLE_CITY
-				+ " WHERE (" + COLUMN_NAME + "=?);";
+				+ WHERE_COND + COLUMN_NAME + "=?);";
 
 	public final static String SQL_ADD_EVENT = INSERT_INTO + TABLE_EVENT
 			+ " (" + COLUMN_TITLE + ", "
@@ -63,24 +64,30 @@ public final class Constants {
 			+ COLUMN_DISTANCE + ", "
 			+ COLUMN_TYPE + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-	public static String SQL_FIND_EVENTS = SELECT_ALL_FROM + TABLE_EVENT + ";";
+	public final static String SQL_FIND_EVENTS = SELECT_ALL_FROM + TABLE_EVENT + ";";
 
-	public static String SQL_FIND_EVENT_FROM_ID = SELECT_ALL_FROM + TABLE_EVENT
-			+ " WHERE (" + COLUMN_IDEVENT + "=?);";
+	public final static String SQL_FIND_EVENT_FROM_ID = SELECT_ALL_FROM + TABLE_EVENT
+			+ WHERE_COND + COLUMN_IDEVENT + "=?);";
 
-	public static String SQL_FIND_JOIN_EVENTS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_EVENT
+	public final static String SQL_FIND_JOIN_EVENTS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_EVENT
 			+ " INNER JOIN " + TABLE_JOIN + "ON organization.idevent=event.idevent "
-			+ " WHERE (" + COLUMN_USERNAME + "=?);";
+			+ WHERE_COND + COLUMN_USERNAME + "=?);";
 
-	public static String SQL_FIND_EVENT_FROM_LATLONG = SELECT_ALL_FROM + TABLE_EVENT
-			+ " WHERE (" + COLUMN_LATITUDE + "=? AND " + COLUMN_LONGITUDE + "=?);";
+	public final static String SQL_FIND_EVENT_FROM_LATLONG = SELECT_ALL_FROM + TABLE_EVENT
+			+ WHERE_COND + COLUMN_LATITUDE + "=? AND " + COLUMN_LONGITUDE + "=?);";
 
-	public static String SQL_JOIN_EVENT = INSERT_INTO + TABLE_JOIN
+	public final static String SQL_JOIN_EVENT = INSERT_INTO + TABLE_JOIN
 			+ " VALUES (?,?);";
 
-	public static String SQL_DELETE_JOIN = DELETE_FROM + TABLE_JOIN
-			+ " WHERE (" + COLUMN_IDEVENT + "=? AND " + COLUMN_USERNAME + "=?);";
+	public final static String SQL_DELETE_JOIN = DELETE_FROM + TABLE_JOIN
+			+ WHERE_COND + COLUMN_IDEVENT + "=? AND " + COLUMN_USERNAME + "=?);";
 
-	public static String SQL_DELETE_EVENT = DELETE_FROM + TABLE_EVENT
-			+ " WHERE (" + COLUMN_IDEVENT + "=?);";
+	public final static String SQL_DELETE_EVENT = DELETE_FROM + TABLE_EVENT
+			+ WHERE_COND + COLUMN_IDEVENT + "=?);";
+
+	public final static String SQL_FIND_JOIN_FROM_USERNAME = SELECT_ALL_FROM + TABLE_JOIN
+			+ WHERE_COND + COLUMN_IDEVENT + "=? AND " + COLUMN_USERNAME + "=?);";
+
+	public final static String SQL_FIND_JOIN_FROM_EVENT = SELECT_ALL_FROM + TABLE_JOIN
+			+ WHERE_COND + COLUMN_IDEVENT + "=?);";
 }
