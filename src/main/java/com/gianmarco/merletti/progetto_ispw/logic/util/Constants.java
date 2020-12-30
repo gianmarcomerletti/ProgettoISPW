@@ -23,6 +23,7 @@ public final class Constants {
 	private static final String TABLE_JOIN = "organization";
 	private static final String TABLE_REQUEST = "request";
 	private static final String TABLE_USER = "user";
+	private static final String TABLE_REVIEW = "review";
 
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_LATITUDE = "latitude";
@@ -47,6 +48,10 @@ public final class Constants {
 	public static final String COLUMN_PASSWORD = "password";
 	public static final String COLUMN_USERNAME = "username";
 	public static final String COLUMN_SURNAME = "surname";
+	public static final String COLUMN_IDREVIEW = "idreview";
+	public static final String COLUMN_VALUE = "value";
+	public static final String COLUMN_TEXT = "text";
+	public static final String COLUMN_IMAGE = "image";
 
 
 	public static final String SQL_FIND_CITY = SELECT_ALL_FROM + TABLE_CITY
@@ -121,4 +126,6 @@ public final class Constants {
 	public static final String SQL_FIND_USER_FROM_CREDENTIALS = SELECT_ALL_FROM + TABLE_USER
 			+ WHERE_COND + COLUMN_USERNAME + AND_STRING + COLUMN_PASSWORD + END_STRING;
 
+	public static final String SQL_FIND_REVIEWS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_REVIEW
+			+ WHERE_COND + COLUMN_USERNAME + END_STRING;
 }
