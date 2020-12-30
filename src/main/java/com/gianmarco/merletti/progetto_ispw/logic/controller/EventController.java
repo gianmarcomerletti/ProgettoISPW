@@ -8,15 +8,22 @@ import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.model.Review;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 
 public class EventController {
 
@@ -129,4 +136,15 @@ public class EventController {
 		EventDAO dao = new EventDAO();
 		return dao.getNumberParticipants(eventBean.getEventId());
 	}
+
+	public boolean addReview(ReviewBean reviewBean) {
+		ReviewDAO dao = new ReviewDAO();
+		if (dao.checkReview(reviewBean.getEventBean().getEventId(), SessionView.getUsername())) {
+			new Alert(AlertType.ERROR, "You are already reviewed this event!", ButtonType.OK).showAndWait();
+			return false;
+		}
+		Review review = dao.addReview(reviewBean);
+		return (review != null);
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
@@ -76,6 +77,13 @@ public class SystemFacade {
 
 	public Integer getEventParticipants(EventBean event) {
 		return new EventController().getNumberParticipants(event);
+	}
+
+
+
+	public boolean sendReview(ReviewBean review) {
+		return new EventController().addReview(review);
+
 	}
 
 }

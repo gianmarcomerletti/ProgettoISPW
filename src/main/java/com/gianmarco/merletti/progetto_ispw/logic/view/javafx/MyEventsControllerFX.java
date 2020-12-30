@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
@@ -19,6 +21,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -27,6 +31,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MyEventsControllerFX implements Initializable {
 
@@ -121,7 +127,23 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "rateButton":
 						JFXButton rateBtn = (JFXButton) nodeEvent;
-						rateBtn.setOnAction(value -> Logger.getLogger("togheterrun").log(Level.INFO, "Rate button pressed!"));
+						rateBtn.setOnAction(value -> {
+							try {
+								FXMLLoader loader = new FXMLLoader(App.class.getResource("send_review_form.fxml"));
+								Parent root = loader.load();
+								SendReviewControllerFX controller = loader.getController();
+								controller.setControllerAndEvent(this, event);
+								Stage stage = new Stage();
+								stage.initModality(Modality.WINDOW_MODAL);
+								stage.initOwner(myPastEventsContainer.getScene().getWindow());
+								Scene scene = new Scene(root);
+								stage.setScene(scene);
+								stage.setResizable(false);
+								stage.show();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						});
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;
@@ -158,6 +180,12 @@ public class MyEventsControllerFX implements Initializable {
 		}
 	}
 
+	public void sendReview(ReviewBean review) {
+		new SystemFacade().sendReview(review);
+		App.setRoot("my_events");
+
+	}
+
 	@FXML
 	private void toMap() {
 		App.setRoot("home_user");
@@ -173,5 +201,6 @@ public class MyEventsControllerFX implements Initializable {
 		new SystemFacade().logout();
 		App.setRoot("login");
 	}
+
 
 }

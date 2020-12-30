@@ -128,4 +128,11 @@ public final class Constants {
 
 	public static final String SQL_FIND_REVIEWS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_REVIEW
 			+ WHERE_COND + COLUMN_USERNAME + END_STRING;
+
+	public static final String SQL_FIND_REVIEW = SELECT_ALL_FROM + TABLE_REVIEW
+			+ WHERE_COND + COLUMN_IDEVENT + AND_STRING + COLUMN_USER + END_STRING;
+
+	public static final String SQL_ADD_REVIEW = INSERT_INTO + TABLE_REVIEW
+			+ " VALUES (?,?,?,?,?);";
+
 }

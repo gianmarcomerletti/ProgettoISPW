@@ -4,8 +4,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 
 public class Review {
 
-	private Integer idReview;
-	private User user;
+	private String user;
 	private Event event;
 	private Integer value;
 	private String text;
@@ -16,26 +15,19 @@ public class Review {
 	}
 
 	public void setFromBean(ReviewBean reviewBean) {
-		this.setUser(reviewBean.getUserBean());
-		this.setEvent(reviewBean.getEventBean());
+		Event ev = new Event();
+		ev.setFromBean(reviewBean.getEventBean());
+		this.setEvent(ev);
 		this.setValue(reviewBean.getValueBean());
 		this.setText(reviewBean.getTextBean());
 		this.setImage(reviewBean.getImageBean());
 	}
 
-	public Integer getIdReview() {
-		return idReview;
-	}
-
-	public void setIdReview(Integer idReview) {
-		this.idReview = idReview;
-	}
-
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

@@ -7,7 +7,7 @@ public class ReviewBean {
 
 	private Integer idReviewBean;
 	private User userBean;
-	private Event eventBean;
+	private EventBean eventBean;
 	private Integer valueBean;
 	private String textBean;
 	private byte[] imageBean;
@@ -23,10 +23,10 @@ public class ReviewBean {
 	public void setUserBean(User userBean) {
 		this.userBean = userBean;
 	}
-	public Event getEventBean() {
+	public EventBean getEventBean() {
 		return eventBean;
 	}
-	public void setEventBean(Event eventBean) {
+	public void setEventBean(EventBean eventBean) {
 		this.eventBean = eventBean;
 	}
 	public Integer getValueBean() {
