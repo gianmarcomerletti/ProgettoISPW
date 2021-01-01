@@ -10,11 +10,8 @@ import java.util.List;
 import static com.gianmarco.merletti.progetto_ispw.logic.util.Constants.*;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Review;
-import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.DBConnect;
-import com.gianmarco.merletti.progetto_ispw.logic.util.Status;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 public class ReviewDAO {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.temporal.TemporalAccessor;
 import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
@@ -124,8 +125,8 @@ public class EventController {
 
 	public boolean cancelEvent(EventBean eventBean) {
 		EventDAO dao = new EventDAO();
-
-		if (eventBean.getEventOrganizer().getUsername().equals(SessionView.getUsername())) {
+		Event event = dao.findById(eventBean.getEventId());
+		if (event.getOrganizerUser().getUsername().equals(SessionView.getUsername())) {
 			return dao.deleteEvent(eventBean.getEventId());
 		}
 

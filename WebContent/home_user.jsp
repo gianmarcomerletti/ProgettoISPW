@@ -1,6 +1,7 @@
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum"%>
 <%@page import="java.time.ZoneId"%>
 <%@page import="java.sql.Date"%>
-<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.util.stream.Collectors"%>
 <%@page import="java.util.stream.Stream"%>
@@ -8,7 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBeanView"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.model.City"%>
@@ -36,30 +37,31 @@
 	SystemFacade facade = new SystemFacade();
 	if (evLatitude != null && evLongitude != null && evAddress != null &&
 			titleEvent != null && descriptionEvent != null && dateEvent != null && timeEvent != null && distanceEvent != null) {
-		EventBeanView bean = new EventBeanView();
-		bean.setEventViewTitle(titleEvent);
-		bean.setEventViewDescription(descriptionEvent);
-		bean.setEventViewDate(new java.sql.Date(new SimpleDateFormat("dd-MM-yyyy").parse(dateEvent).getTime()));
-		bean.setEventViewTime(timeEvent);
-		bean.setEventViewDistance(Integer.parseInt(distanceEvent));
-		bean.setEventViewAddress(evAddress);
-		bean.setEventViewLatitude(Double.parseDouble(evLatitude));
-		bean.setEventViewLongitude(Double.parseDouble(evLongitude));
-		bean.setEventViewCity(SessionView.getCityEnum().toString());
-		bean.setEventViewCreationDate(new java.sql.Date(new java.util.Date().getTime()));
-		bean.setEventViewOrganizer(SessionView.getUsername());
-		bean.setEventViewLevel(SessionView.getLevelEnum().toString());
-		bean.setEventViewType(typeEvent);
+		EventBean bean = new EventBean();
+		bean.setEventTitle(titleEvent);
+		bean.setEventDescription(descriptionEvent);
+		bean.setEventDate(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse(dateEvent).getTime()));
+		bean.setEventTime(timeEvent);
+		bean.setEventDistance(Integer.parseInt(distanceEvent));
+		bean.setEventAddress(evAddress);
+		bean.setEventLatitude(Double.parseDouble(evLatitude));
+		bean.setEventLongitude(Double.parseDouble(evLongitude));
+		bean.setEventCity(SessionView.getCityEnum().toString());
+		bean.setEventCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		bean.setEventOrganizer(new UserDAO().findUserFromUsername(SessionView.getUsername()));
+		bean.setEventLevel(SessionView.getLevelEnum());
+		bean.setEventType(TypeEnum.valueOf(typeEvent));
 		if (facade.createEvent(bean))
 			out.println("<script>alert('Event created');</script>");
 	}
 
 	City city = new CityDAO().getCity(SessionView.getCityEnum());
-	List<EventBeanView> events = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 	List<String> typeList = Stream.of("LENTO", "MEDIO", "VELOCE", "FARTLEK", "RIPETUTE")
 			.collect(Collectors.toList());
-	List<EventBeanView> myEvents = new SystemFacade().getMyEvents();
-	List<EventBeanView> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
+	List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
+	List<EventBean> eventsFiltered = new SystemFacade().getEventsByCity(SessionView.getCityEnum());
 %>
 
 <head>
@@ -88,7 +90,6 @@
 
 <title>TogetherRun</title>
 </head>
-<body>
 
 <body>
 	<!--  Navbar -->
@@ -104,17 +105,16 @@
 			<% out.println(SessionView.getLevelEnum());	%>
 			</span></li>
 		</ul>
-
 	</nav>
 	<div class="d-flex">
 		<!-- Sidebar -->
 		<div class="bg-light border-right" id="sidenav">
 			<div class id="sidenav-heading" >Menu</div>
 			<div class="list-group list-group-flush">
-				<a href="home_citizen.jsp" class="list-group-item list-group-item-action bg-light">Map</a>
+				<a href="home_user.jsp" class="list-group-item list-group-item-action bg-light">Map</a>
 				<a href="all_events.jsp" class="list-group-item list-group-item-action bg-light">All Events</a>
-				<a href="my_events.jsp" class="list-group-item list-group-item-action bg-light">My Events</a>
-				<a href="my_requests.jsp" class="list-group-item list-group-item-action bg-light">My Requests</a>
+				<a href="events.jsp" class="list-group-item list-group-item-action bg-light">My Events</a>
+				<a href="requests.jsp" class="list-group-item list-group-item-action bg-light">My Requests</a>
 			</div>
 		</div>
 
@@ -124,12 +124,12 @@
 				<form class="form-inline">
 					<button id="createEventModalBtnId" disabled
 						data-toggle="modal" data-target="#newEvent"
-						class="btn btn-sm btn-primary" type="button" style="margin-right:5px;">
+						class="btn btn-primary" type="button" style="margin-right:5px;">
 						Create an Event
 					</button>
 					<button id="sendRequestModalBtnId" disabled
 						data-toggle="modal" data-target="#newRequest"
-						class="btn btn-sm btn-primary" type="button">
+						class="btn btn-primary" type="button">
 						Send a Request to Join
 					</button>
 				</form>
@@ -400,28 +400,28 @@
 						id : 'togetherrun.ia9c2p12',
 						accessToken : 'jcr3K96ee99COTmahBGt_FvhIAv2c12ePbnKWBukCLk'
 					}).addTo(mymap);
-<%	for (EventBeanView myEvent : myEvents) {
-		out.println("L.marker([" + myEvent.getEventViewLatitude() + ", " + myEvent.getEventViewLongitude()
-				+ "], {icon: iconMyEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventViewTitle() + "</u></b><br>" + myEvent.getEventViewAddress()
-				+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewDate()) + "</b>"
-				+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(myEvent.getEventViewTime()) + "</b>"
-				+ "<br><b>" + myEvent.getEventViewDistance() + " KM</b> - " + myEvent.getEventViewType()
-				+ "<br>Level: <b>" + myEvent.getEventViewLevel() + "</b>"
+<%	for (EventBean myEvent : myEvents) {
+		out.println("L.marker([" + myEvent.getEventLatitude() + ", " + myEvent.getEventLongitude()
+				+ "], {icon: iconMyEvent}).addTo(mymap).bindPopup('<b><u>" + myEvent.getEventTitle() + "</u></b><br>" + myEvent.getEventAddress()
+				+ "<br>Date: <b>" + dateFormat.format(myEvent.getEventDate()) + "</b>"
+				+ "<br>Time: <b>" + timeFormat.format(myEvent.getEventTime()) + "</b>"
+				+ "<br><b>" + myEvent.getEventDistance() + " KM</b> - " + myEvent.getEventType()
+				+ "<br>Level: <b>" + myEvent.getEventLevel() + "</b>"
 				+ "<br><i>created on "
-				+ new SimpleDateFormat("dd-MM-yyyy").format(myEvent.getEventViewCreationDate()) + " by "
-				+ myEvent.getEventViewOrganizer() + "</i>')");
+				+ dateFormat.format(myEvent.getEventCreationDate()) + " by "
+				+ myEvent.getEventOrganizer().getUsername() + "</i>')");
 	}
 
-	for (EventBeanView event : eventsFiltered) {
-		out.println("L.marker([" + event.getEventViewLatitude() + ", " + event.getEventViewLongitude()
-				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventViewTitle() + "</b><br>" + event.getEventViewAddress()
-				+ "<br>Date: <b>" + new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewDate()) + "</b>"
-				+ "<br>Time: <b>" + new SimpleDateFormat("HH:mm").format(event.getEventViewTime()) + "</b>"
-				+ "<br><b>" + event.getEventViewDistance() + " KM</b> - " + event.getEventViewType()
-				+ "<br>Level: <b>" + event.getEventViewLevel() + "</b>"
+	for (EventBean event : eventsFiltered) {
+		out.println("L.marker([" + event.getEventLatitude() + ", " + event.getEventLongitude()
+				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventTitle() + "</b><br>" + event.getEventAddress()
+				+ "<br>Date: <b>" + dateFormat.format(event.getEventDate()) + "</b>"
+				+ "<br>Time: <b>" + timeFormat.format(event.getEventTime()) + "</b>"
+				+ "<br><b>" + event.getEventDistance() + " KM</b> - " + event.getEventType()
+				+ "<br>Level: <b>" + event.getEventLevel() + "</b>"
 				+ "<br><i>created on "
-				+ new SimpleDateFormat("dd-MM-yyyy").format(event.getEventViewCreationDate()) + " by "
-				+ event.getEventViewOrganizer() + "</i>');");
+				+ dateFormat.format(event.getEventCreationDate()) + " by "
+				+ event.getEventOrganizer().getUsername() + "</i>');");
 	}
 %>
 

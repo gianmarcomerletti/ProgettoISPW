@@ -68,7 +68,7 @@ html, body {
 }
 
 #sidenav {
-  height: calc(100vh-60px);
+  min-height: calc(100vh - 60px);
   min-width: 160px;
   z-index: 1;
   top: 0;
