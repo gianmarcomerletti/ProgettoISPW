@@ -25,9 +25,9 @@
 	}
 
 
-
-
-
+	List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
+	List<EventBean> joinEvents = new SystemFacade().getJoinEvents();
+	List<EventBean> myPastEvents = new SystemFacade().getMyPastEvents();
 
 %>
 
@@ -97,16 +97,15 @@
 
 
 
-			<div class="tab-content">
-				<div class="tab-pane active" id="createdEvents">
+
 				<form action="events.jsp" method="GET">
 					<input type="hidden" name="btnAction" id="btnActionId" value="">
 					<input type="hidden" name="event" id="eventId" value="">
-
+					<div class="tab-content">
+					<div class="tab-pane active" id="createdEvents">
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
-						List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
 						for (EventBean event : myEvents) {
 						%>
 						<li class="list-group-item">
@@ -190,18 +189,12 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
-				</form>
-				</div>
+					</div>
 
-				<div class="tab-pane fade" id="joinEvents">
-				<form action="events.jsp" method="GET">
-					<input type="hidden" name="btnAction" id="btnActionId" value="">
-					<input type="hidden" name="event" id="eventId" value="">
-
+					<div class="tab-pane fade" id="joinEvents">
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
-						List<EventBean> joinEvents = new SystemFacade().getJoinEvents();
 						for (EventBean joinEvent : joinEvents) {
 						%>
 						<li class="list-group-item">
@@ -287,18 +280,13 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
-				</form>
-				</div>
+					</div>
 
-				<div class="tab-pane fade" id="pastEvents">
-				<form action="events.jsp" method="GET">
-					<input type="hidden" name="btnAction" id="btnActionId" value="">
-					<input type="hidden" name="event" id="eventId" value="">
-
+					<div class="tab-pane fade" id="pastEvents">
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
-						List<EventBean> myPastEvents = new SystemFacade().getMyPastEvents();
+
 						for (EventBean event : myPastEvents) {
 						%>
 						<li class="list-group-item">
@@ -382,14 +370,11 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
-				</form>
+					</div>
 				</div>
-
+				</form>
 			</div>
-
 		</div>
-	</div>
-
 </body>
 
 <!-- Optional JavaScript -->
