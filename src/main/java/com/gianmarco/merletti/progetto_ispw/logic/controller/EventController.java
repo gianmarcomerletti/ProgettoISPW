@@ -13,6 +13,8 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Review;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
@@ -138,11 +140,10 @@ public class EventController {
 		return dao.getNumberParticipants(eventBean.getEventId());
 	}
 
-	public boolean addReview(ReviewBean reviewBean) {
+	public boolean addReview(ReviewBean reviewBean) throws ReviewException {
 		ReviewDAO dao = new ReviewDAO();
 		if (dao.checkReview(reviewBean.getEventBean().getEventId(), SessionView.getUsername())) {
-			new Alert(AlertType.ERROR, "You are already reviewed this event!", ButtonType.OK).showAndWait();
-			return false;
+			throw new ReviewException();
 		}
 		Review review = dao.addReview(reviewBean);
 		return (review != null);

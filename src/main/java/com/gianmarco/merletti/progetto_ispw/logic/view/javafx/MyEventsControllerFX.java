@@ -13,6 +13,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -181,7 +182,11 @@ public class MyEventsControllerFX implements Initializable {
 	}
 
 	public void sendReview(ReviewBean review) {
-		new SystemFacade().sendReview(review);
+		try {
+			new SystemFacade().sendReview(review);
+		} catch (ReviewException e) {
+			new Alert(AlertType.ERROR, "You are already reviewed this event!", ButtonType.OK).showAndWait();
+		}
 		App.setRoot("my_events");
 
 	}

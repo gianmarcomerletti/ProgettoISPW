@@ -11,6 +11,7 @@ public class ReviewBean {
 	private Integer valueBean;
 	private String textBean;
 	private byte[] imageBean;
+
 	public Integer getIdReviewBean() {
 		return idReviewBean;
 	}

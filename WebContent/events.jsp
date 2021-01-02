@@ -1,3 +1,6 @@
+<%@page import="java.util.Base64"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.view.SessionView"%>
@@ -14,14 +17,29 @@
 <%
 	String action = request.getParameter("btnAction");
 	String eventId = request.getParameter("event");
+	String textReview = request.getParameter("inputTextReview");
+	String valueReview = request.getParameter("selected_rating");
+	String revBase64Image = request.getParameter("base64ImageReview");
 
 	if (action != "" && eventId != null) {
 		SystemFacade facade = new SystemFacade();
 		EventBean bean = new EventBean();
-
 		bean.setEventId(Integer.parseInt(eventId));
 		if (action.equalsIgnoreCase("CANCEL"))
 			facade.cancelEvent(bean);
+		else if (action.equalsIgnoreCase("REVIEW")) {
+			ReviewBean reviewBean = new ReviewBean();
+			reviewBean.setEventBean(bean);
+			reviewBean.setTextBean(textReview);
+			reviewBean.setValueBean(Integer.parseInt(valueReview));
+			reviewBean.setImageBean(Base64.getDecoder().decode(revBase64Image));
+			try {
+				facade.sendReview(reviewBean);
+			} catch (ReviewException e) {
+				out.println("<script>alert('You are already reviewed this event!');</script>");
+			}
+		}
+
 	}
 
 
@@ -43,6 +61,7 @@
 	crossorigin="anonymous">
 
 <link rel="stylesheet" href="style/background.css">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 <title>TogetherRun</title>
 </head>
@@ -102,7 +121,7 @@
 					<input type="hidden" name="btnAction" id="btnActionId" value="">
 					<input type="hidden" name="event" id="eventId" value="">
 					<div class="tab-content">
-					<div class="tab-pane active" id="createdEvents">
+					<div class="tab-pane fade show active" id="createdEvents">
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
@@ -356,14 +375,107 @@
 											%>
 										</div>
 										<div class="row justify-content-end mt-2">
-											<input type="submit" onclick='cancelEvent(<% out.println(event.getEventId()); %>)'
-												class="btn btn-outline-danger" value='Cancel'>
+											<button id="sendReview"
+												data-toggle="modal" data-target="#newReview"
+												class="btn btn-outline-primary" type="button">
+												Review
+											</button>
 										</div>
 									</div>
 
 								</div>
 
 							</div>
+
+							<!-- Review Event Modal -->
+							<div class="modal fade" id="newReview">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h3 class="modal-title">Send a Review</h3>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal body -->
+										<form action="events.jsp" method="GET">
+											<input type="hidden" value=""
+												id="base64ImageReviewId" name="base64ImageReview" value="">
+											<div class="modal-body">
+												<div class="row">
+													<div class="col-sm">
+														<p>Title</p>
+													</div>
+													<div class="col">
+														<h5><%	out.println(event.getEventTitle());	%></h5>
+													</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm">
+													<div class="form-group">
+														<label for="inputTextReview">Text of the review</label>
+														<textarea class="form-control" required placeholder="Text of the review"
+															name="inputTextReview" rows="4"></textarea>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm">
+													<div class="form-group">
+														<label class="control-label" for="rating">
+	   														<span class="field-label-header">Rate</span><br>
+	    													<span class="field-label-info"></span>
+	    													<input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+	   													</label>
+	   													<h2 class="bold rating-header" style="">
+	    													<span class="selected-rating">0</span><small> / 5</small>
+	    												</h2>
+	    												<button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+	        												<i class="fa fa-star" aria-hidden="true"></i>
+	    												</button>
+	    												<button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+	        												<i class="fa fa-star" aria-hidden="true"></i>
+	   												 	</button>
+	    												<button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+	        												<i class="fa fa-star" aria-hidden="true"></i>
+	    												</button>
+	    												<button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+	        												<i class="fa fa-star" aria-hidden="true"></i>
+	    												</button>
+	    												<button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+	        												<i class="fa fa-star" aria-hidden="true"></i>
+	    												</button>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-sm">
+													<div class="form-group">
+														<label for="inputReviewPictureId">Add a picture</label> <br>
+														<input required type="file" accept="image/png, image/jpeg"
+															id="inputReviewPictureId" name="inputReviewPicture">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<div class="row">
+												<div class="col-sm">
+													<input type="submit" onclick='reviewEvent(<% out.println(event.getEventId()); %>)'
+														class="btn btn-primary w-100" value='Send'>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
 						</li>
 						<%
 							}
@@ -390,6 +502,34 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
+
+<script>
+	jQuery(document).ready(function($){
+
+		$(".btnrating").on('click',(function(e) {
+
+			var previous_value = $("#selected_rating").val();
+
+			var selected_value = $(this).attr("data-attr");
+			$("#selected_rating").val(selected_value);
+
+			$(".selected-rating").empty();
+			$(".selected-rating").html(selected_value);
+
+			for (i = 1; i <= selected_value; ++i) {
+				$("#rating-star-"+i).toggleClass('btn-warning');
+				$("#rating-star-"+i).toggleClass('btn-default');
+			}
+
+			for (ix = 1; ix <= previous_value; ++ix) {
+				$("#rating-star-"+ix).toggleClass('btn-warning');
+				$("#rating-star-"+ix).toggleClass('btn-default');
+			}
+
+		}));
+	});
+</script>
+
 <script>
 	function cancelEvent(evId) {
 		if (confirm("Are you sure you want to cancel your participation in the event. "
@@ -399,6 +539,28 @@
 		} else
 			document.getElementById("btnActionId").value = "";
 	}
+
+	function reviewEvent(evId) {
+		document.getElementById("btnActionId").value = "REVIEW";
+		document.getElementById("eventId").value = evId;
+	}
+
+	function getBase64(file) {
+		var reader = new FileReader();
+		reader.readAsBinaryString(file);
+		reader.onload = function() {
+			console.log(reader.result);
+			document.getElementById('base64ImageReportId').value = btoa(reader.result);
+		};
+		reader.onerror = function(error) {
+			alert("Invalid file");
+		};
+	}
+
+	$("#inputReportPictureId").change(function() {
+		var file = document.getElementById('inputReportPictureId').files[0];
+		getBase64(file);
+	});
 </script>
 
 </html>

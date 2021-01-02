@@ -1,6 +1,7 @@
 package com.gianmarco.merletti.progetto_ispw.logic.model;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 
 public class Review {
 
@@ -16,7 +17,7 @@ public class Review {
 
 	public void setFromBean(ReviewBean reviewBean) {
 		Event ev = new Event();
-		ev.setFromBean(reviewBean.getEventBean());
+		ev = new EventDAO().findById(reviewBean.getEventBean().getEventId());
 		this.setEvent(ev);
 		this.setValue(reviewBean.getValueBean());
 		this.setText(reviewBean.getTextBean());
