@@ -23,7 +23,7 @@ public class RequestDAO {
 
 		try (PreparedStatement st = conn.prepareStatement(SQL_ADD_REQUEST);) {
 			st.setDate(1, request.getCreationDate());
-			st.setInt(2, request.getEvent().getId());
+			st.setInt(2, request.getEvent());
 			st.setString(3, request.getUser());
 			st.setString(4, request.getMessage());
 			st.setString(5, request.getStatus());
@@ -43,7 +43,7 @@ public class RequestDAO {
 				Request request = new Request();
 				request.setIdRequest(rs.getInt(COLUMN_IDREQUEST));
 				request.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
-				request.setEvent(new EventDAO().findById(rs.getInt(COLUMN_IDEVENT)));
+				request.setEvent(rs.getInt(COLUMN_IDEVENT));
 				request.setUser(rs.getString(COLUMN_USER));
 				request.setMessage(rs.getString(COLUMN_MESSAGE));
 				request.setStatus(rs.getString(COLUMN_STATUS));
@@ -68,7 +68,7 @@ public class RequestDAO {
 				Request requestElem = new Request();
 				requestElem.setIdRequest(rs.getInt(COLUMN_IDREQUEST));
 				requestElem.setCreationDate(rs.getDate(COLUMN_CREATION_DATE));
-				requestElem.setEvent(new EventDAO().findById(rs.getInt(COLUMN_IDEVENT)));
+				requestElem.setEvent(rs.getInt(COLUMN_IDEVENT));
 				requestElem.setUser(rs.getString(COLUMN_USER));
 				requestElem.setMessage(rs.getString(COLUMN_MESSAGE));
 				requestElem.setStatus(rs.getString(COLUMN_STATUS));
@@ -108,6 +108,23 @@ public class RequestDAO {
 			e.printStackTrace();
 		}
 		return request;
+	}
+
+	public boolean checkRequest(RequestBean bean) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		boolean result = false;
+
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_PENDING_REQUEST_FROM_USER);) {
+			st.setString(3, Status.PENDING.toString());
+			st.setInt(2, bean.getRequestEvent().getEventId());
+			st.setString(1, bean.getRequestUser());
+			ResultSet rs = st.executeQuery();
+			result = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
 	}
 
 }

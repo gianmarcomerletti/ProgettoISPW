@@ -9,7 +9,7 @@ public class Request {
 	private Integer idRequest;
 	private Date creationDate;
 	private String user;
-	private Event event;
+	private Integer event;
 	private String message;
 	private String status;
 
@@ -18,12 +18,10 @@ public class Request {
 	}
 
 	public void setFromBean(RequestBean requestBean) {
-		Event ev = new Event();
-		ev.setFromBean(requestBean.getRequestEvent());
+		this.setEvent(requestBean.getRequestEvent().getEventId());
 		this.setIdRequest(requestBean.getRequestId());
 		this.setUser(requestBean.getRequestUser());
 		this.setCreationDate(requestBean.getRequestCreationDate());
-		this.setEvent(ev);
 		this.setMessage(requestBean.getRequestMessage());
 		this.setStatus(requestBean.getRequestStatus());
 
@@ -53,11 +51,11 @@ public class Request {
 		this.user = user;
 	}
 
-	public Event getEvent() {
+	public Integer getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(Integer event) {
 		this.event = event;
 	}
 

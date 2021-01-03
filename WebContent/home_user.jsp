@@ -1,3 +1,8 @@
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.model.Event"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum"%>
 <%@page import="java.time.ZoneId"%>
@@ -29,12 +34,35 @@
 	String distanceEvent = request.getParameter("inputDistanceEvent");
 	String typeEvent = request.getParameter("inputEventLevel");
 
+	SystemFacade facade = new SystemFacade();
+
+	// new request values
+	String eventSelectedLat = request.getParameter("eventSelectedLat");
+	String eventSelectedLng = request.getParameter("eventSelectedLng");
+	String requestMessage = request.getParameter("inputRequestMessage");
+
+	if (eventSelectedLat != null && eventSelectedLng != null) {
+		Event evSelected = new EventDAO().findByLatLong(Double.valueOf(eventSelectedLat), Double.valueOf(eventSelectedLng));
+		EventBean bean = new EventBean();
+		bean.setEventId(evSelected.getId());
+		RequestBean requestBean = new RequestBean();
+		requestBean.setRequestEvent(bean);
+		requestBean.setRequestMessage(requestMessage);
+		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		requestBean.setRequestUser(SessionView.getUsername());
+		try {
+			facade.sendRequest(requestBean);
+		} catch (RequestException e) {
+			out.println("<script>alert('You are already a participant of the event or your request is in pending status!');</script>");
+		}
+	}
+
 	// map click values
 	String evLatitude = (String) request.getParameter("latitudeInput");
 	String evLongitude = (String) request.getParameter("longitudeInput");
 	String evAddress = request.getParameter("addressInput");
 
-	SystemFacade facade = new SystemFacade();
+
 	if (evLatitude != null && evLongitude != null && evAddress != null &&
 			titleEvent != null && descriptionEvent != null && dateEvent != null && timeEvent != null && distanceEvent != null) {
 		EventBean bean = new EventBean();
@@ -160,47 +188,27 @@
 				<!-- Modal body -->
 				<form action="home_user.jsp" method="GET"
 					id="sendRequestFormId">
+					<input type="hidden" value="" id="eventSelectedLatId"
+						name="eventSelectedLat">
+					<input type="hidden" value="" id="eventSelectedLngId"
+						name="eventSelectedLng">
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-sm">
 								<div class="form-group">
-									<input type="text" required class="form-control"
-										name="inputReportTitle" placeholder="Title">
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-sm">
-								<div class="form-group">
 									<textarea required class="form-control"
-										name="inputReportDescription" placeholder="Description"
-										rows="10"></textarea>
+										name="inputRequestMessage" placeholder="Message for event organizer"
+										rows="4"></textarea>
 								</div>
 							</div>
 						</div>
-
-
-
-						<div class="row">
-							<div class="col-sm">
-								<div class="form-group">
-									<label for="inputReportPictureId">Add a picture</label> <br>
-									<input required type="file" accept="image/png, image/jpeg"
-										id="inputReportPictureId" name="inputReportPicture">
-								</div>
-							</div>
-						</div>
-
-
-
 					</div>
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<div class="row">
 							<div class="col-sm">
-								<button type="submit" class="btn btn-primary w-100">Send</button>
+								<button type="submit" class="btn btn-primary w-100">Send Request</button>
 							</div>
 						</div>
 					</div>
@@ -413,7 +421,7 @@
 	}
 
 	for (EventBean event : eventsFiltered) {
-		out.println("L.marker([" + event.getEventLatitude() + ", " + event.getEventLongitude()
+		out.println("var marker = L.marker([" + event.getEventLatitude() + ", " + event.getEventLongitude()
 				+ "], {icon: iconEvent}).addTo(mymap).bindPopup('<b>" + event.getEventTitle() + "</b><br>" + event.getEventAddress()
 				+ "<br>Date: <b>" + dateFormat.format(event.getEventDate()) + "</b>"
 				+ "<br>Time: <b>" + timeFormat.format(event.getEventTime()) + "</b>"
@@ -422,6 +430,24 @@
 				+ "<br><i>created on "
 				+ dateFormat.format(event.getEventCreationDate()) + " by "
 				+ event.getEventOrganizer().getUsername() + "</i>');");
+%>
+
+				marker
+					.on('click',
+					function(e) {
+						geocodeService
+						.reverse()
+						.latlng(e.latlng)
+						.run ( function(error, result) {
+							document.getElementById("eventSelectedLatId").value = marker.getLatLng().lat;
+							document.getElementById("eventSelectedLngId").value = marker.getLatLng().lng;
+							document.getElementById("sendRequestModalBtnId").disabled = false;
+							document.getElementById("createEventModalBtnId").disabled = true;
+						});
+
+				});
+
+<%
 	}
 %>
 
@@ -460,6 +486,7 @@
 						document.getElementById("longitudeInputId").value = e.latlng.lng;
 						document.getElementById("addressInputId").value = result.address.Match_addr;
 						document.getElementById("createEventModalBtnId").disabled = false;
+						document.getElementById("sendRequestModalBtnId").disabled = true;
 				});
 	});
 

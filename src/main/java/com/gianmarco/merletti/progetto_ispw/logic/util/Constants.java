@@ -113,6 +113,11 @@ public final class Constants {
 			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=request.idevent"
 			+ WHERE_COND + COLUMN_ORGANIZER + END_STRING;
 
+	public static final String SQL_FIND_PENDING_REQUEST_FROM_USER = SELECT_ALL_FROM + TABLE_REQUEST
+			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=request.idevent"
+			+ WHERE_COND + COLUMN_USER + AND_STRING
+			+ "request."+COLUMN_IDEVENT + AND_STRING + COLUMN_STATUS + END_STRING;
+
 	public static final String SQL_UPDATE_REQUEST_STATUS = UPDATE + TABLE_REQUEST
 			+ " SET " + COLUMN_STATUS + "=? "
 			+ WHERE_COND + COLUMN_IDREQUEST + END_STRING;

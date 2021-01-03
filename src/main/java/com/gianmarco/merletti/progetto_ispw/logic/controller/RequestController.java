@@ -6,6 +6,7 @@ import java.util.List;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.RequestDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 
 import javafx.scene.control.Alert;
@@ -14,11 +15,11 @@ import javafx.scene.control.Alert.AlertType;
 
 public class RequestController {
 
-	public boolean createRequest(RequestBean requestBean) {
+	public boolean createRequest(RequestBean requestBean) throws RequestException {
 		RequestDAO dao = new RequestDAO();
-		if (new EventDAO().checkParticipation(requestBean.getRequestUser(), requestBean.getRequestEvent().getEventId())) {
-			new Alert(AlertType.ERROR, "You are already a participant of the event!", ButtonType.OK).showAndWait();
-			return false;
+		if (new EventDAO().checkParticipation(requestBean.getRequestUser(), requestBean.getRequestEvent().getEventId()) ||
+				new RequestDAO().checkRequest(requestBean)) {
+			throw new RequestException();
 		}
 		Request request = dao.addRequest(requestBean);
 		return (request != null);
@@ -32,7 +33,7 @@ public class RequestController {
 		requests.stream().forEach(req -> {
 			RequestBean reqBean = new RequestBean();
 			reqBean.setRequestCreationDate(req.getCreationDate());
-			reqBean.setRequestEvent(new LoadEventsController().getEventBeanFromEvent(req.getEvent()));
+			reqBean.setRequestEvent(new LoadEventsController().getEventBeanFromEvent(new EventDAO().findById(req.getEvent())));
 			reqBean.setRequestId(req.getIdRequest());
 			reqBean.setRequestMessage(req.getMessage());
 			reqBean.setRequestStatus(req.getStatus());

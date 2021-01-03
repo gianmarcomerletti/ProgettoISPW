@@ -42,7 +42,6 @@ public class LoginController {
 		UserDAO dao = new UserDAO();
 
 		if (dao.userExists(userBean.getUsername())) {
-			new Alert(AlertType.ERROR, "Utente già presente nel database!", ButtonType.OK).showAndWait();
 			return false;
 		}
 

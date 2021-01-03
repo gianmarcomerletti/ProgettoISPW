@@ -9,13 +9,17 @@ import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
@@ -99,7 +103,11 @@ public class SendRequestControllerFX implements Initializable {
 		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
 		requestBean.setRequestUser(SessionView.getUsername());
 
-		new SystemFacade().sendRequest(requestBean);
+		try {
+			new SystemFacade().sendRequest(requestBean);
+		} catch (RequestException e) {
+			new Alert(AlertType.ERROR, "You are already a participant of the event or your request is in pending status!", ButtonType.OK).showAndWait();
+		}
 		App.setRoot("home_user");
 	}
 

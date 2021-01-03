@@ -7,6 +7,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
@@ -42,7 +43,7 @@ public class SystemFacade {
 		return new LoadEventsController().getJoinEvents();
 	}
 
-	public boolean sendRequest(RequestBean requestBean) {
+	public boolean sendRequest(RequestBean requestBean) throws RequestException {
 		return new RequestController().createRequest(requestBean);
 	}
 

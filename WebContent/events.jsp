@@ -113,15 +113,13 @@
 				role="button"> Logout
 				</a>
 			</nav>
+				<div class="tab-content">
 
-
-
-
-				<form action="events.jsp" method="GET">
+					<div class="tab-pane fade show active" id="createdEvents">
+					<form action="events.jsp" method="GET">
 					<input type="hidden" name="btnAction" id="btnActionId" value="">
 					<input type="hidden" name="event" id="eventId" value="">
-					<div class="tab-content">
-					<div class="tab-pane fade show active" id="createdEvents">
+
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
@@ -208,9 +206,15 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
+
+					</form>
 					</div>
 
 					<div class="tab-pane fade" id="joinEvents">
+					<form action="events.jsp" method="GET">
+					<input type="hidden" name="btnAction" id="btnActionId2" value="">
+					<input type="hidden" name="event" id="eventId2" value="">
+
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
@@ -299,9 +303,14 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
+
+					</form>
 					</div>
 
 					<div class="tab-pane fade" id="pastEvents">
+					<form action="events.jsp" method="GET">
+
+
 					<ul class="list-group">
 						<!-- Single Row for JSP -->
 						<%
@@ -402,6 +411,8 @@
 										<form action="events.jsp" method="GET">
 											<input type="hidden" value=""
 												id="base64ImageReviewId" name="base64ImageReview" value="">
+											<input type="hidden" name="btnAction" id="btnActionId3" value="">
+											<input type="hidden" name="event" id="eventId3" value="">
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-sm">
@@ -456,7 +467,7 @@
 												<div class="col-sm">
 													<div class="form-group">
 														<label for="inputReviewPictureId">Add a picture</label> <br>
-														<input required type="file" accept="image/png, image/jpeg"
+														<input type="file" accept="image/png, image/jpeg"
 															id="inputReviewPictureId" name="inputReviewPicture">
 													</div>
 												</div>
@@ -482,9 +493,11 @@
 						%>
 						<!-- End of Single Row for JSP  -->
 					</ul>
+
+					</form>
 					</div>
+
 				</div>
-				</form>
 			</div>
 		</div>
 </body>
@@ -535,14 +548,17 @@
 		if (confirm("Are you sure you want to cancel your participation in the event. "
 				+ "If you are the organizer, the event will be deleted.")) {
 			document.getElementById("btnActionId").value = "CANCEL";
+			document.getElementById("btnActionId2").value = "CANCEL";
 			document.getElementById("eventId").value = evId;
+			document.getElementById("eventId2").value = evid;
+
 		} else
 			document.getElementById("btnActionId").value = "";
 	}
 
 	function reviewEvent(evId) {
-		document.getElementById("btnActionId").value = "REVIEW";
-		document.getElementById("eventId").value = evId;
+		document.getElementById("btnActionId3").value = "REVIEW";
+		document.getElementById("eventId3").value = evId;
 	}
 
 	function getBase64(file) {
@@ -551,6 +567,7 @@
 		reader.onload = function() {
 			console.log(reader.result);
 			document.getElementById('base64ImageReportId').value = btoa(reader.result);
+			response.sendRedirect("index.jsp");
 		};
 		reader.onerror = function(error) {
 			alert("Invalid file");
