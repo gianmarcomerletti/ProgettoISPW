@@ -99,4 +99,18 @@ public class LoadEventsController {
 		eventBean.setEventCity(event.getCity());
 		return eventBean;
 	}
+
+	public List<EventBean> getAllEvents() {
+		EventDAO dao = new EventDAO();
+		List<Event> events = dao.findAll();
+		ArrayList<EventBean> eventBeanList = new ArrayList<>();
+
+		for (Event event : events) {
+			if	(event.getDate().after(new Date())) {
+				EventBean eventBean = getEventBeanFromEvent(event);
+				eventBeanList.add(eventBean);
+			}
+		}
+		return eventBeanList;
+	}
 }

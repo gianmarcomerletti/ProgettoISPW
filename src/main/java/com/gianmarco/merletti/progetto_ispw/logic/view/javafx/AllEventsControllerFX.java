@@ -4,17 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
-import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
-import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
@@ -24,10 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,7 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MyEventsControllerFX implements Initializable {
+public class AllEventsControllerFX implements Initializable {
 
 	@FXML
 	private Text usernameText;
@@ -44,29 +35,21 @@ public class MyEventsControllerFX implements Initializable {
 	private Label levelLabel;
 
 	@FXML
-	private VBox myEventsContainer;
-
-	@FXML
-	private VBox joinEventsContainer;
-
-	@FXML
-	private VBox myPastEventsContainer;
+	private VBox eventsContainer;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
-		URL urlSingleEventFXML = App.class.getResource("single_event.fxml");
-		URL urlSingleEventReviewFXML = App.class.getResource("single_event_review.fxml");
-		List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
-		fillEvents(myEvents, urlSingleEventFXML, myEventsContainer);
-		List<EventBean> joinEvents = new SystemFacade().getJoinEvents();
-		fillEvents(joinEvents, urlSingleEventFXML, joinEventsContainer);
-		List<EventBean> myPastEvents = new SystemFacade().getMyPastEvents();
-		fillEvents(myPastEvents, urlSingleEventReviewFXML, myPastEventsContainer);
+
+		List<EventBean> events = new SystemFacade().getAllEvents();
+		fillEvents(events);
+
 	}
 
-	private void fillEvents(List<EventBean> events, URL urlSingleEventFXML, VBox eventsContainer) {
+	private void fillEvents(List<EventBean> events) {
+
+		URL urlSingleEventFXML = App.class.getResource("single_event.fxml");
 
 		if (events.isEmpty())
 			return;
@@ -124,27 +107,11 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "cancelButton":
 						JFXButton cancelBtn = (JFXButton) nodeEvent;
-						cancelBtn.setOnAction(value -> cancelEvent(event));
+						cancelBtn.setOnAction(value -> App.setRoot("home_user"));
 						break;
 					case "rateButton":
 						JFXButton rateBtn = (JFXButton) nodeEvent;
-						rateBtn.setOnAction(value -> {
-							try {
-								FXMLLoader loader = new FXMLLoader(App.class.getResource("send_review_form.fxml"));
-								Parent root = loader.load();
-								SendReviewControllerFX controller = loader.getController();
-								controller.setControllerAndEvent(this, event);
-								Stage stage = new Stage();
-								stage.initModality(Modality.WINDOW_MODAL);
-								stage.initOwner(myPastEventsContainer.getScene().getWindow());
-								Scene scene = new Scene(root);
-								stage.setScene(scene);
-								stage.setResizable(false);
-								stage.show();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						});
+						rateBtn.setOnAction(value -> App.setRoot("home_user"));
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;
@@ -168,37 +135,14 @@ public class MyEventsControllerFX implements Initializable {
 		}
 	}
 
-	private void cancelEvent(EventBean event) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("TogetherRun");
-		alert.setHeaderText("Cancel event participation");
-		alert.setContentText("Are you sure you want to cancel your participation in the event. "
-				+ "If you are the organizer, the event will be deleted.");
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			new SystemFacade().cancelEvent(event);
-			App.setRoot("home_user");
-		}
-	}
-
-	public void sendReview(ReviewBean review) {
-		try {
-			new SystemFacade().sendReview(review);
-		} catch (ReviewException e) {
-			new Alert(AlertType.ERROR, "You are already reviewed this event!", ButtonType.OK).showAndWait();
-		}
-		App.setRoot("my_events");
-
-	}
-
 	@FXML
 	private void toMap() {
 		App.setRoot("home_user");
 	}
 
 	@FXML
-	private void toAllEvents() {
-		App.setRoot("all_events");
+	private void toMyEvents() {
+		App.setRoot("my_events");
 	}
 
 	@FXML
@@ -211,6 +155,5 @@ public class MyEventsControllerFX implements Initializable {
 		new SystemFacade().logout();
 		App.setRoot("login");
 	}
-
 
 }

@@ -17,7 +17,7 @@
 
 <VBox alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gianmarco.merletti.progetto_ispw.logic.view.javafx.SendReviewControllerFX">
    <children>
-      <AnchorPane maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" >
+      <AnchorPane maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
          <children>
             <Text layoutX="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send a Review" textAlignment="CENTER" AnchorPane.topAnchor="30.0">
                <font>
@@ -31,9 +31,9 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Title of the event" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
@@ -51,22 +51,17 @@
                         <Insets right="30.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label text="Picture" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets right="30.0" />
-                     </GridPane.margin>
-                  </Label>
+                  <JFXButton onAction="#handlePictureUpload" prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-radius: 3;" text="Upload" GridPane.rowIndex="3" />
                   <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <JFXButton prefHeight="30.0" prefWidth="70.0" style="-fx-background-color: #fff; -fx-border-color: black; -fx-border-radius: 3;" text="Upload">
+                        <ImageView fx:id="imgView" fitHeight="80.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets left="10.0" />
                            </HBox.margin>
-                        </JFXButton>
-                        <ImageView fx:id="imgView" fitHeight="76.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" />
+                        </ImageView>
                      </children>
                   </HBox>
-                  <TextArea fx:id="textField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextArea fx:id="textField" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="50.0" />
                      </GridPane.margin>

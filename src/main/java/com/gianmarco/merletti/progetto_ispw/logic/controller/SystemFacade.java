@@ -39,6 +39,12 @@ public class SystemFacade {
 		return new LoadEventsController().getMyPastEvents();
 	}
 
+
+	public List<EventBean> getAllEvents() {
+		return new LoadEventsController().getAllEvents();
+	}
+
+
 	public List<EventBean> getJoinEvents() {
 		return new LoadEventsController().getJoinEvents();
 	}

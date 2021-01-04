@@ -1,5 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,6 +9,7 @@ import org.controlsfx.control.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +18,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
 
 public class SendReviewControllerFX {
 
@@ -66,5 +72,23 @@ public class SendReviewControllerFX {
 
 		controller.sendReview(reviewBean);
 		reviewGridPane.getScene().getWindow().hide();
+	}
+
+	@FXML
+	private void handlePictureUpload() {
+		Window window = reviewGridPane.getScene().getWindow();
+		FileChooser imageFileChooser = new FileChooser();
+		imageFileChooser.getExtensionFilters()
+				.add((new ExtensionFilter("JPG files (*.jpg, *.jpeg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg")));
+		File imageFile = imageFileChooser.showOpenDialog(window);
+
+		if (imageFile != null) {
+			Image selImage = new Image(imageFile.toURI().toString());
+
+			imgView.setImage(selImage);
+			selectedImage = ConverterUtil.byteArrayFromImage(imageFile);
+
+		}
+
 	}
 }

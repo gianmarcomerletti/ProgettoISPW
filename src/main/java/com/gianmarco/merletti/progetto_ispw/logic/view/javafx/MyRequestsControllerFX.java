@@ -148,6 +148,11 @@ public class MyRequestsControllerFX implements Initializable {
 	}
 
 	@FXML
+	private void toAllEvents() {
+		App.setRoot("all_events");
+	}
+
+	@FXML
 	private void logout() {
 		new SystemFacade().logout();
 		App.setRoot("login");

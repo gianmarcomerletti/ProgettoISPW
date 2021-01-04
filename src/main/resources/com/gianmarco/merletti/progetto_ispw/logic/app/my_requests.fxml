@@ -60,7 +60,7 @@
                      </font>
                   </Text>
                   <JFXButton layoutY="65.0" onAction="#toMap" text="Map" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-                  <JFXButton layoutY="90.0" text="All Events" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
+                  <JFXButton layoutY="90.0" onAction="#toAllEvents" text="All Events" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0" />
                   <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-background-color: #007bff; -fx-text-alignment: left;" text="My Requests" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="115.0" />
                   <JFXButton layoutX="10.0" layoutY="75.0" onAction="#toMyEvents" text="My Events" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
                   <JFXButton layoutY="312.0" onAction="#logout" style="-fx-background-color: #fff5f5;" text="Log out" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

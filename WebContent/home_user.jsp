@@ -193,6 +193,8 @@
 					<input type="hidden" value="" id="eventSelectedLngId"
 						name="eventSelectedLng">
 					<div class="modal-body">
+
+
 						<div class="row">
 							<div class="col-sm">
 								<div class="form-group">
@@ -441,6 +443,7 @@
 						.run ( function(error, result) {
 							document.getElementById("eventSelectedLatId").value = marker.getLatLng().lat;
 							document.getElementById("eventSelectedLngId").value = marker.getLatLng().lng;
+							document.getElementById("eventSelectedId").value = <% event.getEventId(); %>
 							document.getElementById("sendRequestModalBtnId").disabled = false;
 							document.getElementById("createEventModalBtnId").disabled = true;
 						});
