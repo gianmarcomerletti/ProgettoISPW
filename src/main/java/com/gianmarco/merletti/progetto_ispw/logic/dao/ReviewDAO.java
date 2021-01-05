@@ -79,4 +79,26 @@ public class ReviewDAO {
 		}
 		return review;
 	}
+
+	public Integer getUserRating(String username) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		Integer sum = 0;
+		Integer count = 0;
+
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_REVIEWS_FROM_USERNAME)) {
+			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				sum += rs.getInt(COLUMN_VALUE);
+				count++;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (count == 0)
+			return sum;
+		return (int) Math.round(sum.doubleValue()/count);
+	}
 }

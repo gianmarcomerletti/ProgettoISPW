@@ -1,9 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
-import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
@@ -12,24 +9,15 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
-import com.mysql.cj.x.protobuf.MysqlxExpect.Open.Condition.Key;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -41,12 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class AllEventsControllerFX implements Initializable {
 
@@ -67,7 +50,7 @@ public class AllEventsControllerFX implements Initializable {
 	@FXML
 	private TableColumn<EventListElementBean, String> titleCol;
 	@FXML
-	private TableColumn<EventListElementBean, Integer> distanceCol;
+	private TableColumn<EventListElementBean, String> levelCol;
 	@FXML
 	private TableColumn<EventListElementBean, String> typeCol;
 	@FXML
@@ -89,7 +72,7 @@ public class AllEventsControllerFX implements Initializable {
 		FilteredList<EventListElementBean> flEvent = new FilteredList<>(events, p -> true);
 
 		titleCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, String>("ElemEventTitle"));
-		distanceCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, Integer>("ElemEventDistance"));
+		levelCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, String>("ElemEventLevel"));
 		typeCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, String>("ElemEventType"));
 		cityCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, String>("ElemEventCity"));
 		dateCol.setCellValueFactory(new PropertyValueFactory<EventListElementBean, String>("ElemEventDate"));

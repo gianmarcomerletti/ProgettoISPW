@@ -9,7 +9,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.fxml.FXML;
@@ -85,7 +87,8 @@ public class SendRequestControllerFX implements Initializable {
 		timeText.setText(tf.format(selectedEvent.getEventTime()));
 		distanceText.setText(selectedEvent.getEventDistance().toString() + " KM");
 		typeText.setText(selectedEvent.getEventType().toString());
-		organizerText.setText(selectedEvent.getEventOrganizer().getUsername());
+		organizerText.setText(selectedEvent.getEventOrganizer().getUsername()
+				+ "  " + Rating.getStringRating(new SystemFacade().getUserRating(selectedEvent.getEventOrganizer().getUsername())));
 
 		gridInfo.setVisible(true);
 		gridMessage.setVisible(false);

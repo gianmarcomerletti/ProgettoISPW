@@ -1,5 +1,7 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
+import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.scene.control.Label;
@@ -11,7 +13,8 @@ public class NavbarManager {
 	}
 
 	public static void setNavbar(Text usernameText, Label levelLabel) {
-		usernameText.setText(SessionView.getUsername());
+		usernameText.setText(SessionView.getUsername()
+				+ "  " + Rating.getStringRating(new SystemFacade().getUserRating(SessionView.getUsername())));
 		levelLabel.setText(SessionView.getLevelEnum().toString());
 		switch (SessionView.getLevelEnum()) {
 		case BEGINNER:

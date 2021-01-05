@@ -13,7 +13,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
@@ -152,7 +154,8 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "organizerText":
 						Text organizer = (Text) nodeEvent;
-						organizer.setText("created by " + event.getEventOrganizer().getUsername());
+						organizer.setText("created by " + event.getEventOrganizer().getUsername() + "  "
+								+ Rating.getStringRating(new SystemFacade().getUserRating(event.getEventOrganizer().getUsername())));
 						break;
 
 					default:

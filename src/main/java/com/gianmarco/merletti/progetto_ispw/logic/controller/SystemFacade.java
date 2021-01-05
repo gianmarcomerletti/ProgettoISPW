@@ -95,4 +95,8 @@ public class SystemFacade {
 
 	}
 
+	public Integer getUserRating(String username) {
+		return new LoginController().getUserRating(username);
+	}
+
 }

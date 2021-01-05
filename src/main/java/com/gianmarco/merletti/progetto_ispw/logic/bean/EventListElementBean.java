@@ -2,7 +2,10 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
 import java.text.SimpleDateFormat;
 
+import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,8 +16,8 @@ public class EventListElementBean {
 	private SimpleStringProperty elemEventDate;
 	private SimpleStringProperty elemEventTitle;
 	private SimpleStringProperty elemEventAddress;
-	private SimpleIntegerProperty elemEventDistance;
 	private SimpleStringProperty elemEventType;
+	private SimpleStringProperty elemEventLevel;
 	private SimpleStringProperty elemEventRating;
 	private SimpleStringProperty elemEventCity;
 
@@ -25,9 +28,10 @@ public class EventListElementBean {
 		this.elemEventDate = new SimpleStringProperty(dateFormat.format(event.getDate()) + " " + timeFormat.format(event.getTime()));
 		this.elemEventTitle = new SimpleStringProperty(event.getTitle());
 		this.elemEventAddress = new SimpleStringProperty(event.getAddress());
-		this.elemEventDistance = new SimpleIntegerProperty(event.getDistance());
-		this.elemEventType = new SimpleStringProperty(event.getType());
-		this.elemEventRating = new SimpleStringProperty(event.getOrganizerUser().getUsername());
+		this.elemEventType = new SimpleStringProperty(event.getDistance() + " KM " + event.getType());
+		this.elemEventLevel = new SimpleStringProperty(event.getLevel());
+		this.elemEventRating = new SimpleStringProperty(event.getOrganizerUser().getUsername() + " " +
+									Rating.getStringRating(new SystemFacade().getUserRating(event.getOrganizerUser().getUsername())));
 		this.elemEventCity = new SimpleStringProperty(event.getCity());
 	}
 
@@ -63,20 +67,20 @@ public class EventListElementBean {
 		this.elemEventAddress.set(elemEventAddress);
 	}
 
-	public Integer getElemEventDistance() {
-		return elemEventDistance.get();
-	}
-
-	public void setElemEventDistance(Integer elemEventDistance) {
-		this.elemEventDistance.set(elemEventDistance);
-	}
-
 	public String getElemEventType() {
 		return elemEventType.get();
 	}
 
 	public void setElemEventType(String elemEventType) {
 		this.elemEventType.set(elemEventType);
+	}
+
+	public String getElemEventLevel() {
+		return elemEventLevel.get();
+	}
+
+	public void setElemEventLevel(String elemEventLevel) {
+		this.elemEventLevel.set(elemEventLevel);
 	}
 
 	public String getElemEventRating() {

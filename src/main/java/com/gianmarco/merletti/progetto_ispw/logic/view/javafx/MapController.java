@@ -7,7 +7,9 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.City;
+import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.scene.control.Alert;
@@ -143,8 +145,7 @@ public class MapController {
 					+ "<br><b>" + myEvent.getEventDistance() + " KM</b> - " + myEvent.getEventType()
 					+ "<br>Level: <b>" + myEvent.getEventLevel() + "</b>"
 					+ "<br><i>created on "
-					+ dateFormat.format(myEvent.getEventCreationDate()) + " by "
-					+ myEvent.getEventOrganizer().getUsername() + "</i>"))
+					+ dateFormat.format(myEvent.getEventCreationDate()) + "</i>"))
 				.addTo(map);
 		}
 
@@ -157,9 +158,10 @@ public class MapController {
 						+ "<br>Time: <b>" + timeFormat.format(event.getEventTime()) + "</b>"
 						+ "<br><b>" + event.getEventDistance() + " KM</b> - " + event.getEventType()
 						+ "<br>Level: <b>" + event.getEventLevel() + "</b>"
-						+ "<br><i>created on "
-						+ dateFormat.format(event.getEventCreationDate()) + " by "
-						+ event.getEventOrganizer().getUsername() + "</i>"));
+						+ "<br><i>created on " + dateFormat.format(event.getEventCreationDate())
+						+ "<br>by " + event.getEventOrganizer().getUsername() + "</i> "
+						+ Rating.getStringRating(new SystemFacade().getUserRating(event.getEventOrganizer().getUsername()))
+						));
 			mk.addMouseListener(Type.CLICK, ev -> {
 						Double latitude = Double.valueOf(mk.getLatLng().getLatitude());
 						Double longitude = Double.valueOf(mk.getLatLng().getLongitude());

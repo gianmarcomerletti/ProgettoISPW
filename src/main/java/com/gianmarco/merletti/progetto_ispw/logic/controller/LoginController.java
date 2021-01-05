@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
@@ -57,5 +58,10 @@ public class LoginController {
 		SessionView.setUsername(null);
 		SessionView.setCityEnum(null);
 		SessionView.setLevelEnum(null);
+	}
+
+	public Integer getUserRating(String username) {
+		ReviewDAO dao = new ReviewDAO();
+		return dao.getUserRating(username);
 	}
 }
