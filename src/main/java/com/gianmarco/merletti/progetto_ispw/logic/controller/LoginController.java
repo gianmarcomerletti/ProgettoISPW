@@ -64,4 +64,19 @@ public class LoginController {
 		ReviewDAO dao = new ReviewDAO();
 		return dao.getUserRating(username);
 	}
+
+	public UserBean getUserData(String username) {
+		UserBean userBean = new UserBean();
+		UserDAO dao = new UserDAO();
+		User user = dao.findUserFromUsername(username);
+		if (user != null) {
+			userBean.setFirstName(user.getName());
+			userBean.setLastName(user.getSurname());
+			userBean.setUsername(user.getUsername());
+			userBean.setPassword(user.getPwd());
+			userBean.setCity(CityEnum.valueOf(user.getCity()));
+			userBean.setLevel(LevelEnum.valueOf(user.getLevel()));
+		}
+		return userBean;
+	}
 }

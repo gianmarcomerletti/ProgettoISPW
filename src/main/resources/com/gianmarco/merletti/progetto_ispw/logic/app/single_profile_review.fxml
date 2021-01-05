@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.Rating?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefWidth="645.0" style="-fx-background-color: #fff; -fx-border-style: solid none none none; -fx-border-color: #bfbfbf; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+         <children>
+            <ImageView id="imageReview" fitHeight="132.0" fitWidth="175.0" layoutX="9.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <Text id="textReviewEvent" layoutX="200.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review event" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Text>
+            <JFXTextArea id="messageText" editable="false" layoutX="198.0" layoutY="35.0" prefHeight="70.0" prefWidth="250.0" promptText="text review" text="&#10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="200.0" />
+            <Text id="userText" layoutX="533.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="review by user" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font></Text>
+            <Rating id="ratingValue" layoutX="454.0" layoutY="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

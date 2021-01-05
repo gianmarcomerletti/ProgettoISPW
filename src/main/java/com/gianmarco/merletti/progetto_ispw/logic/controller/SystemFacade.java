@@ -99,4 +99,8 @@ public class SystemFacade {
 		return new LoginController().getUserRating(username);
 	}
 
+	public UserBean getUserData(String username) {
+		return new LoginController().getUserData(username);
+	}
+
 }

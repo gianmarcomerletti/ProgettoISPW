@@ -34,9 +34,9 @@
             <Text id="dateText" fill="#797979" layoutX="191.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="event date" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="180.0" />
             <Text id="organizerText" fill="#797979" layoutX="362.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="organized by" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="220.0">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Italic" size="12.0" />
                </font></Text>
-            <JFXButton id="rateButton" layoutX="489.0" layoutY="41.0" style="-fx-background-color: #007bff; -fx-border-radius: 3;" text="Rate organizer" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <JFXButton id="rateButton" layoutX="489.0" layoutY="41.0" style="-fx-background-color: #ffffff; -fx-border-radius: 3; -fx-border-color: #007bff;" text="Rate organizer" textFill="#007bff" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
