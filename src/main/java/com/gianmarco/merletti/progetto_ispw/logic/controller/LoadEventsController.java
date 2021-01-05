@@ -101,7 +101,6 @@ public class LoadEventsController {
 		return eventBean;
 	}
 
-	// TODO da sistemare la gestione con il bean
 	public List<EventListElementBean> getAllEvents() {
 		EventDAO dao = new EventDAO();
 		List<Event> events = dao.findAll();
@@ -109,8 +108,7 @@ public class LoadEventsController {
 
 		for (Event event : events) {
 			if	(event.getDate().after(new Date())) {
-				EventBean eventBean = getEventBeanFromEvent(event);
-				EventListElementBean eventElemBean = new EventListElementBean(eventBean);
+				EventListElementBean eventElemBean = new EventListElementBean(event);
 				eventElemBeanList.add(eventElemBean);
 			}
 		}

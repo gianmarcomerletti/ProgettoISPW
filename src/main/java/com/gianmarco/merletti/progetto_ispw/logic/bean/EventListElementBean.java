@@ -1,5 +1,9 @@
 package com.gianmarco.merletti.progetto_ispw.logic.bean;
 
+import java.text.SimpleDateFormat;
+
+import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -14,78 +18,80 @@ public class EventListElementBean {
 	private SimpleStringProperty elemEventRating;
 	private SimpleStringProperty elemEventCity;
 
-	public EventListElementBean(EventBean bean) {
-		this.elemEventId = new SimpleIntegerProperty(bean.getEventId());
-		this.elemEventDate = new SimpleStringProperty(bean.getEventDate().toString() + " - " + bean.getEventTime().toString());
-		this.elemEventTitle = new SimpleStringProperty(bean.getEventTitle());
-		this.elemEventAddress = new SimpleStringProperty(bean.getEventAddress());
-		this.elemEventDistance = new SimpleIntegerProperty(bean.getEventDistance());
-		this.elemEventType = new SimpleStringProperty(bean.getEventType().toString());
-		this.elemEventRating = new SimpleStringProperty(bean.getEventOrganizer().getUsername());
-		this.elemEventCity = new SimpleStringProperty(bean.getEventCity());
+	public EventListElementBean(Event event) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		this.elemEventId = new SimpleIntegerProperty(event.getId());
+		this.elemEventDate = new SimpleStringProperty(dateFormat.format(event.getDate()) + " " + timeFormat.format(event.getTime()));
+		this.elemEventTitle = new SimpleStringProperty(event.getTitle());
+		this.elemEventAddress = new SimpleStringProperty(event.getAddress());
+		this.elemEventDistance = new SimpleIntegerProperty(event.getDistance());
+		this.elemEventType = new SimpleStringProperty(event.getType());
+		this.elemEventRating = new SimpleStringProperty(event.getOrganizerUser().getUsername());
+		this.elemEventCity = new SimpleStringProperty(event.getCity());
 	}
 
-	public Integer getEventId() {
+	public Integer getElemEventId() {
 		return elemEventId.get();
 	}
 
-	public void setEventId(Integer elemEventId) {
+	public void setElemEventId(Integer elemEventId) {
 		this.elemEventId.set(elemEventId);
 	}
 
-	public String getEventDate() {
+	public String getElemEventDate() {
 		return elemEventDate.get();
 	}
 
-	public void setEventDate(String elemEventDate) {
+	public void setElemEventDate(String elemEventDate) {
 		this.elemEventDate.set(elemEventDate);
 	}
 
-	public String getEventTitle() {
+	public String getElemEventTitle() {
 		return elemEventTitle.get();
 	}
 
-	public void setEventTitle(String elemEventTitle) {
+	public void setElemEventTitle(String elemEventTitle) {
 		this.elemEventTitle.set(elemEventTitle);
 	}
 
-	public String getEventAddress() {
+	public String getElemEventAddress() {
 		return elemEventAddress.get();
 	}
 
-	public void setEventAddress(String elemEventAddress) {
+	public void setElemEventAddress(String elemEventAddress) {
 		this.elemEventAddress.set(elemEventAddress);
 	}
 
-	public Integer getEventDistance() {
+	public Integer getElemEventDistance() {
 		return elemEventDistance.get();
 	}
 
-	public void setEventDistance(Integer elemEventDistance) {
+	public void setElemEventDistance(Integer elemEventDistance) {
 		this.elemEventDistance.set(elemEventDistance);
 	}
 
-	public String getEventType() {
+	public String getElemEventType() {
 		return elemEventType.get();
 	}
 
-	public void setEventType(String elemEventType) {
+	public void setElemEventType(String elemEventType) {
 		this.elemEventType.set(elemEventType);
 	}
 
-	public String getEventRating() {
+	public String getElemEventRating() {
 		return elemEventRating.get();
 	}
 
-	public void setEventRating(String elemEventRating) {
+	public void setElemEventRating(String elemEventRating) {
 		this.elemEventRating.set(elemEventRating);
 	}
 
-	public String getEventCity() {
+	public String getElemEventCity() {
 		return elemEventCity.get();
 	}
 
-	public void setEventCity(String elemEventCity) {
+	public void setElemEventCity(String elemEventCity) {
 		this.elemEventCity.set(elemEventCity);
 	}
 
