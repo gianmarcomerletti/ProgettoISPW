@@ -8,17 +8,29 @@ import java.util.ResourceBundle;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
+import com.mysql.cj.x.protobuf.MysqlxExpect.Open.Condition.Key;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,105 +47,73 @@ public class AllEventsControllerFX implements Initializable {
 	private Label levelLabel;
 
 	@FXML
-	private VBox eventsContainer;
+	private ChoiceBox<String> searchChoiceBox;
+
+	@FXML
+	private TextField searchTextField;
+
+	@FXML
+	private TableView<EventListElementBean> eventsContainer;
+	@FXML
+	private TableColumn<EventListElementBean, String> titleCol;
+	@FXML
+	private TableColumn<EventListElementBean, Integer> distanceCol;
+	@FXML
+	private TableColumn<EventListElementBean, String> typeCol;
+	@FXML
+	private TableColumn<EventListElementBean, String> cityCol;
+	@FXML
+	private TableColumn<EventListElementBean, String> dateCol;
+	@FXML
+	private TableColumn<EventListElementBean, String> ratingCol;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
 
+		ObservableList<EventListElementBean> events = FXCollections.observableArrayList(
+				new SystemFacade().getAllEvents());
+		FilteredList<EventListElementBean> flEvent = new FilteredList<>(events, p -> true);
+		eventsContainer.setItems(flEvent);
 
-		List<EventBean> events = new SystemFacade().getAllEvents();
-		fillEvents(events);
+		titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
+		distanceCol.setCellValueFactory(new PropertyValueFactory<>("KM"));
+		typeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
+		cityCol.setCellValueFactory(new PropertyValueFactory<>("City"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<>("Date"));
+		ratingCol.setCellValueFactory(new PropertyValueFactory<>("Rating"));
 
-	}
+		searchChoiceBox.getItems().addAll(
+				"Title", "City", "Organizer");
 
-	private void fillEvents(List<EventBean> events) {
-
-		URL urlSingleEventFXML = App.class.getResource("single_event.fxml");
-
-		if (events.isEmpty())
-			return;
-
-		for (EventBean event : events) {
-			AnchorPane singleEvent;
-			try {
-				HBox parent;
-				parent = FXMLLoader.load(urlSingleEventFXML);
-				singleEvent = (AnchorPane) parent.getChildren().get(0);
-				for (Node nodeEvent : singleEvent.getChildren()) {
-					switch (nodeEvent.getId()) {
-					case "distanceText":
-						Text distance = (Text) nodeEvent;
-						distance.setText(event.getEventDistance().toString() + " KM");
-						break;
-					case "typeText":
-						Text type = (Text) nodeEvent;
-						type.setText(event.getEventType().toString());
-						break;
-					case "levelLabel":
-						Label level = (Label) nodeEvent;
-						level.setText(event.getEventLevel().toString());
-						switch (event.getEventLevel()) {
-						case BEGINNER:
-							level.setStyle("-fx-background-color: GREEN; -fx-background-radius: 3;");
-							break;
-						case INTERMEDIATE:
-							level.setStyle("-fx-background-color: #0080ff; -fx-background-radius: 3;");
-							break;
-						case PRO:
-							level.setStyle("-fx-background-color: RED; -fx-background-radius: 3;");
-							break;
-						default:
-							break;
-						}
-						break;
-					case "titleText":
-						Text title = (Text) nodeEvent;
-						title.setText(event.getEventTitle());
-						break;
-					case "descriptionTextArea":
-						JFXTextArea description = (JFXTextArea) nodeEvent;
-						description.setText(event.getEventDescription());
-						break;
-					case "addressText":
-						Text address = (Text) nodeEvent;
-						address.setText(event.getEventAddress() + ", " + event.getEventCity());
-						break;
-					case "dateText":
-						Text date = (Text) nodeEvent;
-						String dateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(event.getEventDate());
-						String timeFormatted = new SimpleDateFormat("HH:mm").format(event.getEventTime());
-						date.setText(dateFormatted + " - " + timeFormatted);
-						break;
-					case "cancelButton":
-						JFXButton cancelBtn = (JFXButton) nodeEvent;
-						cancelBtn.setOnAction(value -> App.setRoot("home_user"));
-						break;
-					case "rateButton":
-						JFXButton rateBtn = (JFXButton) nodeEvent;
-						rateBtn.setOnAction(value -> App.setRoot("home_user"));
-						break;
-					case "usersText":
-						Text users = (Text) nodeEvent;
-						users.setText(new SystemFacade().getEventParticipants(event).toString());
-						break;
-					case "organizerText":
-						Text organizer = (Text) nodeEvent;
-						organizer.setText("created by " + event.getEventOrganizer().getUsername());
-						break;
-
-					default:
-						continue;
-					}
-				}
-				eventsContainer.getChildren().add(singleEvent);
-
-			} catch (IOException e) {
-				e.printStackTrace();
+		searchTextField.setOnKeyReleased(keyEvent -> {
+			switch (searchChoiceBox.getValue()) {
+			case "Title":
+				flEvent.setPredicate(p -> p.getEventTitle().toLowerCase().contains
+						(searchTextField.getText().toLowerCase().trim()));
+				break;
+			case "City":
+				flEvent.setPredicate(p -> p.getEventCity().toLowerCase().contains
+						(searchTextField.getText().toLowerCase().trim()));
+				break;
+			case "Organizer":
+				flEvent.setPredicate(p -> p.getEventRating().toLowerCase().contains
+						(searchTextField.getText().toLowerCase().trim()));
+				break;
 			}
+		});
 
-		}
+		searchChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal != null) {
+				searchTextField.setText("");
+				flEvent.setPredicate(null);
+			}
+		});
+
 	}
+
+
 
 	@FXML
 	private void toMap() {

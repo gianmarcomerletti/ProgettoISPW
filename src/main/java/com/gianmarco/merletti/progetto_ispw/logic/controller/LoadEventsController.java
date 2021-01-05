@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
@@ -100,17 +101,19 @@ public class LoadEventsController {
 		return eventBean;
 	}
 
-	public List<EventBean> getAllEvents() {
+	// TODO da sistemare la gestione con il bean
+	public List<EventListElementBean> getAllEvents() {
 		EventDAO dao = new EventDAO();
 		List<Event> events = dao.findAll();
-		ArrayList<EventBean> eventBeanList = new ArrayList<>();
+		ArrayList<EventListElementBean> eventElemBeanList = new ArrayList<>();
 
 		for (Event event : events) {
 			if	(event.getDate().after(new Date())) {
 				EventBean eventBean = getEventBeanFromEvent(event);
-				eventBeanList.add(eventBean);
+				EventListElementBean eventElemBean = new EventListElementBean(eventBean);
+				eventElemBeanList.add(eventElemBean);
 			}
 		}
-		return eventBeanList;
+		return eventElemBeanList ;
 	}
 }

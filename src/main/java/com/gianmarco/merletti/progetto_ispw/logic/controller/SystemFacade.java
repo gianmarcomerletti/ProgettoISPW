@@ -3,6 +3,7 @@ package com.gianmarco.merletti.progetto_ispw.logic.controller;
 import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
@@ -40,7 +41,7 @@ public class SystemFacade {
 	}
 
 
-	public List<EventBean> getAllEvents() {
+	public List<EventListElementBean> getAllEvents() {
 		return new LoadEventsController().getAllEvents();
 	}
 
