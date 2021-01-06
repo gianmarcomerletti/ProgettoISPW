@@ -103,4 +103,8 @@ public class SystemFacade {
 		return new LoginController().getUserData(username);
 	}
 
+	public List<ReviewBean> getMyReviews() {
+		return new LoadEventsController().getMyReviews();
+	}
+
 }

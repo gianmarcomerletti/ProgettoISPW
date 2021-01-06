@@ -6,8 +6,14 @@ import java.util.List;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.model.Review;
+import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum;
@@ -113,5 +119,24 @@ public class LoadEventsController {
 			}
 		}
 		return eventElemBeanList ;
+	}
+
+	public List<ReviewBean> getMyReviews() {
+		ReviewDAO dao = new ReviewDAO();
+		List<Review> reviews = dao.findUserReviews(SessionView.getUsername());
+		ArrayList<ReviewBean> reviewBeansList = new ArrayList<>();
+
+		for (Review review : reviews) {
+			ReviewBean reviewBean = new ReviewBean();
+			EventBean eventBean = getEventBeanFromEvent(review.getEvent());
+
+			reviewBean.setEventBean(eventBean);
+			reviewBean.setImageBean(review.getImage());
+			reviewBean.setTextBean(review.getText());
+			reviewBean.setUserBean(new UserDAO().findUserFromUsername(review.getUser()));
+			reviewBean.setValueBean(review.getValue());
+			reviewBeansList.add(reviewBean);
+		}
+		return reviewBeansList;
 	}
 }

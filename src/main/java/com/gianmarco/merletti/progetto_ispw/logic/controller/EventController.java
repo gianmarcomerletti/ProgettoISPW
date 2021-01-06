@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.temporal.TemporalAccessor;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
