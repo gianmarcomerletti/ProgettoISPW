@@ -65,7 +65,6 @@ public class AllEventsControllerFX implements Initializable {
 	private TableColumn<EventListElementBean, String> ratingCol;
 
 	private EventBean selectedEvent;
-	private List<String> filters;
 
 
 	@Override
@@ -85,7 +84,7 @@ public class AllEventsControllerFX implements Initializable {
 
 
 		eventsContainer.setItems(flEvent);
-		filters = Stream.of(FilterEnum.values()).map(FilterEnum::name).collect(Collectors.toList());
+		List<String> filters = Stream.of(FilterEnum.values()).map(FilterEnum::name).collect(Collectors.toList());
 		searchChoiceBox.getItems().addAll(filters);
 		searchChoiceBox.setValue(filters.get(0));
 
