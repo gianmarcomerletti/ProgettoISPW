@@ -7,5 +7,5 @@ addons:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
 script:
-  - ant build
+  -  mvn clean verify
   - sonar-scanner
