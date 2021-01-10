@@ -6,6 +6,7 @@
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="ProgettoISPW">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="P:/eclipse_neon/"/>
+    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
@@ -50,6 +51,10 @@
         <path refid="Maven Dependencies.libraryclasspath"/>
     </path>
     <path id="run.App (3).classpath">
+        <path refid="ProgettoISPW.classpath"/>
+        <path refid="Maven Dependencies.libraryclasspath"/>
+    </path>
+    <path id="run.ProgettoISPW (1).classpath">
         <path refid="ProgettoISPW.classpath"/>
         <path refid="Maven Dependencies.libraryclasspath"/>
     </path>
@@ -116,5 +121,22 @@
         <java classname="com.gianmarco.merletti.progetto_ispw.logic.app.App" failonerror="true" fork="yes">
             <classpath refid="run.App (3).classpath"/>
         </java>
+    </target>
+    <target name="ProgettoISPW (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.gianmarco.merletti.progetto_ispw.JUnitTest" todir="${junit.output.dir}"/>
+            <jvmarg line="-ea"/>
+            <classpath refid="run.ProgettoISPW (1).classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
     </target>
 </project>
