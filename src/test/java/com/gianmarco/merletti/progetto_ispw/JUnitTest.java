@@ -40,6 +40,7 @@ public class JUnitTest {
 		userBean.setLevel(LevelEnum.INTERMEDIATE);
 		new SystemFacade().signupUser(userBean);
 
+
 		UserBean createdUser = new UserBean();
 		createdUser.setUsername(randomUsername);
 		createdUser.setPassword(randomPassword);
