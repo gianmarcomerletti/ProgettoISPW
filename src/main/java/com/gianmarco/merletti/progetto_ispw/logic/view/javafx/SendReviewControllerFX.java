@@ -1,18 +1,14 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import org.controlsfx.control.Rating;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean;
-import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.util.ConverterUtil;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;

@@ -12,10 +12,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-
 public class LoginController {
 
 	private Logger log;

@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 
 import javafx.scene.control.DatePicker;
-import javafx.scene.image.Image;
 
 public class ConverterUtil {
 
@@ -30,7 +29,6 @@ public class ConverterUtil {
 		try {
 			b = Files.readAllBytes(imageFile.toPath());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -7,7 +7,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO;
-import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.City;
 import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;

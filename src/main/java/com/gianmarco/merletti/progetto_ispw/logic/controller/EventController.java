@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.temporal.TemporalAccessor;
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.AddressBean;
@@ -15,7 +13,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ConnectToGeolocationServiceException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException;
-import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Review;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
@@ -24,10 +21,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Alert.AlertType;
 
 public class EventController {
 

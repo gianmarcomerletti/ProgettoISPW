@@ -1,7 +1,6 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;

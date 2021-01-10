@@ -9,10 +9,6 @@ import com.gianmarco.merletti.progetto_ispw.logic.dao.RequestDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Alert.AlertType;
-
 public class RequestController {
 
 	public boolean createRequest(RequestBean requestBean) throws RequestException {

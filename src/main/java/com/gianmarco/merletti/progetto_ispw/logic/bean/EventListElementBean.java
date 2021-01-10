@@ -3,7 +3,6 @@ package com.gianmarco.merletti.progetto_ispw.logic.bean;
 import java.text.SimpleDateFormat;
 
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
-import com.gianmarco.merletti.progetto_ispw.logic.dao.ReviewDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.util.Rating;
 
