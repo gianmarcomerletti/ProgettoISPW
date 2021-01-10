@@ -130,23 +130,7 @@ public class MyEventsControllerFX implements Initializable {
 						break;
 					case "rateButton":
 						JFXButton rateBtn = (JFXButton) nodeEvent;
-						rateBtn.setOnAction(value -> {
-							try {
-								FXMLLoader loader = new FXMLLoader(App.class.getResource("send_review_form.fxml"));
-								Parent root = loader.load();
-								SendReviewControllerFX controller = loader.getController();
-								controller.setControllerAndEvent(this, event);
-								Stage stage = new Stage();
-								stage.initModality(Modality.WINDOW_MODAL);
-								stage.initOwner(myPastEventsContainer.getScene().getWindow());
-								Scene scene = new Scene(root);
-								stage.setScene(scene);
-								stage.setResizable(false);
-								stage.show();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						});
+						rateBtn.setOnAction(value -> rateEvent(event));
 						break;
 					case "usersText":
 						Text users = (Text) nodeEvent;
@@ -181,6 +165,24 @@ public class MyEventsControllerFX implements Initializable {
 		if (result.get() == ButtonType.OK) {
 			new SystemFacade().cancelEvent(event);
 			App.setRoot("home_user");
+		}
+	}
+
+	private void rateEvent(EventBean event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(App.class.getResource("send_review_form.fxml"));
+			Parent root = loader.load();
+			SendReviewControllerFX controller = loader.getController();
+			controller.setControllerAndEvent(this, event);
+			Stage stage = new Stage();
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(myPastEventsContainer.getScene().getWindow());
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.setResizable(false);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

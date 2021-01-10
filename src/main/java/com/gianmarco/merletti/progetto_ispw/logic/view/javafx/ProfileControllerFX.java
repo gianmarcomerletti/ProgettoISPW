@@ -131,11 +131,6 @@ public class ProfileControllerFX implements Initializable {
 	}
 
 	@FXML
-	private void toMap() {
-		App.setRoot("home_user");
-	}
-
-	@FXML
 	private void toAllEvents() {
 		App.setRoot("all_events");
 	}
@@ -143,6 +138,11 @@ public class ProfileControllerFX implements Initializable {
 	@FXML
 	private void toMyRequests() {
 		App.setRoot("my_requests");
+	}
+
+	@FXML
+	private void toMap() {
+		App.setRoot("home_user");
 	}
 
 	@FXML

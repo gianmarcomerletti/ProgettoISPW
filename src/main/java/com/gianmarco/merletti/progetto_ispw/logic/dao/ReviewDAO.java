@@ -24,13 +24,13 @@ public class ReviewDAO {
 			st.setString(1, username);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				Review reviewElem = new Review();
-				reviewElem.setUser(username);
-				reviewElem.setValue(rs.getInt(COLUMN_VALUE));
-				reviewElem.setText(rs.getString(COLUMN_TEXT));
-				reviewElem.setImage(rs.getBytes(COLUMN_IMAGE));
+				Review reviewUserElem = new Review();
+				reviewUserElem.setUser(username);
+				reviewUserElem.setValue(rs.getInt(COLUMN_VALUE));
+				reviewUserElem.setText(rs.getString(COLUMN_TEXT));
+				reviewUserElem.setImage(rs.getBytes(COLUMN_IMAGE));
 				events.add(rs.getInt(COLUMN_IDEVENT));
-				result.add(reviewElem);
+				result.add(reviewUserElem);
 			}
 
 			EventDAO dao = new EventDAO();

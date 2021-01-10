@@ -1,7 +1,13 @@
 package com.gianmarco.merletti.progetto_ispw.logic.view.javafx;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
 
 import com.gianmarco.merletti.progetto_ispw.logic.app.App;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
@@ -9,6 +15,7 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
+import com.gianmarco.merletti.progetto_ispw.logic.util.FilterEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.view.SessionView;
 
 import javafx.collections.FXCollections;
@@ -61,6 +68,7 @@ public class AllEventsControllerFX implements Initializable {
 	private TableColumn<EventListElementBean, String> ratingCol;
 
 	private EventBean selectedEvent;
+	private List<String> filters;
 
 
 	@Override
@@ -80,10 +88,9 @@ public class AllEventsControllerFX implements Initializable {
 
 
 		eventsContainer.setItems(flEvent);
-
-		searchChoiceBox.getItems().addAll(
-				"Title", "City", "Organizer");
-		searchChoiceBox.setValue("Title");
+		filters = Stream.of(FilterEnum.values()).map(FilterEnum::name).collect(Collectors.toList());
+		searchChoiceBox.getItems().addAll(filters);
+		searchChoiceBox.setValue(filters.get(0));
 
 		searchTextField.setOnKeyReleased(keyEvent -> {
 			switch (searchChoiceBox.getValue()) {
@@ -98,6 +105,8 @@ public class AllEventsControllerFX implements Initializable {
 			case "Organizer":
 				flEvent.setPredicate(p -> p.getElemEventRating().toLowerCase().contains
 						(searchTextField.getText().toLowerCase().trim()));
+				break;
+			default:
 				break;
 			}
 		});

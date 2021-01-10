@@ -15,6 +15,7 @@ public final class Constants {
 	private static final String DELETE_FROM = "DELETE FROM ";
 	private static final String UPDATE = "UPDATE ";
 	private static final String WHERE_COND = " WHERE (";
+	private static final String INNER_JOIN = " INNER JOIN ";
 	private static final String END_STRING = "=?);";
 	private static final String AND_STRING = "=? AND ";
 
@@ -78,7 +79,7 @@ public final class Constants {
 			+ WHERE_COND + COLUMN_IDEVENT + END_STRING;
 
 	public static final String SQL_FIND_JOIN_EVENTS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_EVENT
-			+ " INNER JOIN " + TABLE_JOIN + " ON organization.idevent=event.idevent"
+			+ INNER_JOIN + TABLE_JOIN + " ON organization.idevent=event.idevent"
 			+ WHERE_COND + COLUMN_USERNAME + END_STRING;
 
 	public static final String SQL_FIND_EVENT_FROM_LATLONG = SELECT_ALL_FROM + TABLE_EVENT
@@ -110,11 +111,11 @@ public final class Constants {
 			+ WHERE_COND + COLUMN_IDREQUEST + END_STRING;
 
 	public static final String SQL_FIND_REQUESTS_FROM_USER = SELECT_ALL_FROM + TABLE_REQUEST
-			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=request.idevent"
+			+ INNER_JOIN + TABLE_EVENT + " ON event.idevent=request.idevent"
 			+ WHERE_COND + COLUMN_ORGANIZER + END_STRING;
 
 	public static final String SQL_FIND_PENDING_REQUEST_FROM_USER = SELECT_ALL_FROM + TABLE_REQUEST
-			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=request.idevent"
+			+ INNER_JOIN + TABLE_EVENT + " ON event.idevent=request.idevent"
 			+ WHERE_COND + COLUMN_USER + AND_STRING
 			+ "request."+COLUMN_IDEVENT + AND_STRING + COLUMN_STATUS + END_STRING;
 
@@ -135,7 +136,7 @@ public final class Constants {
 			+ WHERE_COND + COLUMN_USER + END_STRING;
 
 	public static final String SQL_FIND_REVIEWS_FROM_ORGANIZER = SELECT_ALL_FROM + TABLE_REVIEW
-			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=review.idevent"
+			+ INNER_JOIN + TABLE_EVENT + " ON event.idevent=review.idevent"
 			+ WHERE_COND + COLUMN_USER + END_STRING;
 
 	public static final String SQL_FIND_REVIEW = SELECT_ALL_FROM + TABLE_REVIEW

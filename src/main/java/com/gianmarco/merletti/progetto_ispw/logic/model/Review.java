@@ -16,8 +16,7 @@ public class Review {
 	}
 
 	public void setFromBean(ReviewBean reviewBean) {
-		Event ev = new Event();
-		ev = new EventDAO().findById(reviewBean.getEventBean().getEventId());
+		Event ev = new EventDAO().findById(reviewBean.getEventBean().getEventId());
 		this.setEvent(ev);
 		this.setValue(reviewBean.getValueBean());
 		this.setText(reviewBean.getTextBean());
