@@ -58,33 +58,25 @@ public class ProfileControllerFX implements Initializable {
 	private TextField usernameTextField;
 
 	@FXML
-	private PasswordField passwordField;
+	private TextField cityField;
 
 	@FXML
-	private ChoiceBox<String> cityField;
-
-	@FXML
-	private ChoiceBox<String> levelField;
+	private TextField levelField;
 
 	@FXML
 	private VBox reviewsContainer;
 
-	ObservableList<String> cityList = FXCollections.observableArrayList("ROMA", "MILANO", "TORINO");
-	ObservableList<String> levelList = FXCollections.observableArrayList("BEGINNER", "INTERMEDIATE", "PRO");
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		NavbarManager.setNavbar(usernameText, levelLabel);
-		levelField.setItems(levelList);
-		cityField.setItems(cityList);
 
 		UserBean currentUser = new SystemFacade().getUserData(SessionView.getUsername());
 		firstNameTextField.setText(currentUser.getFirstName());
 		lastNameTextField.setText(currentUser.getLastName());
 		usernameTextField.setText(currentUser.getUsername());
-		passwordField.setText(currentUser.getPassword());
-		cityField.setValue(currentUser.getCity().toString());
-		levelField.setValue(currentUser.getLevel().toString());
+		cityField.setText(currentUser.getCity().toString());
+		levelField.setText(currentUser.getLevel().toString());
 
 		URL urlSingleReviewFXML = App.class.getResource("single_profile_review.fxml");
 		List<ReviewBean> reviews = new SystemFacade().getMyReviews();
@@ -124,6 +116,7 @@ public class ProfileControllerFX implements Initializable {
 					case "ratingValue":
 						org.controlsfx.control.Rating rating = (org.controlsfx.control.Rating) nodeEvent;
 						rating.setRating(review.getValueBean());
+						rating.setMouseTransparent(true);
 						break;
 					default:
 						continue;

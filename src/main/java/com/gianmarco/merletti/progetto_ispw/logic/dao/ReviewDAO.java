@@ -46,6 +46,36 @@ public class ReviewDAO {
 		return result;
 	}
 
+	public List<Review> findReceivedReviews(String username) {
+		Connection conn = DBConnect.getInstance().getConnection();
+		List<Review> result = new ArrayList<>();
+		List<Integer> events = new ArrayList<>();
+		try (PreparedStatement st = conn.prepareStatement(SQL_FIND_REVIEWS_FROM_ORGANIZER)) {
+			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				Review reviewElem = new Review();
+				reviewElem.setUser(username);
+				reviewElem.setValue(rs.getInt(COLUMN_VALUE));
+				reviewElem.setText(rs.getString(COLUMN_TEXT));
+				reviewElem.setImage(rs.getBytes(COLUMN_IMAGE));
+				events.add(rs.getInt(COLUMN_IDEVENT));
+				result.add(reviewElem);
+			}
+
+			EventDAO dao = new EventDAO();
+			for (int i=0; i<events.size(); i++) {
+				Event event = dao.findById(events.get(i));
+				result.get(i).setEvent(event);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	public boolean checkReview(Integer eventId, String username) {
 		Connection conn = DBConnect.getInstance().getConnection();
 		boolean result = false;

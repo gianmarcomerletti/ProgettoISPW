@@ -123,7 +123,7 @@ public class LoadEventsController {
 
 	public List<ReviewBean> getMyReviews() {
 		ReviewDAO dao = new ReviewDAO();
-		List<Review> reviews = dao.findUserReviews(SessionView.getUsername());
+		List<Review> reviews = dao.findReceivedReviews(SessionView.getUsername());
 		ArrayList<ReviewBean> reviewBeansList = new ArrayList<>();
 
 		for (Review review : reviews) {

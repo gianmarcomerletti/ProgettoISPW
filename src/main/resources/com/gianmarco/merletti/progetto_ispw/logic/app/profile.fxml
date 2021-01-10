@@ -2,9 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -98,39 +96,33 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First name" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last name" GridPane.columnIndex="2" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" GridPane.rowIndex="1" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" GridPane.rowIndex="2" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Level" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="firstNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="1">
+                  <TextField fx:id="firstNameTextField" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="lastNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="3">
+                  <TextField fx:id="lastNameTextField" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="3">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="usernameTextField" maxHeight="20.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TextField fx:id="usernameTextField" editable="false" maxHeight="20.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <TextField fx:id="cityField" editable="false" layoutX="110.0" layoutY="38.0" maxHeight="20.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
-                  </PasswordField>
-                  <ChoiceBox fx:id="cityField" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  </TextField>
+                  <TextField fx:id="levelField" editable="false" layoutX="10.0" layoutY="13.0" maxHeight="20.0" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="250.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
-                  </ChoiceBox>
-                  <ChoiceBox fx:id="levelField" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="250.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </ChoiceBox>
+                  </TextField>
                </children>
             </GridPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reviews">

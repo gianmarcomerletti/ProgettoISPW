@@ -134,6 +134,10 @@ public final class Constants {
 	public static final String SQL_FIND_REVIEWS_FROM_USERNAME = SELECT_ALL_FROM + TABLE_REVIEW
 			+ WHERE_COND + COLUMN_USER + END_STRING;
 
+	public static final String SQL_FIND_REVIEWS_FROM_ORGANIZER = SELECT_ALL_FROM + TABLE_REVIEW
+			+ " INNER JOIN " + TABLE_EVENT + " ON event.idevent=review.idevent"
+			+ WHERE_COND + COLUMN_USER + END_STRING;
+
 	public static final String SQL_FIND_REVIEW = SELECT_ALL_FROM + TABLE_REVIEW
 			+ WHERE_COND + COLUMN_IDEVENT + AND_STRING + COLUMN_USER + END_STRING;
 
