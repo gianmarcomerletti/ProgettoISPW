@@ -132,6 +132,11 @@ public class ProfileControllerFX implements Initializable {
 	}
 
 	@FXML
+	private void toMyEvents() {
+		App.setRoot("my_events");
+	}
+
+	@FXML
 	private void logout() {
 		new SystemFacade().logout();
 		App.setRoot("login");

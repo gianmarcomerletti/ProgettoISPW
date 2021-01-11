@@ -59,6 +59,7 @@
                   <JFXButton layoutY="40.0" prefHeight="21.0" prefWidth="156.0" style="-fx-background-color: #007bff; -fx-text-alignment: left;" text="My Events" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0" />
                   <JFXButton layoutY="312.0" onAction="#logout" style="-fx-background-color: #fff5f5;" text="Log out" textFill="#ff3737" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                   <JFXButton layoutX="45.0" layoutY="115.0" onAction="#toMyRequests" text="My Requests" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="115.0" />
+                  <JFXButton onAction="#profile" style="-fx-background-color: #ccebff;" text="Profile" textFill="#3884ff" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

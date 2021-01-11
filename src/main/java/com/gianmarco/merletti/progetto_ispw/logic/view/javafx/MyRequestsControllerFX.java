@@ -153,6 +153,11 @@ public class MyRequestsControllerFX implements Initializable {
 	}
 
 	@FXML
+	private void profile() {
+		App.setRoot("profile");
+	}
+
+	@FXML
 	private void logout() {
 		new SystemFacade().logout();
 		App.setRoot("login");

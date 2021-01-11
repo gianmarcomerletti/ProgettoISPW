@@ -213,5 +213,9 @@ public class MyEventsControllerFX implements Initializable {
 		App.setRoot("login");
 	}
 
+	@FXML
+	private void profile() {
+		App.setRoot("profile");
+	}
 
 }
