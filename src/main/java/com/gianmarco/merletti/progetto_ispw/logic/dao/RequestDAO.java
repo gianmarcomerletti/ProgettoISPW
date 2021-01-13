@@ -82,10 +82,9 @@ public class RequestDAO {
 		return result;
 	}
 
-	public Request activateRequest(RequestBean bean) {
+	public Request activateRequest(Integer reqId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		Request request = new Request();
-		request.setFromBean(bean);
+		Request request = findById(reqId);
 		try (PreparedStatement st = conn.prepareStatement(SQL_UPDATE_REQUEST_STATUS);) {
 			st.setString(1, Status.ACCEPTED.toString());
 			st.setInt(2, request.getIdRequest());
@@ -96,10 +95,9 @@ public class RequestDAO {
 		return request;
 	}
 
-	public Request refuseRequest(RequestBean bean) {
+	public Request refuseRequest(Integer reqId) {
 		Connection conn = DBConnect.getInstance().getConnection();
-		Request request = new Request();
-		request.setFromBean(bean);
+		Request request = findById(reqId);
 		try (PreparedStatement st = conn.prepareStatement(SQL_UPDATE_REQUEST_STATUS);) {
 			st.setString(1, Status.REJECTED.toString());
 			st.setInt(2, request.getIdRequest());

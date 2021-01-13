@@ -42,15 +42,15 @@ public class RequestController {
 
 	public boolean acceptRequest(RequestBean bean) {
 		RequestDAO dao = new RequestDAO();
-		Request request = dao.activateRequest(bean);
+		Request request = dao.activateRequest(bean.getRequestId());
 		if (request != null)
-			return new EventDAO().joinEvent(bean.getRequestUser(), bean.getRequestEvent().getEventId());
+			return new EventDAO().joinEvent(request.getUser(), request.getEvent());
 		return false;
 	}
 
 	public boolean rejectRequest(RequestBean bean) {
 		RequestDAO dao = new RequestDAO();
-		Request request = dao.refuseRequest(bean);
+		Request request = dao.refuseRequest(bean.getRequestId());
 		return (request != null);
 	}
 

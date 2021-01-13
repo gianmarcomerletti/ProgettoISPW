@@ -48,10 +48,6 @@ html, body {
 	display: "inline-block";
 }
 
-.table-row{
-	cursor:pointer;
-}
-
 .btn-join {
 	padding: .3em .5em .3em .5em;
 	background-color: #116d89;
