@@ -90,15 +90,15 @@ public class AllEventsControllerFX implements Initializable {
 
 		searchTextField.setOnKeyReleased(keyEvent -> {
 			switch (searchChoiceBox.getValue()) {
-			case "Title":
+			case "TITLE":
 				flEvent.setPredicate(p -> p.getElemEventTitle().toLowerCase().contains
 						(searchTextField.getText().toLowerCase().trim()));
 				break;
-			case "City":
+			case "CITY":
 				flEvent.setPredicate(p -> p.getElemEventCity().toLowerCase().contains
 						(searchTextField.getText().toLowerCase().trim()));
 				break;
-			case "Organizer":
+			case "ORGANIZER":
 				flEvent.setPredicate(p -> p.getElemEventRating().toLowerCase().contains
 						(searchTextField.getText().toLowerCase().trim()));
 				break;

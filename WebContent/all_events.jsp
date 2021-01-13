@@ -1,3 +1,5 @@
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean"%>
 <%@page import="java.util.Base64"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean"%>
@@ -6,46 +8,40 @@
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.view.SessionView"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventListElementBean"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 
 <%
-	String action = request.getParameter("btnAction");
 	String eventId = request.getParameter("event");
-	String textReview = request.getParameter("inputTextReview");
-	String valueReview = request.getParameter("selected_rating");
-	String revBase64Image = request.getParameter("base64ImageReview");
-
-	if (action != "" && eventId != null) {
+	String requestMessage = request.getParameter("inputRequestMessage");
+	if (eventId != null) {
 		SystemFacade facade = new SystemFacade();
-		EventBean bean = new EventBean();
-		bean.setEventId(Integer.parseInt(eventId));
-		if (action.equalsIgnoreCase("CANCEL"))
-			facade.cancelEvent(bean);
-		else if (action.equalsIgnoreCase("REVIEW")) {
-			ReviewBean reviewBean = new ReviewBean();
-			reviewBean.setEventBean(bean);
-			reviewBean.setTextBean(textReview);
-			reviewBean.setValueBean(Integer.parseInt(valueReview));
-			reviewBean.setImageBean(Base64.getDecoder().decode(revBase64Image));
-			try {
-				facade.sendReview(reviewBean);
-			} catch (ReviewException e) {
-				out.println("<script>alert('You are already reviewed this event!');</script>");
-			}
+		EventBean selectedEvent = new EventBean();
+		selectedEvent.setEventId(Integer.parseInt(eventId));
+		RequestBean requestBean = new RequestBean();
+		requestBean.setRequestEvent(selectedEvent);
+		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		requestBean.setRequestUser(SessionView.getUsername());
+		if (requestMessage != "")
+			requestBean.setRequestMessage(requestMessage);
+
+		try {
+			facade.sendRequest(requestBean);
+			out.println("<script>alert('Requested to join send!');</script>");
+		} catch (RequestException e) {
+			out.println("<script>alert('You are already a participant of the event or your request is in pending status!');</script>");
 		}
 
 	}
 
 
-	List<EventBean> myEvents = new SystemFacade().getMyActiveEvents();
-	List<EventBean> joinEvents = new SystemFacade().getJoinEvents();
-	List<EventBean> myPastEvents = new SystemFacade().getMyPastEvents();
+	List<EventListElementBean> events = new SystemFacade().getAllEvents();
 
 %>
 
@@ -92,390 +88,83 @@
 		<!-- Page Content -->
 		<div id="page-content">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-				<ul class="nav nav-pills">
-  					<li class="nav-item">
-  						<a class="nav-link active" data-toggle="tab" href="#createdEvents">Created events</a>
-  					</li>
-  					<li class="nav-item">
-  						<a class="nav-link" data-toggle="tab" href="#joinEvents">Join events</a>
-  					</li>
- 					<li class="nav-item">
- 						<a class="nav-link" data-toggle="tab" href="#pastEvents">Past events</a>
- 					</li>
-				</ul>
+				<div class="input-group" style="width:200px;">
+					<div class="input-group-prepend">
+    					<label class="input-group-text" for="inputGroupSelect">Filter by</label>
+  					</div>
+  					<select class="custom-select" id="inputGroupSelect">
+    					<option selected value="0">Title</option>
+    					<option value="3">City</option>
+   						<option value="5">Organizer</option>
+  					</select>
+				</div>
+
+				<input class="form-control" id="myInput" onkeyup="myFunction()" type="text" style="width:500px; margin-left: 10px;" placeholder="Search..">
 
 				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
-				role="button"> Logout
+					role="button"> Logout
 				</a>
 			</nav>
 
-
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="createdEvents">
-				<form action="events.jsp" method="GET">
-				<input type="hidden" name="btnAction" id="btnActionId" value="">
+			<form action="all_events.jsp" method="GET" id="form">
 				<input type="hidden" name="event" id="eventId" value="">
-					<ul class="list-group">
-						<!-- Single Row for JSP -->
-						<%
-						for (EventBean event : myEvents) {
-						%>
-						<li class="list-group-item">
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col">
-										<div class="row">
-											<h5>
-											<%
-												LevelEnum level = event.getEventLevel();
-												switch (level) {
-												case BEGINNER:
-											%>		<span class="badge badge-success">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case INTERMEDIATE:
-											%>		<span class="badge badge-primary">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case PRO:
-											%>		<span class="badge badge-danger">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												default:
-													break;
-												}
-											%>
-											<span>
-											<%	out.println(event.getEventTitle());	%>
-											</span>
-
-											</h5>
-
-
-										</div>
-										<div class="row">
-										<h2>
-											<%	out.println(event.getEventDistance().toString() + " KM");	%>
-										</h2>
-										</div>
-										<div class="row">
-											<b><%	out.println(event.getEventType().toString());	%></b>
-										</div>
-										<div class="row">
-											<%	out.println(event.getEventDescription());	%>
-										</div>
-										<div class="row">
-											<%	out.println(event.getEventAddress());	%>
-										</div>
-										<div class="row">
-											<%	out.println(new SimpleDateFormat("dd-MM-yyyy").format
-													(event.getEventDate()) + " - " +
-													new SimpleDateFormat("HH:mm").format
-															(event.getEventTime()));	%>
-										</div>
-									</div>
-
-									<div class="col">
-										<div class="row justify-content-end mt-2">
-											<img src="style/img/icon-participants-24.png" alt="" width="24"
-												height="24">
-											<%
-												out.println(new SystemFacade().getEventParticipants(event));
-											%>
-										</div>
-										<div class="row justify-content-end mt-2">
-											<input type="submit" onclick='cancelEvent(<% out.println(event.getEventId()); %>)'
-												class="btn btn-outline-danger" value='Cancel'>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-						</li>
-						<%
-							}
-						%>
-						<!-- End of Single Row for JSP  -->
-					</ul>
-				</form>
-				</div>
-
-				<div class="tab-pane fade" id="joinEvents">
-				<form action="events.jsp" method="GET">
-				<input type="hidden" name="btnAction" id="btnActionId2" value="">
-				<input type="hidden" name="event" id="eventId2" value="">
-					<ul class="list-group">
-						<!-- Single Row for JSP -->
-						<%
-						for (EventBean joinEvent : joinEvents) {
-						%>
-						<li class="list-group-item">
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col">
-										<div class="row">
-											<h5>
-											<%
-												LevelEnum level = joinEvent.getEventLevel();
-												switch (level) {
-												case BEGINNER:
-											%>		<span class="badge badge-success">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case INTERMEDIATE:
-											%>		<span class="badge badge-primary">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case PRO:
-											%>		<span class="badge badge-danger">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												default:
-													break;
-												}
-											%>
-											<span>
-											<%	out.println(joinEvent.getEventTitle());	%>
-											</span>
-											</h5>
-
-											<span><i>
-											<%	out.println("&nbsp;&nbsp;created by " + joinEvent.getEventOrganizer().getUsername());	%>
-											</i></span>
-
-										</div>
-										<div class="row">
-										<h2>
-											<%	out.println(joinEvent.getEventDistance().toString() + " KM");	%>
-										</h2>
-										</div>
-										<div class="row">
-											<b><%	out.println(joinEvent.getEventType().toString());	%></b>
-										</div>
-										<div class="row">
-											<%	out.println(joinEvent.getEventDescription());	%>
-										</div>
-										<div class="row">
-											<%	out.println(joinEvent.getEventAddress());	%>
-										</div>
-										<div class="row">
-											<%	out.println(new SimpleDateFormat("dd-MM-yyyy").format
-													(joinEvent.getEventDate()) + " - " +
-													new SimpleDateFormat("HH:mm").format
-															(joinEvent.getEventTime()));	%>
-										</div>
-									</div>
-
-									<div class="col">
-										<div class="row justify-content-end mt-2">
-											<img src="style/img/icon-participants-24.png" alt="" width="24"
-												height="24">
-											<%
-												out.println(new SystemFacade().getEventParticipants(joinEvent));
-											%>
-										</div>
-										<div class="row justify-content-end mt-2">
-											<input type="submit" onclick='cancelEvent(<% out.println(joinEvent.getEventId()); %>)'
-												class="btn btn-outline-danger" value='Cancel'>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-						</li>
-						<%
-							}
-						%>
-						<!-- End of Single Row for JSP  -->
-					</ul>
-				</form>
-				</div>
-
-				<div class="tab-pane fade" id="pastEvents">
-					<ul class="list-group">
-						<!-- Single Row for JSP -->
-						<%
-						for (EventBean event : myPastEvents) {
-						%>
-						<li class="list-group-item">
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col">
-										<div class="row">
-											<h5>
-											<%
-												LevelEnum level = event.getEventLevel();
-												switch (level) {
-												case BEGINNER:
-											%>		<span class="badge badge-success">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case INTERMEDIATE:
-											%>		<span class="badge badge-primary">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												case PRO:
-											%>		<span class="badge badge-danger">
-													<%	out.println(level.toString()); %>
-													</span>
-											<% 		break;
-												default:
-													break;
-												}
-											%>
-											<span>
-											<%	out.println(event.getEventTitle());	%>
-											</span>
-											</h5>
-											<span><i>
-											<%	out.println("&nbsp;&nbsp;created by " + event.getEventOrganizer().getUsername());	%>
-											</i></span>
-										</div>
-										<div class="row">
-										<h2>
-											<%	out.println(event.getEventDistance().toString() + " KM");	%>
-										</h2>
-										</div>
-										<div class="row">
-											<b><%	out.println(event.getEventType().toString());	%></b>
-										</div>
-										<div class="row">
-											<%	out.println(event.getEventDescription());	%>
-										</div>
-										<div class="row">
-											<%	out.println(event.getEventAddress());	%>
-										</div>
-										<div class="row">
-											<%	out.println(new SimpleDateFormat("dd-MM-yyyy").format
-													(event.getEventDate()) + " - " +
-													new SimpleDateFormat("HH:mm").format
-															(event.getEventTime()));	%>
-										</div>
-									</div>
-
-									<div class="col">
-										<div class="row justify-content-end mt-2">
-											<img src="style/img/icon-participants-24.png" alt="" width="24"
-												height="24">
-											<%
-												out.println(new SystemFacade().getEventParticipants(event));
-											%>
-										</div>
-
-										<div class="row justify-content-end mt-2">
-											<button id="sendReview" onclick='selectEventforReview(<%out.println(event.getEventId());%>)'
-												data-toggle="modal" data-target="#newReview"
-												class="btn btn-outline-primary" type="button">
-												Review
-											</button>
-										</div>
-									</div>
-
-								</div>
-
-						  	</div>
-						</li>
-
-						<%
-
-						}
-						%>
-						<!-- End of Single Row for JSP  -->
-
-					</ul>
-				</div>
-
-				<!-- Review Event Modal -->
-				<div class="modal fade" id="newReview" role="dialog"  aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h3 class="modal-title">Send a Review</h3>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-
-							<!-- Modal body -->
-							<form action="events.jsp" method="POST">
-							<input type="hidden" name="btnAction" id="btnActionId3" value="">
-							<input type="hidden" name="event" id="eventId3" value="">
-							<input type="hidden" value="" id="base64ImageReviewId" name="base64ImageReview" value="">
-							<div class="modal-body">
-								<div class="row">
-	 								<div class="col-sm">
-										<div class="form-group">
-											<label for="inputTextReview">Text of the review</label>
-											<textarea class="form-control" required placeholder="Text of the review"
-												name="inputTextReview" rows="4"></textarea>
-										</div>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-sm">
-										<div class="form-group">
-											<label class="control-label" for="rating">
-	   											<span class="field-label-header">Rate</span><br>
-	    										<span class="field-label-info"></span>
-	    										<input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
-	   										</label>
-	   										<h2 class="bold rating-header" style="">
-	    										<span class="selected-rating">0</span><small> / 5</small>
-	    									</h2>
-	    									<button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
-	        									<i class="fa fa-star" aria-hidden="true"></i>
-	    									</button>
-	    									<button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
-	        									<i class="fa fa-star" aria-hidden="true"></i>
-	   									 	</button>
-	    									<button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
-	        									<i class="fa fa-star" aria-hidden="true"></i>
-	    									</button>
-	    									<button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
-	        									<i class="fa fa-star" aria-hidden="true"></i>
-	    									</button>
-	    									<button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
-	        									<i class="fa fa-star" aria-hidden="true"></i>
-	    									</button>
-										</div>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-sm">
-										<div class="form-group">
-											<label for="inputReviewPictureId">Add a picture</label> <br>
-											<input type="file" accept="image/png, image/jpeg"
-												id="inputReviewPictureId" name="inputReviewPicture">
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Modal footer -->
-							<div class="modal-footer">
-								<div class="row">
-									<div class="col-sm">
-										<input type="submit" onclick='reviewEvent()'
-											class="btn btn-primary w-100" value='Send'>
-									</div>
-								</div>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				<input type="hidden" name="inputRequestMessage" id="inputRequestMessageId" value="">
+				<table id="myTable" class="table table-bordered table-hover">
+					<thead class="thead-dark">
+   						<tr>
+      						<th width="20% scope="col">Title</th>
+      						<th width="15% scope="col">Type</th>
+      						<th width="10% scope="col">Level</th>
+      						<th width="15% scope="col">City</th>
+      						<th width="15% scope="col">Date</th>
+      						<th width="25% scope="col">User</th>
+    					</tr>
+  					</thead>
+  					<tbody>
+					<%
+					for (EventListElementBean ev : events) {
+					%>
+    					<tr class="clickable-row" id="<%out.print(ev.getElemEventId());%>" style="cursor:pointer">
+      						<td><b>
+      						<%
+      							out.println(ev.getElemEventTitle());
+      						%>
+      						</b></td>
+      						<td>
+      						<%
+      							out.println(ev.getElemEventType());
+      						%>
+      						</td>
+      						<td>
+      						<%
+      							out.println(ev.getElemEventLevel());
+      						%>
+      						</td>
+      						<td>
+      						<%
+      							out.println(ev.getElemEventCity());
+      						%>
+      						</td>
+      						<td>
+      						<%
+      							out.println(ev.getElemEventDate());
+      						%>
+      						</td>
+      						<td>
+      						<%
+      							out.println(ev.getElemEventRating());
+      						%>
+      						</td>
+    					</tr>
+    				<%
+					}
+    				%>
+  					</tbody>
+				</table>
+			</form>
 			</div>
+
 
 		</div>
 	</div>
@@ -487,71 +176,49 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
 <script>
-	jQuery(document).ready(function($){
 
-		$(".btnrating").on('click',(function(e) {
-
-			var previous_value = $("#selected_rating").val();
-
-			var selected_value = $(this).attr("data-attr");
-			$("#selected_rating").val(selected_value);
-
-			$(".selected-rating").empty();
-			$(".selected-rating").html(selected_value);
-
-			for (i = 1; i <= selected_value; ++i) {
-				$("#rating-star-"+i).toggleClass('btn-warning');
-				$("#rating-star-"+i).toggleClass('btn-default');
-			}
-
-			for (ix = 1; ix <= previous_value; ++ix) {
-				$("#rating-star-"+ix).toggleClass('btn-warning');
-				$("#rating-star-"+ix).toggleClass('btn-default');
-			}
-
-		}));
+	$("tbody tr").click(function () {
+	  var evId = this.id;
+	  document.getElementById("eventId").value = evId;
+	  var form = document.getElementById("form");
+	  var message = prompt("Enter a message for the organizer user", "");
+	  if (message != null) {
+		  document.getElementById("inputRequestMessageId").value = message;
+		  form.submit();
+	  } else {
+		  return;
+	  }
 	});
+
 </script>
 
 <script>
-	function cancelEvent(evId) {
-		if (confirm("Are you sure you want to cancel your participation in the event. "
-				+ "If you are the organizer, the event will be deleted.")) {
-			document.getElementById("btnActionId").value = "CANCEL";
-			document.getElementById("btnActionId2").value = "CANCEL";
-			document.getElementById("eventId").value = evId;
-			document.getElementById("eventId2").value = evId;
 
-		} else
-			document.getElementById("btnActionId").value = "";
+	function myFunction() {
+  		// Declare variables
+ 	 	var input, filter, table, tr, td, i, txtValue, sel;
+ 		input = document.getElementById("myInput");
+ 		filter = input.value.toUpperCase();
+  		table = document.getElementById("myTable");
+  		tr = table.getElementsByTagName("tr");
+  		sel = document.getElementById("inputGroupSelect");
+
+ 		// Loop through all table rows, and hide those who don't match the search query
+  		for (i = 0; i < tr.length; i++) {
+    		td = tr[i].getElementsByTagName("td")[sel.value];
+    		if (td) {
+     			txtValue = td.textContent || td.innerText;
+      			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        			tr[i].style.display = "";
+      			} else {
+        			tr[i].style.display = "none";
+     	 		}
+    		}
+  		}
 	}
 
-	function reviewEvent() {
-		document.getElementById("btnActionId3").value = "REVIEW";
-	}
-
-	function getBase64(file) {
-		var reader = new FileReader();
-		reader.readAsBinaryString(file);
-		reader.onload = function() {
-			console.log(reader.result);
-			document.getElementById('base64ImageReviewId').value = btoa(reader.result);
-			response.sendRedirect("index.jsp");
-		};
-		reader.onerror = function(error) {
-			alert("Invalid file");
-		};
-	}
-
-	function selectEventforReview(evId) {
-		document.getElementById("eventId3").value = evId;
-	}
-
-	$("#inputReviewPictureId").change(function() {
-		var file = document.getElementById('inputReviewPictureId').files[0];
-		getBase64(file);
-	});
 </script>
 
 </html>
