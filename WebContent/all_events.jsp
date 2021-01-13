@@ -111,14 +111,15 @@
 				<input type="hidden" name="event" id="eventId" value="">
 				<input type="hidden" name="inputRequestMessage" id="inputRequestMessageId" value="">
 				<table id="myTable" class="table table-bordered table-hover">
+					<caption>All Events</caption>
 					<thead class="thead-dark">
    						<tr>
-      						<th width="20% scope="col">Title</th>
-      						<th width="15% scope="col">Type</th>
-      						<th width="10% scope="col">Level</th>
-      						<th width="15% scope="col">City</th>
-      						<th width="15% scope="col">Date</th>
-      						<th width="25% scope="col">User</th>
+      						<th width="20%" scope="col">Title</th>
+      						<th width="15%" scope="col">Type</th>
+      						<th width="10%" scope="col">Level</th>
+      						<th width="15%" scope="col">City</th>
+      						<th width="15%" scope="col">Date</th>
+      						<th width="25%" scope="col">User</th>
     					</tr>
   					</thead>
   					<tbody>
@@ -126,11 +127,11 @@
 					for (EventListElementBean ev : events) {
 					%>
     					<tr class="clickable-row" id="<%out.print(ev.getElemEventId());%>" style="cursor:pointer">
-      						<td><b>
+      						<td><strong>
       						<%
       							out.println(ev.getElemEventTitle());
       						%>
-      						</b></td>
+      						</strong></td>
       						<td>
       						<%
       							out.println(ev.getElemEventType());

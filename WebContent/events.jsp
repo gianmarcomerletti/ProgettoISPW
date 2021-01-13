@@ -162,7 +162,7 @@
 										</h2>
 										</div>
 										<div class="row">
-											<b><%	out.println(event.getEventType().toString());	%></b>
+											<strong><%	out.println(event.getEventType().toString());	%></strong>
 										</div>
 										<div class="row">
 											<%	out.println(event.getEventDescription());	%>
@@ -246,9 +246,9 @@
 											</span>
 											</h5>
 
-											<span><i>
+											<span><em>
 											<%	out.println("&nbsp;&nbsp;created by " + joinEvent.getEventOrganizer().getUsername());	%>
-											</i></span>
+											</em></span>
 
 										</div>
 										<div class="row">
@@ -257,7 +257,7 @@
 										</h2>
 										</div>
 										<div class="row">
-											<b><%	out.println(joinEvent.getEventType().toString());	%></b>
+											<strong><%	out.println(joinEvent.getEventType().toString());	%></strong>
 										</div>
 										<div class="row">
 											<%	out.println(joinEvent.getEventDescription());	%>
@@ -337,9 +337,9 @@
 											<%	out.println(event.getEventTitle());	%>
 											</span>
 											</h5>
-											<span><i>
+											<span><em>
 											<%	out.println("&nbsp;&nbsp;created by " + event.getEventOrganizer().getUsername());	%>
-											</i></span>
+											</em></span>
 										</div>
 										<div class="row">
 										<h2>
@@ -347,7 +347,7 @@
 										</h2>
 										</div>
 										<div class="row">
-											<b><%	out.println(event.getEventType().toString());	%></b>
+											<strong><%	out.println(event.getEventType().toString());	%></strong>
 										</div>
 										<div class="row">
 											<%	out.println(event.getEventDescription());	%>

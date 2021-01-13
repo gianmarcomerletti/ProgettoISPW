@@ -93,6 +93,7 @@
 				<input type="hidden" name="btnAction" id="btnActionId" value="">
 				<input type="hidden" name="request" id="requestId" value="">
 				<table class="table table-bordered table-hover">
+					<caption>My Requests</caption>
 					<thead class="thead-dark">
    						<tr>
       						<th scope="col">Event</th>
