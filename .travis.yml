@@ -1,10 +1,14 @@
 language: java
 jdk:
- - openjdk11
+  - openjdk11
 dist: trusty
+services:
+  - mysql
 addons:
   sonarcloud:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
+before_install:
+  - mysql -u root --password="" < db.sql
 script:
   - sonar-scanner
