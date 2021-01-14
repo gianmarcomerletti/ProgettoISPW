@@ -19,7 +19,7 @@
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.CityDAO"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.model.City"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.view.SessionView"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -79,7 +79,7 @@
 		bean.setEventOrganizer(new UserDAO().findUserFromUsername(SessionView.getUsername()));
 		bean.setEventLevel(SessionView.getLevelEnum());
 		bean.setEventType(TypeEnum.valueOf(typeEvent));
-		if (facade.createEvent(bean))
+		if (facade.createEvent(bean) > 0)
 			out.println("<script>alert('Event created');</script>");
 	}
 

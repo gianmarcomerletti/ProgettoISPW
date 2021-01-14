@@ -144,5 +144,6 @@ CREATE TABLE `user` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO user values ('test', 'test', 'test', 'test', 'PRO', 'ROMA');
+INSERT INTO user values ('test2', 'test2', 'test2', 'test2', 'PRO', 'ROMA');
 
 -- Dump completed on 2021-01-14 11:08:35
