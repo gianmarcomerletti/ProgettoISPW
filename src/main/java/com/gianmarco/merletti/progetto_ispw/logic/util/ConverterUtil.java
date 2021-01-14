@@ -2,10 +2,7 @@ package com.gianmarco.merletti.progetto_ispw.logic.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
 

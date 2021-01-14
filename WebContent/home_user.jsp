@@ -5,6 +5,8 @@
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.TypeEnum"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.Rating"%>
+
 <%@page import="java.time.ZoneId"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.time.LocalDateTime"%>
@@ -118,13 +120,14 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="Navbar">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><span class="navbar-brand mb-0 h1">
-			<% out.println(SessionView.getUsername());	%>
+			<% out.println(SessionView.getUsername()
+					+ "  " + Rating.getStringRating(new SystemFacade().getUserRating(SessionView.getUsername())));	%>
 			</span>
 			<span class="navbar-brand mb-0 h1" id="label-level">
 			<% out.println(SessionView.getLevelEnum());	%>
@@ -145,7 +148,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Navbar2">
 				<form class="form-inline">
 					<button id="createEventModalBtnId" disabled
 						data-toggle="modal" data-target="#newEvent"

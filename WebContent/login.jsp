@@ -54,7 +54,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm" style="padding:50px;">
-						<h1 id="welcome" align="center" style="color:white;">TogetherRun</h1>
+						<h1 id="welcome" style="color:white;">TogetherRun</h1>
 					</div>
 				</div>
 				<form action="login.jsp" method="GET">

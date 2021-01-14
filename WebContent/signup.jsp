@@ -64,7 +64,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm" style="padding:10px;">
-						<h5 id="welcome" align="center">Registration</h5>
+						<h5 id="welcome">Registration</h5>
 					</div>
 				</div>
 				<form id="signupForm" action="signup.jsp" method="GET">

@@ -1,6 +1,7 @@
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean"%>
 <%@page import="java.util.Base64"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.Rating"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.exception.ReviewException"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.ReviewBean"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum"%>
@@ -60,13 +61,14 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="Navbar">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><span class="navbar-brand mb-0 h1">
-			<% out.println(SessionView.getUsername());	%>
+			<% out.println(SessionView.getUsername()
+					+ "  " + Rating.getStringRating(new SystemFacade().getUserRating(SessionView.getUsername())));	%>
 			</span>
 			<span class="navbar-brand mb-0 h1" id="label-level">
 			<% out.println(SessionView.getLevelEnum());	%>
@@ -87,7 +89,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Navbar2">
 				<div class="input-group" style="width:200px;">
 					<div class="input-group-prepend">
     					<label class="input-group-text" for="inputGroupSelect">Filter by</label>
@@ -114,12 +116,12 @@
 					<caption>All Events</caption>
 					<thead class="thead-dark">
    						<tr>
-      						<th width="20%" scope="col">Title</th>
-      						<th width="15%" scope="col">Type</th>
-      						<th width="10%" scope="col">Level</th>
-      						<th width="15%" scope="col">City</th>
-      						<th width="15%" scope="col">Date</th>
-      						<th width="25%" scope="col">User</th>
+      						<th scope="col">Title</th>
+      						<th scope="col">Type</th>
+      						<th scope="col">Level</th>
+      						<th scope="col">City</th>
+      						<th scope="col">Date</th>
+      						<th scope="col">User</th>
     					</tr>
   					</thead>
   					<tbody>

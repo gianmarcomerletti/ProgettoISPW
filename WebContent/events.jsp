@@ -7,6 +7,7 @@
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean"%>
+<%@page import="com.gianmarco.merletti.progetto_ispw.logic.util.Rating"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
@@ -64,13 +65,14 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="Navbar">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><span class="navbar-brand mb-0 h1">
-			<% out.println(SessionView.getUsername());	%>
+			<% out.println(SessionView.getUsername()
+					+ "  " + Rating.getStringRating(new SystemFacade().getUserRating(SessionView.getUsername())));	%>
 			</span>
 			<span class="navbar-brand mb-0 h1" id="label-level">
 			<% out.println(SessionView.getLevelEnum());	%>
@@ -91,7 +93,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Navbar2">
 				<ul class="nav nav-pills">
   					<li class="nav-item">
   						<a class="nav-link active" data-toggle="tab" href="#createdEvents">Created events</a>
