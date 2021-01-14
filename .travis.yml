@@ -11,5 +11,5 @@ addons:
 before_install:
   - mysql -u root -h 127.0.0.1 -P 3306 < db.sql
 script:
-  - mvn clean -Pcoverage
+  - mvn clean jacoco:prepare-agent install jacoco:report
   - sonar-scanner
