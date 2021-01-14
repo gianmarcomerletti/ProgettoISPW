@@ -9,10 +9,13 @@ import java.util.Random;
 import org.junit.Test;
 
 import com.gianmarco.merletti.progetto_ispw.logic.bean.EventBean;
+import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
+import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
@@ -63,6 +66,40 @@ public class JUnitTest {
 
 		int check = new EventDAO().findById(id).getId();
 		assertEquals(id, check);
+	}
+
+	@Test
+	public void testSendRequest() throws InvalidFieldException, ParseException, UserNotFoundException, RequestException {
+		SystemFacade facade = new SystemFacade();
+		double d = 41.4;
+		EventBean event = new EventBean();
+		User organizer = new UserDAO().findUserFromUsername("test");
+		event.setEventCity("ROMA");
+		event.setEventOrganizer(organizer);
+		event.setEventAddress("via");
+		event.setEventCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		event.setEventDate(new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse("31/01/2031").getTime()));
+		event.setEventDescription("...");
+		event.setEventDistance(22);
+		event.setEventLatitude(Double.valueOf(d));
+		event.setEventLongitude(Double.valueOf(d));
+		event.setEventTime("20:02");
+		event.setEventTitle("title2");
+		event.setEventType(TypeEnum.LENTO);
+		int eventId = facade.createEvent(event);
+
+		Event temp = new EventDAO().findById(eventId);
+		new SystemFacade().setEventForRequest(temp.getLongitude(), temp.getLatitude());
+
+		RequestBean requestBean = new RequestBean();
+		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+		requestBean.setRequestMessage("message");
+		requestBean.setRequestUser("test2");
+		requestBean.setRequestEvent(SessionView.getEventSetOnMap());
+
+
+		boolean res = new SystemFacade().sendRequest(requestBean);
+		assertEquals(res, true);
 	}
 
 	@Test
