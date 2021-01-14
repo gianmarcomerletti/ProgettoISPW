@@ -18,7 +18,7 @@ public class DBConnect {
 	private DBConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connection = DriverManager.getConnection(URL_DB, USERNAME_DB, PSW_DB);
+			this.connection = DriverManager.getConnection(URL_DB, USERNAME_DB, "");
 			Logger.getLogger("together_run").log(Level.INFO, "Database connesso");
 		} catch (ClassNotFoundException | SQLException e) {
 			Logger.getLogger("together_run").log(Level.SEVERE, "Impossibile connettersi al database");
