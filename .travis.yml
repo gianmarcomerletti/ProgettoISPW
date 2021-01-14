@@ -9,7 +9,9 @@ addons:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
 before_install:
+  - mysql -e 'DROP DATABASE IF EXISTS progettoispw'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS progettoispw;'
   - mysql -u root -h 127.0.0.1 -P 3306 < db.sql
 script:
-  - mvn clean jacoco:prepare-agent install jacoco:report
+  - mvn test -X
   - sonar-scanner
