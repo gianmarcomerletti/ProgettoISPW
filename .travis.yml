@@ -9,7 +9,7 @@ addons:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
 before_script:
-  - mysql -u -e 'CREATE DATABASE progettoispw'
+  - mysql -u root -e 'CREATE DATABASE progettoispw;'
   - mysql -u root progettoispw < db.sql
 script:
   - mvn test -X
