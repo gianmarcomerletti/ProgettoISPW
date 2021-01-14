@@ -106,9 +106,14 @@
  					</li>
 				</ul>
 
-				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
-				role="button"> Logout
-				</a>
+				<form class="form-inline ml-auto mr-1">
+					<a href="profile.jsp" class="btn btn-sm btn-outline-primary ml-auto mr-1"
+						role="button"> Profile
+					</a>
+					<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
+						role="button"> Logout
+					</a>
+				</form>
 			</nav>
 
 
@@ -249,7 +254,8 @@
 											</h5>
 
 											<span><em>
-											<%	out.println("&nbsp;&nbsp;created by " + joinEvent.getEventOrganizer().getUsername());	%>
+											<%	out.println("&nbsp;&nbsp;created by " + joinEvent.getEventOrganizer().getUsername() + "  " +
+											 Rating.getStringRating(new SystemFacade().getUserRating(joinEvent.getEventOrganizer().getUsername())));	%>
 											</em></span>
 
 										</div>
@@ -340,7 +346,8 @@
 											</span>
 											</h5>
 											<span><em>
-											<%	out.println("&nbsp;&nbsp;created by " + event.getEventOrganizer().getUsername());	%>
+											<%	out.println("&nbsp;&nbsp;created by " + event.getEventOrganizer().getUsername() + "  "  +
+ 													Rating.getStringRating(new SystemFacade().getUserRating(event.getEventOrganizer().getUsername())));	%>
 											</em></span>
 										</div>
 										<div class="row">

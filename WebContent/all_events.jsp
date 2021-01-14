@@ -103,17 +103,21 @@
 
 				<input class="form-control" id="myInput" onkeyup="myFunction()" type="text" style="width:500px; margin-left: 10px;" placeholder="Search..">
 
-				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
-					role="button"> Logout
-				</a>
+				<form class="form-inline ml-auto mr-1">
+					<a href="profile.jsp" class="btn btn-sm btn-outline-primary ml-auto mr-1"
+						role="button"> Profile
+					</a>
+					<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
+						role="button"> Logout
+					</a>
+				</form>
 			</nav>
 
 			<div class="tab-content">
 			<form action="all_events.jsp" method="GET" id="form">
 				<input type="hidden" name="event" id="eventId" value="">
 				<input type="hidden" name="inputRequestMessage" id="inputRequestMessageId" value="">
-				<table id="myTable" class="table table-bordered table-hover">
-					<caption>All Events</caption>
+				<table id="myTable" class="table table-bordered table-hover" aria-label="All Events">
 					<thead class="thead-dark">
    						<tr>
       						<th scope="col">Title</th>

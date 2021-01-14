@@ -161,9 +161,15 @@
 						Send a Request to Join
 					</button>
 				</form>
-				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
-				role="button"> Logout
-				</a>
+
+				<form class="form-inline ml-auto mr-1">
+					<a href="profile.jsp" class="btn btn-sm btn-outline-primary ml-auto mr-1"
+						role="button"> Profile
+					</a>
+					<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
+						role="button"> Logout
+					</a>
+				</form>
 			</nav>
 
 			<div class="container-fluid p-0">
@@ -412,9 +418,7 @@
 				+ "<br>Time: <b>" + timeFormat.format(myEvent.getEventTime()) + "</b>"
 				+ "<br><b>" + myEvent.getEventDistance() + " KM</b> - " + myEvent.getEventType()
 				+ "<br>Level: <b>" + myEvent.getEventLevel() + "</b>"
-				+ "<br><i>created on "
-				+ dateFormat.format(myEvent.getEventCreationDate()) + " by "
-				+ myEvent.getEventOrganizer().getUsername() + "</i>')");
+				+ "<br><i>created on " + dateFormat.format(myEvent.getEventCreationDate()) + "</i>')");
 	}
 
 	for (EventBean event : eventsFiltered) {
@@ -424,9 +428,9 @@
 				+ "<br>Time: <b>" + timeFormat.format(event.getEventTime()) + "</b>"
 				+ "<br><b>" + event.getEventDistance() + " KM</b> - " + event.getEventType()
 				+ "<br>Level: <b>" + event.getEventLevel() + "</b>"
-				+ "<br><i>created on "
-				+ dateFormat.format(event.getEventCreationDate()) + " by "
-				+ event.getEventOrganizer().getUsername() + "</i>');");
+				+ "<br><i>created on " + dateFormat.format(event.getEventCreationDate())
+				+ "<br>by " + event.getEventOrganizer().getUsername() + "</i> "
+				+ Rating.getStringRating(new SystemFacade().getUserRating(event.getEventOrganizer().getUsername())) + "');");
 %>
 
 				marker

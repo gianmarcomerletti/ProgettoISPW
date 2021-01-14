@@ -103,7 +103,7 @@ public class JUnitTest {
 	}
 
 	@Test
-	public void testSignuoNewUser() throws UserNotFoundException {
+	public void testSignupNewUser() throws UserNotFoundException {
 
 		int leftLimit = 97;		// lettera 'a'
 		int rightLimit = 122;	// lettera 'z'

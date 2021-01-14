@@ -85,17 +85,21 @@
 		<!-- Page Content -->
 		<div id="page-content">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="nav2_requests">
-				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
-				role="button"> Logout
-				</a>
+				<form class="form-inline ml-auto mr-1">
+					<a href="profile.jsp" class="btn btn-sm btn-outline-primary ml-auto mr-1"
+						role="button"> Profile
+					</a>
+					<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
+						role="button"> Logout
+					</a>
+				</form>
 			</nav>
 
 			<div class="tab-content">
 			<form action="requests.jsp" method="GET">
 				<input type="hidden" name="btnAction" id="btnActionId" value="">
 				<input type="hidden" name="request" id="requestId" value="">
-				<table class="table table-bordered table-hover">
-					<caption>My Requests</caption>
+				<table class="table table-bordered table-hover" aria-label="My Requests">
 					<thead class="thead-dark">
    						<tr>
       						<th scope="col">Event</th>
@@ -115,7 +119,7 @@
       						</th>
       						<td>
       						<%
-      							out.println(req.getRequestUser());
+      							out.println(req.getRequestUser() + "\t" + Rating.getStringRating(new SystemFacade().getUserRating(req.getRequestUser())));
       						%>
       						</td>
       						<td>

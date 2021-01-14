@@ -97,7 +97,7 @@ public class ProfileControllerFX implements Initializable {
 						break;
 					case "userText":
 						Text user = (Text) nodeEvent;
-						user.setText(review.getUserBean().getUsername());
+						user.setText("Review from " + review.getUserBean().getUsername());
 						break;
 					case "ratingValue":
 						org.controlsfx.control.Rating rating = (org.controlsfx.control.Rating) nodeEvent;
