@@ -36,7 +36,7 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="nav_requests">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="nav_profile">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
@@ -64,7 +64,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="nav2_requests">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="nav2_profile">
 				<form class="form-inline ml-auto mr-1">
 					<a href="profile.jsp" class="btn btn-sm btn-outline-primary ml-auto mr-1"
 						role="button"> Profile
