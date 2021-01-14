@@ -120,7 +120,7 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="Navbar">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="nav_home">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
@@ -148,7 +148,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Navbar2">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="nav2_home">
 				<form class="form-inline">
 					<button id="createEventModalBtnId" disabled
 						data-toggle="modal" data-target="#newEvent"

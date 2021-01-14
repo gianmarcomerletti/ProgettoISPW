@@ -56,7 +56,7 @@
 
 <body>
 	<!--  Navbar -->
-	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="Navbar">
+	<nav id="navbar" class="navbar navbar-dark bg-primary" aria-label="nav_requests">
 		<ul class="nav navbar-nav navbar-left">
 			<li><span class="navbar-brand mb-0 h1">TogetherRun</span></li>
 		</ul>
@@ -84,7 +84,7 @@
 
 		<!-- Page Content -->
 		<div id="page-content">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="Navbar2">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" aria-label="nav2_requests">
 				<a href="logout.jsp" class="btn btn-sm btn-danger ml-auto mr-1"
 				role="button"> Logout
 				</a>
