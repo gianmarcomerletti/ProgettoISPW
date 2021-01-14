@@ -24,7 +24,7 @@ public class SystemFacade {
 		return new LoginController().signupUser(user);
 	}
 
-	public boolean createEvent(EventBean eventBean) {
+	public Integer createEvent(EventBean eventBean) {
 		return new EventController().createEvent(eventBean);
 	}
 

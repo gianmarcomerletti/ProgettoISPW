@@ -24,7 +24,7 @@ import com.google.gson.stream.JsonReader;
 
 public class EventController {
 
-	public boolean createEvent(EventBean eventBean) {
+	public Integer createEvent(EventBean eventBean) {
 		EventDAO dao = new EventDAO();
 
 		EventBean temp = new EventBean();
@@ -44,8 +44,8 @@ public class EventController {
 
 		Event event = dao.addEvent(temp);
 		if (dao.joinEvent(SessionView.getUsername(), event.getId()))
-			return (event != null);
-		return false;
+			return (event.getId());
+		return -1;
 	}
 
 	public void setEventForRequest(Double latitude, Double longitude) {

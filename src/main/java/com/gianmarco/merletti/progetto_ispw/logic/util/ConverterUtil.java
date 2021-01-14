@@ -38,25 +38,4 @@ public class ConverterUtil {
 		return b;
 	}
 
-	public static String md5FromString(String input) {
-		try {
-
-			MessageDigest md = MessageDigest.getInstance("MD5");
-
-			byte[] messageDigest = md.digest(input.getBytes());
-
-			BigInteger no = new BigInteger(1, messageDigest);
-
-			String hashtext = no.toString(16);
-			while (hashtext.length() < 32) {
-				hashtext = "0".concat(hashtext);
-			}
-			return hashtext;
-		}
-
-		catch (NoSuchAlgorithmException e) {
-			return null;
-		}
-	}
-
 }
