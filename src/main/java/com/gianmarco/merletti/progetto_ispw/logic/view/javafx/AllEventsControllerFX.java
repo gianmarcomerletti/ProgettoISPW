@@ -165,13 +165,13 @@ public class AllEventsControllerFX implements Initializable {
 	}
 
 	@FXML
-	private void profile() {
-		App.setRoot("profile");
+	private void toMap() {
+		App.setRoot("home_user");
 	}
 
 	@FXML
-	private void toMap() {
-		App.setRoot("home_user");
+	private void profile() {
+		App.setRoot("profile");
 	}
 
 }
