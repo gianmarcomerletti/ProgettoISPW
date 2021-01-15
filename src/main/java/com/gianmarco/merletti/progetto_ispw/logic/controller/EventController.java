@@ -44,7 +44,7 @@ public class EventController {
 
 		Event event = dao.addEvent(temp);
 		if (dao.joinEvent(SessionView.getUsername(), event.getId()))
-			return (event.getId());
+			return event.getId();
 		return -1;
 	}
 

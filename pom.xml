@@ -110,6 +110,14 @@
   		<version>8.40.18</version>
 	</dependency>
 
+	<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
+	<dependency>
+    	<groupId>org.seleniumhq.selenium</groupId>
+    	<artifactId>selenium-chrome-driver</artifactId>
+    	<version>3.141.59</version>
+	</dependency>
+
+
   </dependencies>
 
 

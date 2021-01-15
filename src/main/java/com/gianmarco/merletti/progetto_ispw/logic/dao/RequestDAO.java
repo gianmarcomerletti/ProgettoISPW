@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +22,16 @@ public class RequestDAO {
 		request.setFromBean(requestBean);
 		request.setStatus(Status.PENDING.toString());
 
-		try (PreparedStatement st = conn.prepareStatement(SQL_ADD_REQUEST);) {
+		try (PreparedStatement st = conn.prepareStatement(SQL_ADD_REQUEST, Statement.RETURN_GENERATED_KEYS)) {
 			st.setDate(1, request.getCreationDate());
 			st.setInt(2, request.getEvent());
 			st.setString(3, request.getUser());
 			st.setString(4, request.getMessage());
 			st.setString(5, request.getStatus());
 			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			rs.next();
+			request.setIdRequest(rs.getInt(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

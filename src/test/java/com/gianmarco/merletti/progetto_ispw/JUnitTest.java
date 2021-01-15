@@ -13,11 +13,13 @@ import com.gianmarco.merletti.progetto_ispw.logic.bean.RequestBean;
 import com.gianmarco.merletti.progetto_ispw.logic.bean.UserBean;
 import com.gianmarco.merletti.progetto_ispw.logic.controller.SystemFacade;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.EventDAO;
+import com.gianmarco.merletti.progetto_ispw.logic.dao.RequestDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.dao.UserDAO;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.InvalidFieldException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.RequestException;
 import com.gianmarco.merletti.progetto_ispw.logic.exception.UserNotFoundException;
 import com.gianmarco.merletti.progetto_ispw.logic.model.Event;
+import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 import com.gianmarco.merletti.progetto_ispw.logic.model.User;
 import com.gianmarco.merletti.progetto_ispw.logic.util.CityEnum;
 import com.gianmarco.merletti.progetto_ispw.logic.util.LevelEnum;
@@ -64,8 +66,14 @@ public class JUnitTest {
 		event.setEventType(TypeEnum.FARTLEK);
 		int id = new SystemFacade().createEvent(event);
 
-		int check = new EventDAO().findById(id).getId();
+		Event testEvent = new EventDAO().findById(id);
+		int check = testEvent.getId();
+
+		event.setEventId(id);
+		new SystemFacade().cancelEvent(event);
 		assertEquals(id, check);
+
+
 	}
 
 	@Test
@@ -96,10 +104,18 @@ public class JUnitTest {
 		requestBean.setRequestMessage("message");
 		requestBean.setRequestUser("test2");
 		requestBean.setRequestEvent(SessionView.getEventSetOnMap());
+		int id = new SystemFacade().sendRequest(requestBean);
 
+		Request testRequest = new RequestDAO().findById(id);
+		int check = testRequest.getIdRequest();
 
-		boolean res = new SystemFacade().sendRequest(requestBean);
-		assertEquals(res, true);
+		requestBean.setRequestId(id);
+		SessionView.setUsername("test");
+		event.setEventId(eventId);
+		new SystemFacade().rejectRequest(requestBean);
+		new SystemFacade().cancelEvent(event);
+
+		assertEquals(id, check);
 	}
 
 	@Test

@@ -50,7 +50,7 @@ public class SystemFacade {
 		return new LoadEventsController().getJoinEvents();
 	}
 
-	public boolean sendRequest(RequestBean requestBean) throws RequestException {
+	public Integer sendRequest(RequestBean requestBean) throws RequestException {
 		return new RequestController().createRequest(requestBean);
 	}
 

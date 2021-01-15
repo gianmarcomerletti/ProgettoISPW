@@ -11,14 +11,14 @@ import com.gianmarco.merletti.progetto_ispw.logic.model.Request;
 
 public class RequestController {
 
-	public boolean createRequest(RequestBean requestBean) throws RequestException {
+	public Integer createRequest(RequestBean requestBean) throws RequestException {
 		RequestDAO dao = new RequestDAO();
 		if (new EventDAO().checkParticipation(requestBean.getRequestUser(), requestBean.getRequestEvent().getEventId()) ||
 				new RequestDAO().checkRequest(requestBean)) {
 			throw new RequestException();
 		}
 		Request request = dao.addRequest(requestBean);
-		return (request != null);
+		return request.getIdRequest();
 	}
 
 	public List<RequestBean> loadRequests(String username) {
