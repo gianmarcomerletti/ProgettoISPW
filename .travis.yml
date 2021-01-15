@@ -5,7 +5,8 @@ dist: trusty
 services:
   - mysql
 addons:
-  chrome: stable
+  chrome:
+    stable
   sonarcloud:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
