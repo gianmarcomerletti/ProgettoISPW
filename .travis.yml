@@ -5,6 +5,7 @@ dist: trusty
 services:
   - mysql
 addons:
+  chrome: stable
   sonarcloud:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
@@ -19,9 +20,6 @@ before_script:
   - mysql -u root -e 'CREATE DATABASE progettoispw;'
   - mysql -u root progettoispw < db.sql
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('2202')"
-  - wget http://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip -d /home/travis/virtualenv/python2.7.12/bin/
-  - export CHROME_BIN=chromium-browser
 script:
   - mvn test -X
   - sonar-scanner
