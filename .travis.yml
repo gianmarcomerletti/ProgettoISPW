@@ -8,6 +8,13 @@ addons:
   sonarcloud:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
+install:
+  - wget -N http://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 before_script:
   - mysql -u root -e 'CREATE DATABASE progettoispw;'
   - mysql -u root progettoispw < db.sql
