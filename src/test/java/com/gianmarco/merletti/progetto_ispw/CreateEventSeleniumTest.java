@@ -31,7 +31,9 @@ public class CreateEventSeleniumTest {
 		driver.findElement(By.xpath("//*[@id=\"login-box\"]/div/form/div[2]/div/div/input")).sendKeys(password);
 		driver.findElement(By.xpath("//*[@id=\"login-box\"]/div/form/div[3]/div/button[1]")).click();
 
-		assertEquals(username, SessionView.getUsername());
+		String userString = SessionView.getUsername();
+
+		assertEquals(username, userString);
 
 		driver.close();
 	}
