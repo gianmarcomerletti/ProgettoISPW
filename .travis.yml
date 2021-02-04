@@ -1,16 +1,26 @@
 language: java
 jdk:
   - openjdk11
+
 services:
   - mysql
+
 addons:
   sonarcloud:
     organization: "gianmarcomerletti"
     token: "789231355e597c937a9163f5a3fc2892641d0132"
+
+
 before_script:
   - mysql -u root -e 'CREATE DATABASE progettoispw;'
   - mysql -u root progettoispw < db.sql
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('2202')"
+  - ncm
+
+install:
+  - nvm install node
+
 script:
+  - nvm use node
   - mvn test -X
   - sonar-scanner
