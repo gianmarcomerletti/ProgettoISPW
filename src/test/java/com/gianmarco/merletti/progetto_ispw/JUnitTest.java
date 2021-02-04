@@ -33,7 +33,7 @@ public class JUnitTest {
 
 		UserBean userBean = new UserBean();
 		userBean.setUsername("user");
-		userBean.setPassword("pwd");
+		userBean.setPassword("user");
 		userBean.setFirstName("User");
 		userBean.setLastName("Test");
 		userBean.setLevel(LevelEnum.PRO);
@@ -44,7 +44,7 @@ public class JUnitTest {
 
 		UserBean user = new UserBean();
 		user.setUsername("user");
-		user.setPassword("pwd");
+		user.setPassword("user");
 		user = new SystemFacade().isSignedUp(user);
 		SessionView.setUsername(user.getUsername());
 
@@ -74,48 +74,6 @@ public class JUnitTest {
 		assertEquals(id, check);
 
 
-	}
-
-	@Test
-	public void testSendRequest() throws InvalidFieldException, ParseException, UserNotFoundException, RequestException {
-		SystemFacade facade = new SystemFacade();
-		double d = 41.4;
-		EventBean event = new EventBean();
-		User organizer = new UserDAO().findUserFromUsername("test");
-		event.setEventCity("ROMA");
-		event.setEventOrganizer(organizer);
-		event.setEventAddress("via");
-		event.setEventCreationDate(new java.sql.Date(new java.util.Date().getTime()));
-		event.setEventDate(new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse("31/01/2031").getTime()));
-		event.setEventDescription("...");
-		event.setEventDistance(22);
-		event.setEventLatitude(Double.valueOf(d));
-		event.setEventLongitude(Double.valueOf(d));
-		event.setEventTime("20:02");
-		event.setEventTitle("title2");
-		event.setEventType(TypeEnum.LENTO);
-		int eventId = facade.createEvent(event);
-
-		Event temp = new EventDAO().findById(eventId);
-		new SystemFacade().setEventForRequest(temp.getLongitude(), temp.getLatitude());
-
-		RequestBean requestBean = new RequestBean();
-		requestBean.setRequestCreationDate(new java.sql.Date(new java.util.Date().getTime()));
-		requestBean.setRequestMessage("message");
-		requestBean.setRequestUser("test2");
-		requestBean.setRequestEvent(SessionView.getEventSetOnMap());
-		int id = new SystemFacade().sendRequest(requestBean);
-
-		Request testRequest = new RequestDAO().findById(id);
-		int check = testRequest.getIdRequest();
-
-		requestBean.setRequestId(id);
-		SessionView.setUsername("test");
-		event.setEventId(eventId);
-		new SystemFacade().rejectRequest(requestBean);
-		new SystemFacade().cancelEvent(event);
-
-		assertEquals(id, check);
 	}
 
 	@Test

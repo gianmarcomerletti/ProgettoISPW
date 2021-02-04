@@ -81,8 +81,7 @@
 		bean.setEventOrganizer(new UserDAO().findUserFromUsername(SessionView.getUsername()));
 		bean.setEventLevel(SessionView.getLevelEnum());
 		bean.setEventType(TypeEnum.valueOf(typeEvent));
-		if (facade.createEvent(bean) > 0)
-			out.println("<script>alert('Event created');</script>");
+		facade.createEvent(bean);
 	}
 
 	City city = new CityDAO().getCity(SessionView.getCityEnum());
@@ -204,7 +203,7 @@
 						<div class="row">
 							<div class="col-sm">
 								<div class="form-group">
-									<textarea required class="form-control"
+									<textarea class="form-control"
 										name="inputRequestMessage" placeholder="Message for event organizer"
 										rows="4"></textarea>
 								</div>
