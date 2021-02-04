@@ -15,7 +15,6 @@ before_script:
   - mysql -u root -e 'CREATE DATABASE progettoispw;'
   - mysql -u root progettoispw < db.sql
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('2202')"
-  - ncm
 
 install:
   - nvm install node
